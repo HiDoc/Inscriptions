@@ -1,4 +1,4 @@
-package inscriptions;
+package application.inscriptions;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -156,8 +156,9 @@ public class Competition implements Comparable<Competition>, Serializable
 	
 	public void delete()
 	{
-		for (Candidat candidat : candidats)
-			remove(candidat);
+            candidats.stream().forEach((candidat) -> {
+                remove(candidat);
+            });
 		inscriptions.remove(this);
 	}
 	
