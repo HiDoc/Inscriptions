@@ -1,4 +1,4 @@
-package inscriptions;
+package application.inscriptions;
 
 import java.util.Collections;
 import java.util.SortedSet;
@@ -22,6 +22,7 @@ public class Equipe extends Candidat
 
 	/**
 	 * Retourne l'ensemble des personnes formant l'équipe.
+         * @return 
 	 */
 	
 	public SortedSet<Personne> getMembres()
