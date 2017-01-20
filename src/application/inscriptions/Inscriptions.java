@@ -241,6 +241,7 @@ public class Inscriptions implements Serializable
 	
 	public static void main(String[] args)
 	{
+		
 		Inscriptions myInscriptions = Inscriptions.getInscriptions();
 		Competition flechettes = myInscriptions.createCompetition("Mondial de fléchettes", null, false);
 		Personne tony = myInscriptions.createPersonne("Tony", "Dent de plomb", "azerty"), 
