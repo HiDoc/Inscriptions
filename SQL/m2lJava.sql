@@ -40,13 +40,3 @@ CREATE TABLE participer (
     FOREIGN KEY (co_id)
         REFERENCES competition (id_co)
 );
-
-DELIMITER $$
-CREATE PROCEDURE insert_user(IN nom varchar(128),in prenom varchar(128), in mail varchar(128)) 
-BEGIN 
-	declare id int;
-	insert into candidat values(default, nom);
-    set id = LAST_INSERT_ID();
-    insert into users values(id, default, mail, prenom);
-END $$
-DELIMITER ;
