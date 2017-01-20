@@ -16,7 +16,8 @@ import java.sql.Statement;
  */
 public class Connect {
 
-    public static void bConnect(String mQuery) {
+    public static ResultSet bConnect(String mQuery) {
+        ResultSet r = null ;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Driver O.K.");
@@ -27,24 +28,17 @@ public class Connect {
 
             java.sql.Connection c = DriverManager.getConnection(url, user, pass);
             System.out.println("Connexion effective !");
-            Query(mQuery, c);
+            r = Query(mQuery, c);
             
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
-        
+        return r;
     }
-    private static void Query (String Query, java.sql.Connection c) throws SQLException{
+    private static ResultSet Query (String Query, java.sql.Connection c) throws SQLException{
         String req = Query;
         Statement s = c.createStatement();
-        ResultSet rs = s.executeQuery(req);
-        while (rs.next())
-        {
-            System.out.println(rs.getInt(1) + " : " + rs.getString(2) + " : " + rs.getString(3) + " : " + rs.getString(4));
-        }
-    }
-    public static void main(String[] args){
-        bConnect("select * from users");
+        return s.executeQuery(req);
     }
     
 }
