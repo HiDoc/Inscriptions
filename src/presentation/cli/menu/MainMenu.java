@@ -1,9 +1,7 @@
 package presentation.cli.menu;
 
 import application.inscriptions.Inscriptions;
-import utilitaires.ligneDeCommande.Action;
 import utilitaires.ligneDeCommande.Menu;
-import utilitaires.ligneDeCommande.Option;
 
 public class MainMenu {	
 	
@@ -11,17 +9,17 @@ public class MainMenu {
 	
 	public static Menu getMenuUsers()
 	{
-		return MenuUser.getMenu("Personnes", inscriptions);
+		return MenuUser.getMenu("Personnes");
 	}
 	
 	public static Menu getMenuTeams()
 	{
-		return MenuTeam.getMenu("Equipes", inscriptions);
+		return MenuTeam.getMenu("Equipes");
 	}
 	
 	public static Menu getMenuCompetitions()
 	{
-		return MenuCompetition.getMenu("Competitions", inscriptions);
+		return MenuCompetition.getMenu("Competitions");
 	}
 	
 	public static Menu getMainMenu()
@@ -29,12 +27,13 @@ public class MainMenu {
 		Menu menu = new Menu("Menu Principal");
 		menu.ajoute(getMenuUsers());
 		menu.ajoute(getMenuTeams());
-		menu.ajoute(getMenuCompetitions());		
+		menu.ajoute(getMenuCompetitions());
+		menu.ajouteQuitter("q");
 		return menu;
 	}
 	
 	public MainMenu(Inscriptions inscriptions) {
-		this.inscriptions = inscriptions;
+		MainMenu.inscriptions = inscriptions;
 		Menu menu = getMainMenu();
 		menu.start();
 	}
