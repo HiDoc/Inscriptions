@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package data.database;
 
 import java.sql.DriverManager;
@@ -36,9 +31,9 @@ public class Connect {
         return r;
     }
     private static ResultSet Query (String Query, java.sql.Connection c) throws SQLException{
-        String req = Query;
+        Queries q = new Queries("select", "users");
         Statement s = c.createStatement();
-        return s.executeQuery(req);
+        return s.executeQuery(q.getMQuery());
     }
     
 }

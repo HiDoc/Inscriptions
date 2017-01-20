@@ -11,10 +11,10 @@ package data.database;
  */
 public class Queries {
     private String mQuery;
-    private String type;
-    private String table;
+    private final String type;
+    private final String table;
     
-    public void Queries(String table, String type){
+    public Queries(String table, String type){
         this.type = type;
         this.table = table;
     }

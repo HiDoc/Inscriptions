@@ -9,9 +9,12 @@ END $$
 
 CREATE PROCEDURE fill_users (in nbr int)
 BEGIN 
-	declare v_i int;
-    set v_i = 0;
-    
+	DECLARE v1 INT DEFAULT 0;
+	WHILE v1 < nbr DO
+		CALL insert_user('random','random','random');
+		SET v1 = v1 + 1;
+	END WHILE;
+  
 END $$
 DELIMITER ;
 
