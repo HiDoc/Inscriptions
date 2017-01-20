@@ -7,7 +7,7 @@ CREATE TABLE candidat (
 );
 
 CREATE TABLE users (
-    id_us INT PRIMARY KEY,
+    id_us INT PRIMARY KEY AUTO_INCREMENT,
     niveau INT DEFAULT 0,
     mail VARCHAR(128),
     prenom VARCHAR(128)
@@ -40,3 +40,9 @@ CREATE TABLE participer (
     FOREIGN KEY (co_id)
         REFERENCES competition (id_co)
 );
+insert into users values (default, default, 'hello@mail', 'salut');
+
+
+
+
+
