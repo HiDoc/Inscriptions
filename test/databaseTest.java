@@ -30,8 +30,8 @@ public class databaseTest {
 
     @Test
     public void testConnection() {
-        myConnection.bConnect();
-        assertEquals("Connexion effective !", outContent.toString());
+        Connect.bConnect("select * from users");
+        assertEquals("Driver OK", outContent.toString());
     }
 
     @Before

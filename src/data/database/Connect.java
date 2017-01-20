@@ -5,7 +5,6 @@
  */
 package data.database;
 
-import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,30 +16,35 @@ import java.sql.Statement;
  */
 public class Connect {
 
-    public static void bConnect() {
+    public static void bConnect(String mQuery) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Driver O.K.");
 
             String url = "jdbc:mysql://localhost/M2lJava";
             String user = "root";
-            String passwd = "";
+            String pass = "";
 
-            java.sql.Connection c = DriverManager.getConnection(url, user, passwd);
+            java.sql.Connection c = DriverManager.getConnection(url, user, pass);
             System.out.println("Connexion effective !");
-            String req = "select * from users";
-            Statement s = c.createStatement();
-            ResultSet rs = s.executeQuery(req);
-            while (rs.next())
-            {
-             System.out.println(rs.getInt(1) + " : " + rs.getString(2));
-            }
-
+            Query(mQuery, c);
+            
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
+        
     }
-    public static void main(String[]args){
-        bConnect();
+    private static void Query (String Query, java.sql.Connection c) throws SQLException{
+        String req = Query;
+        Statement s = c.createStatement();
+        ResultSet rs = s.executeQuery(req);
+        while (rs.next())
+        {
+            System.out.println(rs.getInt(1) + " : " + rs.getString(2) + " : " + rs.getString(3));
+        }
     }
+    public static void main(String[] args){
+        bConnect("select * from users");
+    }
+    
 }
