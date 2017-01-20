@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+
 /**
  * Point d'entrée dans l'application, un seul objet de type Inscription
  * permet de gérer les compétitions, candidats (de type equipe ou personne)
@@ -239,27 +240,26 @@ public class Inscriptions implements Serializable
 			+ "\nCompetitions  " + getCompetitions().toString();
 	}
 	
-	public static void main(String[] args)
-	{
-		
-		Inscriptions myInscriptions = Inscriptions.getInscriptions();
-		Competition flechettes = myInscriptions.createCompetition("Mondial de fléchettes", null, false);
-		Personne tony = myInscriptions.createPersonne("Tony", "Dent de plomb", "azerty"), 
-				boris = myInscriptions.createPersonne("Boris", "le Hachoir", "ytreza");
-		flechettes.add(tony);
-		Equipe lesManouches = myInscriptions.createEquipe("Les Manouches");
-		lesManouches.add(boris);
-		lesManouches.add(tony);
-		System.out.println(myInscriptions);
-		lesManouches.delete();
-		System.out.println(myInscriptions);
-		try
-		{
-			myInscriptions.sauvegarder();
-		} 
-		catch (IOException e)
-		{
-			System.out.println("Sauvegarde impossible." + e);
-		}
-	}
+//	public static void main(String[] args)
+//	{
+//		Inscriptions myInscriptions = Inscriptions.getInscriptions();
+//		Competition flechettes = myInscriptions.createCompetition("Mondial de fléchettes", null, false);
+//		Personne tony = myInscriptions.createPersonne("Tony", "Dent de plomb", "azerty"), 
+//				boris = myInscriptions.createPersonne("Boris", "le Hachoir", "ytreza");
+//		flechettes.add(tony);
+//		Equipe lesManouches = myInscriptions.createEquipe("Les Manouches");
+//		lesManouches.add(boris);
+//		lesManouches.add(tony);
+//		System.out.println(myInscriptions);
+//		lesManouches.delete();
+//		System.out.println(myInscriptions);
+//		try
+//		{
+//			myInscriptions.sauvegarder();
+//		} 
+//		catch (IOException e)
+//		{
+//			System.out.println("Sauvegarde impossible." + e);
+//		}
+//	}
 }
