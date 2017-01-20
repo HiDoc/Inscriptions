@@ -10,15 +10,21 @@ package data.database;
  * @author Flo
  */
 public class Queries {
+ */
+public class Queries {
+ */
+public class Queries {
     private String mQuery;
     private final String type;
     private final String table;
     
-    public Queries(String table, String type){
+    public Queries(String type, String table){
         this.type = type;
         this.table = table;
-    }
-    public void buildQuery(){
+        this.mQuery = "";
+        buildQuery();
+0 1   }
+    private void buildQuery(){
         switch(this.type){
             case "insert":
                 this.mQuery = "insert into ";
@@ -34,7 +40,7 @@ public class Queries {
         }
         this.mQuery += table;
     }
-    public String getMQuery(){
+    public String getQuery(){
         return this.mQuery;
     }
 }

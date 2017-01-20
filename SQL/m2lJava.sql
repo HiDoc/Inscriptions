@@ -41,8 +41,3 @@ CREATE TABLE participer (
         REFERENCES competition (id_co)
 );
 insert into users values (default, default, 'hello@mail', 'salut');
-
-
-
-
-

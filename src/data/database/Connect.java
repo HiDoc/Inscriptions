@@ -11,11 +11,10 @@ import java.sql.Statement;
  */
 public class Connect {
 
-    public static ResultSet bConnect(String mQuery) {
+    public static ResultSet bConnect() {
         ResultSet r = null ;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("Driver O.K.");
 
             String url = "jdbc:mysql://localhost/M2lJava";
             String user = "root";
@@ -23,17 +22,16 @@ public class Connect {
 
             java.sql.Connection c = DriverManager.getConnection(url, user, pass);
             System.out.println("Connexion effective !");
-            r = Query(mQuery, c);
+            r = Query(c);
             
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
         return r;
     }
-    private static ResultSet Query (String Query, java.sql.Connection c) throws SQLException{
+    private static ResultSet Query (java.sql.Connection c) throws SQLException{
         Queries q = new Queries("select", "users");
         Statement s = c.createStatement();
-        return s.executeQuery(q.getMQuery());
+        return s.executeQuery(q.getQuery());
     }
-    
 }
