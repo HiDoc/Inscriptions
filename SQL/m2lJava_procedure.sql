@@ -7,6 +7,14 @@ BEGIN
     insert into users values(id, default, mail, prenom);
 END $$
 
+DELIMITER $$
+CREATE PROCEDURE insert_team(IN nom varchar(64))
+BEGIN
+	declare 
+END $$
+DELIMITER ;
+
+DELIMITER $$
 CREATE PROCEDURE fill_users (in nbr int)
 BEGIN 
 	DECLARE v1 INT DEFAULT 0;
