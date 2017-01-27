@@ -52,3 +52,4 @@ Inscriptions.srz
 /build/
 
 nbproject/project.properties
+src/data/hibernate/database.cfg.xml

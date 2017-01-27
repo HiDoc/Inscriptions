@@ -41,4 +41,7 @@ CREATE TABLE participer (
     FOREIGN KEY (co_id)
         REFERENCES competition (id_co)
 );
-insert into users values (default, default, 'hello@mail', 'salut');
+use m2ljava;
+select * from candidat;
+
+grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';
