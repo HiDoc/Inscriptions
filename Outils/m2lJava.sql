@@ -10,7 +10,8 @@ CREATE TABLE users (
     id_us INT PRIMARY KEY AUTO_INCREMENT,
     niveau INT DEFAULT 0,
     mail VARCHAR(128),
-    prenom VARCHAR(128)
+    prenom VARCHAR(128),
+    Foreign key (id_us) references candidat(id_ca)
 );
 
 CREATE TABLE competition (

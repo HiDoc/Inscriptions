@@ -48,7 +48,7 @@ public class hibernate {
  private static Session getSession() throws HibernateException
  {
   Configuration configuration = new Configuration()
-    .configure("hibernate/hibernatePremierExemple/hibernatePremierExemple.cfg.xml");
+    .configure("data/hibernate/database.cfg.xml");
   ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
     .applySettings(configuration.getProperties()).build();
   SessionFactory sessionFactory = configuration
