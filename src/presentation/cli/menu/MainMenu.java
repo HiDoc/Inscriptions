@@ -1,9 +1,13 @@
 package presentation.cli.menu;
 
+import java.util.Scanner;
+
 import application.inscriptions.Inscriptions;
 import utilitaires.ligneDeCommande.Menu;
 
 public class MainMenu {	
+	
+	static Scanner scanner = new Scanner(System.in);
 	
 	static Inscriptions inscriptions;
 	

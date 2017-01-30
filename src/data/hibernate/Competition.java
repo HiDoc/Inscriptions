@@ -5,6 +5,7 @@
  */
 package data.hibernate;
 
+import java.awt.List;
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Column;
@@ -14,13 +15,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 /**
  *
  * @author Flo
  */
 @Entity
 @Table(name = "competition")
-class Competition implements Serializable {
+public class Competition implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,6 +65,13 @@ class Competition implements Serializable {
     protected boolean getEnEquipe(){
         return this.enEquipe;
     }
+	public static List getAll()
+	{
+		Session s = hibernate.getSession();
+		List list = (List) s.createQuery("select a from competition").list();
+		return list;
+	}
+	
     /*
      Setters
     */

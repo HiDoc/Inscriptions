@@ -24,7 +24,7 @@ public class Candidat implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_ca")
-    private int id_ca;
+    public int id_ca;
 
     @Column(name = "nom")
     private String nom;

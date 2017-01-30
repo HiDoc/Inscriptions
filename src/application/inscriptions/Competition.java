@@ -1,10 +1,17 @@
 package application.inscriptions;
 
+import java.awt.List;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.TreeSet;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import data.hibernate.hibernate;
 
 /**
  * Représente une compétition, c'est-à-dire un ensemble de candidats 
@@ -162,6 +169,7 @@ public class Competition implements Comparable<Competition>, Serializable
 		inscriptions.remove(this);
 	}
 	
+
 	@Override
 	public int compareTo(Competition o)
 	{

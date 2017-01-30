@@ -6,10 +6,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Collections;
 import java.time.LocalDate;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import data.hibernate.*;
 
 
 /**
@@ -231,6 +237,16 @@ public class Inscriptions implements Serializable
 			} 
 			catch (IOException e){}
 		}
+	}
+	
+	public static void makeCompetition(String name, Calendar date, int duree, boolean team)
+	{
+		data.hibernate.Competition compet = new data.hibernate.Competition(name,date,duree,team);
+		Session s = hibernate.getSession();
+		Transaction t = s.beginTransaction();
+		s.persist(compet);
+        t.commit();
+        s.close();	
 	}
 	
 	@Override
