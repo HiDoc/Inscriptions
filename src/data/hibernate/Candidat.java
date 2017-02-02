@@ -42,7 +42,7 @@ public class Candidat implements Serializable {
     @JoinTable(name = "appartenir", joinColumns = { @JoinColumn(name = "id_ca") }, inverseJoinColumns = { @JoinColumn(name = "id_user") })
     private final Set<Competition> competition = new HashSet<>(0);
     public Set<Competition> getCompetition() {
-            return this.competition;
+            return this.competition; 
     }
     
     /**

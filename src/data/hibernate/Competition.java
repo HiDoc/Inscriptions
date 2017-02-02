@@ -51,7 +51,7 @@ public class Competition implements Serializable {
     private final Set<Candidat> candidats = new HashSet<>(0);
     public Set<Candidat> getCandidats() {
             return this.candidats;
-    }
+    } 
     
     public Competition(String nom, Calendar date_d, int duree, boolean enEquipe) {
         this.nom = nom;
