@@ -8,6 +8,7 @@ import java.util.Date;
 import presentation.cli.menu.MainMenu;
 
 public class Main {
+	
 	public static Calendar parseDate (String strDate)
 	{
 		Date date = new Date();
