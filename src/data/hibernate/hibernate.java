@@ -22,19 +22,41 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class hibernate {
 
+    public static Session getSession() throws HibernateException {
+        Configuration configuration = new Configuration()
+                .configure("data/hibernate/database.cfg.xml");
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                .applySettings(configuration.getProperties()).build();
+        SessionFactory sessionFactory = configuration
+                .buildSessionFactory(serviceRegistry);
+        return sessionFactory.openSession();
+    }
    
-     
+    
+    private static SessionFactory factory;    
+   static  {
+        try {
+            factory = new Configuration().configure("data/hibernate/database.cfg.xml").buildSessionFactory();
+        } catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+
+    }
+
     
     public static void main(String[] args) {
         
-    
+        Session session =  factory.openSession();
       
-       ManageCandidat test = new ManageCandidat();
-       test.DropCandidat(12);
+       Candidat test = new Candidat();
+       test.SetNom(21,"pute", session);
        
        
        
         
     }
+    
+    
 
 }
