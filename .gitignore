@@ -54,3 +54,5 @@ Inscriptions.srz
 nbproject/project.properties
 src/data/hibernate/database.cfg.xml
 src/data/hibernate/database.cfg.xml
+nbproject/private/private.properties
+nbproject/private/private.xml
