@@ -8,15 +8,18 @@ package data.hibernate;
 import java.awt.List;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
 
 /**
  *
@@ -42,7 +45,14 @@ public class Competition implements Serializable {
 
     @Column(name = "enEquipe")
     private boolean enEquipe;
-
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "appartenir", joinColumns = { @JoinColumn(name = "id_co") }, inverseJoinColumns = { @JoinColumn(name = "id_competition") })
+    private final Set<Candidat> candidats = new HashSet<>(0);
+    public Set<Candidat> getCandidats() {
+            return this.candidats;
+    } 
+    
     public Competition(String nom, Calendar date_d, int duree, boolean enEquipe) {
         this.nom = nom;
         this.date = date_d;
@@ -65,13 +75,7 @@ public class Competition implements Serializable {
     protected boolean getEnEquipe(){
         return this.enEquipe;
     }
-	public static List getAll()
-	{
-		Session s = hibernate.getSession();
-		List list = (List) s.createQuery("select a from competition").list();
-		return list;
-	}
-	
+    
     /*
      Setters
     */
