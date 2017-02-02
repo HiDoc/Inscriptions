@@ -59,3 +59,8 @@ nbproject/private/private.xml
 *.properties
 nbproject/private/private.xml
 *.properties
+*.properties
+nbproject/private/private.xml
+nbproject/private/private.properties
+nbproject/project.properties
+src/data/hibernate/hibernate.java
