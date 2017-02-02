@@ -15,8 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.Session;
-
 /**
  *
  * @author Flo
@@ -64,13 +62,7 @@ public class Competition implements Serializable {
     protected boolean getEnEquipe(){
         return this.enEquipe;
     }
-    /*public static List getAll()
-    {
-            Session s = hibernate.getSession();
-            List list = (List) s.createQuery("select * from competition").list();
-            return list;
-    }*/
-	
+    
     /*
      Setters
     */
