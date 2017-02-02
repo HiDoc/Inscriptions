@@ -44,11 +44,11 @@ public class ManageCandidat {
        
         Session session = factory.openSession();
         Transaction tx = null;
-        Integer employeeID = null;
+        Integer id = null;
         try {
             tx = session.beginTransaction();
             Candidat candidat = new Candidat(nom);
-            employeeID = (Integer) session.save(candidat);
+            id = (Integer) session.save(candidat);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -58,7 +58,7 @@ public class ManageCandidat {
         } finally {
             session.close();
         }
-        return employeeID;
+        return id;
     }
 
     public void SetNom(int id, String nom) {
@@ -80,6 +80,23 @@ public class ManageCandidat {
             session.close();
         }
     }
+    
+    public void DropCandidat(Integer id){
+      Session session = factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Candidat candidat
+                    = (Candidat) session.load(Candidat.class, id);
+         session.delete(candidat); 
+         tx.commit();
+      }catch (HibernateException e) {
+         if (tx!=null) tx.rollback();
+         e.printStackTrace(); 
+      }finally {
+         session.close(); 
+      }
+   }
     
     
 }

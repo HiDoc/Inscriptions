@@ -17,7 +17,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-@PrimaryKeyJoinColumn(name = "id_us")
+@PrimaryKeyJoinColumn(name = "id_us", referencedColumnName="id_ca")
+
 public class Users extends Candidat implements Serializable {
 
     

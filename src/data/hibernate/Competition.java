@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -27,6 +28,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "competition")
+@PrimaryKeyJoinColumn(name = "id_co",referencedColumnName = "id_ca")
+
 public class Competition implements Serializable {
 
     @Id

@@ -29,8 +29,10 @@ public class hibernate {
         
     
       
-       ManageCandidat updateC = new ManageCandidat();
-       updateC.SetNom(10, "pute");
+       ManageCandidat test = new ManageCandidat();
+       test.DropCandidat(12);
+       
+       
        
         
     }
