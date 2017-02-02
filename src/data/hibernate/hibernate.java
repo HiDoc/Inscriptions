@@ -34,22 +34,22 @@ public class hibernate {
      
     
     public static void main(String[] args) {
-        try {
-        	
+        try {	
             Session s = getSession();
 //            List l = (List) Competition.getAll();
-            s.createQuery("select a from competition where id_co = 1");
-//            Candidat joffrey = new Candidat("Dark Vador");
+            Candidat joffrey = new Candidat("Dark Vador");
 //            Competition compet = new Competition("Beach voley",Calendar.getInstance(), 15, false);
-//            Transaction t = s.beginTransaction();
-//            s.persist(joffrey);
+            Transaction t = s.beginTransaction();
+            s.persist(joffrey);
 //            s.persist(compet);
-//            t.commit();
+            t.commit();
             s.close();
         } catch (HibernateException ex) {
             throw new RuntimeException("Probleme de configuration : "
                     + ex.getMessage(), ex);
         }
-        
+        finally {
+            
+        }
     }
 }
