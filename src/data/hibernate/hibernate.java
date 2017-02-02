@@ -34,25 +34,13 @@ public class hibernate {
      
     
     public static void main(String[] args) {
-        try {	
-            Session s = getSession();
-//            List l = (List) Competition.getAll();
-            Candidat joffrey = new Candidat("Dark Vador");
-//            Competition compet = new Competition("Beach voley",Calendar.getInstance(), 15, false);
-            Transaction t = s.beginTransaction();
-            s.persist(joffrey);
-//            s.persist(compet);
-            t.commit();
-            s.close();
-        } catch (HibernateException ex) {
-            throw new RuntimeException("Probleme de configuration : "
-                    + ex.getMessage(), ex);
-        }
-        finally {
-            
-        }
+        
+       ManageCandidat traitement = new ManageCandidat(); 
+       traitement.addCandidat("vador");
+       
+       
+       
+        
     }
+
 }
-
-
-

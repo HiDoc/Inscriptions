@@ -36,4 +36,10 @@ public class Candidat implements Serializable {
     public Candidat(String nom) {
         this.nom = nom;
     }
+    
+    // Getter 
+    
+    public String GetNom(){
+        return this.nom ;
+    }
 }
