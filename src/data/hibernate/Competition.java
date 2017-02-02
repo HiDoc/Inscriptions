@@ -49,6 +49,9 @@ public class Competition implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "appartenir", joinColumns = { @JoinColumn(name = "id_co") }, inverseJoinColumns = { @JoinColumn(name = "id_competition") })
     private final Set<Candidat> candidats = new HashSet<>(0);
+
+    public Competition() {
+    }
     public Set<Candidat> getCandidats() {
             return this.candidats;
     } 

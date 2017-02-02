@@ -17,11 +17,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-@PrimaryKeyJoinColumn(name = "id_co")
+@PrimaryKeyJoinColumn(name = "id_us")
 public class Users extends Candidat implements Serializable {
 
-    @Column(name = "id_co")
-    private int id_co;
+    
+    
+   
 
     @Column(name = "prenom")
     private String prenom;
@@ -31,6 +32,9 @@ public class Users extends Candidat implements Serializable {
 
     @Column(name = "mail")
     private String mail;
+
+    public Users() {
+    }
 
     public Users(String prenom, int niveau, String mail) {
         this.prenom = prenom;

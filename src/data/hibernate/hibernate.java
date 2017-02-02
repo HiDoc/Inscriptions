@@ -22,23 +22,15 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class hibernate {
 
-    public static Session getSession() throws HibernateException {
-        Configuration configuration = new Configuration()
-                .configure("data/hibernate/database.cfg.xml");
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties()).build();
-        SessionFactory sessionFactory = configuration
-                .buildSessionFactory(serviceRegistry);
-        return sessionFactory.openSession();
-    }
+   
      
     
     public static void main(String[] args) {
         
-       ManageCandidat traitement = new ManageCandidat(); 
-       traitement.addCandidat("vador");
-       
-       
+    
+      
+       ManageCandidat updateC = new ManageCandidat();
+       updateC.SetNom(10, "pute");
        
         
     }
