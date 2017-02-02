@@ -16,6 +16,7 @@
  
         <mapping class="data.hibernate.Candidat" />
         <mapping class="data.hibernate.Competition"/>
+        <mapping class="data.hibernate.Users"/>
          
     </session-factory>
 </hibernate-configuration>
