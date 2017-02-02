@@ -29,11 +29,6 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		//System.out.println("hi");
-		//Scanner scanner = new Scanner(System.in);
-		//parseDate(scanner.next());
-		// TODO Auto-generated method stub
-
 		MainMenu mainMenu = new MainMenu(Inscriptions.getInscriptions());
 	}
 

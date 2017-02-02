@@ -62,29 +62,6 @@ public class MenuCompetition {
 		compets.add("voley");
 		compets.add("foot");
 		compets.add("hand");
-		
-//		Liste<String> menu = new Liste<String>("Liste des Competitions","l", new ActionListe<String>()
-//		{
-//			// Retourne la liste des personnes formant le menu
-//			public List<String> getListe()
-//			{
-//				return compets;
-//			}
-//
-//			// Exécutée automatiquement lorsqu'un élément de liste est sélectionné
-//			public void elementSelectionne(int indice, String element)
-//			{
-//				System.out.println("Vous avez sélectionné "+ element+ ", qui a l'indice " + indice);
-//				
-//			}
-//
-//			// Retourne l'option que l'on souhaite créer, null si l'on préfère que l'option soit 
-//			// crée automatiquement
-//			public Menu getOption(final String element)
-//			{
-//				return null;
-//			}
-//		});
 		Liste<String> menu = getListeCompet(compets);
 		menu.ajouteRevenir("r");
 		return menu;
@@ -115,10 +92,9 @@ public class MenuCompetition {
 			{
 
 				Menu menuCompet = new Menu("Option pour "+compet, null);
-				menuCompet.ajoute(getAddUserOption(compet));
 				menuCompet.ajoute(getEditCompetOption(compet));
-				menuCompet.ajoute(getShowUsersOption(compet));
 				menuCompet.ajoute(getDeleteCompetOption(compets, compet));
+				menuCompet.ajoute(getShowCandidatsOption(compet));
 //				menuCompet.setRetourAuto(true);
 				menuCompet.ajouteRevenir("r");
 				return menuCompet;
@@ -161,33 +137,84 @@ public class MenuCompetition {
 		};
 	}
 	
-	private static Option getAddUserOption(String compet)
+
+	private static Option getShowCandidatsOption(String compet)
 	{
-		return new Option("Ajouter un candidat à la compétition","a",getAddUserAction(compet));
+		ArrayList<String> candidats = new ArrayList<>();
+		candidats.add("Joffrey");
+		candidats.add("Nick Fury");
+		candidats.add("Batman");
+		Liste<String> menu = getListeCandidats(candidats);
+		menu.ajouteRevenir("r");
+		menu.setRetourAuto(false);
+		return menu;
+		
 	}
 	
-	private static Action getAddUserAction(String compet)
+	private static Liste<String> getListeCandidats(final List<String> candidats)
 	{
-		return new Action()
+		Liste<String> liste = new Liste<>("Afficher les candidats", "a", 
+				getActionListeCandidats(candidats));
+		return liste;
+	}
+	
+	private static ActionListe<String> getActionListeCandidats(final List<String> candidats)
+	{
+		return new ActionListe<String>()
 		{
-			public void optionSelectionnee()
+			// Retourne les éléments affichés dans le menu.
+			public List<String> getListe()
 			{
-				System.out.println("point d'arrivée : ajouter un utilisateur à une compétition");
+				return candidats;
+			}
+
+			// Vide, car on souhaite créer manuellement chaque option.
+			public void elementSelectionne(int indice, String element){}
+
+			// Retourne l'option associée à element.
+			public Option getOption(final String candidat)
+			{
+
+				Menu menuCompet = new Menu("Option pour "+candidat, null);
+				menuCompet.ajoute(getAddCandidatOption(candidat));
+				menuCompet.ajoute(getDeleteCandidatOption(candidats, candidat));
+				menuCompet.setRetourAuto(true);
+				menuCompet.ajouteRevenir("r");
+				return menuCompet;
+						
 			}
 		};
 	}
-	private static Option getShowUsersOption(String compet)
+	
+	private static Option getAddCandidatOption(String candidat)
 	{
-		return new Option("Afficher les candidats d'une compétition", "f", getShowUsersAction(compet));
+		return new Option("Ajouter le candidat à la compétition","a",getAddCandidatAction());
 	}
 	
-	private static Action getShowUsersAction(String compet)
+	private static Action getAddCandidatAction()
 	{
 		return new Action()
 		{
 			public void optionSelectionnee()
 			{
-				System.out.println("point d'arrivée: afficher les candidats d'une compétition");
+				System.out.println("Point d'arrivée : Ajouter candidat à une compétition");
+			}
+		};
+	}
+	
+	private static Option getDeleteCandidatOption(List<String> candidats, String candidat)
+	{
+		return new Option("Enlever le candidat de la compétition","e",getDeleteCandidatAction(candidats, candidat));
+	}
+	
+	private static Action getDeleteCandidatAction(List<String> candidats, String candidat)
+	{
+		return new Action()
+		{
+			public void optionSelectionnee()
+			{
+				candidats.remove(candidat);
+				System.out.println("Point d'arrivée : enlever un candidat d'une compétition");
 			}
 		};
 	}
