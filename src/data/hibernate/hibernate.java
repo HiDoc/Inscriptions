@@ -50,7 +50,9 @@ public class hibernate {
         Session session =  factory.openSession();
       
        Candidat test = new Candidat();
-       test.SetNom(21,"pute", session);
+       test.DropCandidat(21, session);
+       
+       
        
        
        
