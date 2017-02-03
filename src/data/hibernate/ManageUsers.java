@@ -5,7 +5,9 @@
  */
 package data.hibernate;
 
+import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -29,7 +31,11 @@ public class ManageUsers extends ManageCandidat {
 
     }
 
-     public void DropUser(Integer id){
+    /**
+     * Supprime un utilisateur
+     * @param id
+     */
+    public void DropUser(Integer id){
       Session session = factory.openSession();
         Transaction tx = null;
         try {
@@ -44,4 +50,16 @@ public class ManageUsers extends ManageCandidat {
       }finally {
          session.close(); 
       }
-}}
+    }
+     
+    /**
+     * Renvoie la liste de tout les utilisateurs
+     * @return
+     */
+    public List<Users> getUsers(){
+        Session session = factory.openSession();
+        Query query = session.createQuery("from Users"); 
+        List<Users> list = query.list(); 
+        return list;
+   }
+}

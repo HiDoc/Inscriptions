@@ -6,19 +6,11 @@
 package data.hibernate;
 
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 import org.hibernate.Query;
 
 /**
@@ -26,10 +18,12 @@ import org.hibernate.Query;
  * @author Armand
  */
 public class ManageCandidat {
-
-    private static SessionFactory factory;
     
-   static  {
+    
+    
+    private static SessionFactory factory;
+
+    static {
         try {
             factory = new Configuration().configure("data/hibernate/database.cfg.xml").buildSessionFactory();
         } catch (Throwable ex) {
@@ -39,9 +33,13 @@ public class ManageCandidat {
 
     }
 
+    /**
+     * Ajouter un candidat
+     * @param nom
+     * @return id 
+     */
     public Integer AddCandidat(String nom) {
 
-       
         Session session = factory.openSession();
         Transaction tx = null;
         Integer id = null;
@@ -54,13 +52,17 @@ public class ManageCandidat {
             if (tx != null) {
                 tx.rollback();
             }
-            e.printStackTrace();
         } finally {
             session.close();
         }
         return id;
     }
 
+    /**
+     * Update le nom du candidat
+     * @param id
+     * @param nom
+     */
     public void SetNom(int id, String nom) {
         Session session = factory.openSession();
         Transaction tx = null;
@@ -75,28 +77,42 @@ public class ManageCandidat {
             if (tx != null) {
                 tx.rollback();
             }
-            e.printStackTrace();
         } finally {
             session.close();
         }
     }
-    
-    public void DropCandidat(Integer id){
-      Session session = factory.openSession();
+
+    /**
+     * Supprime un candidat
+     * @param id
+     */
+    public void DropCandidat(Integer id) {
+        Session session = factory.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
             Candidat candidat
                     = (Candidat) session.load(Candidat.class, id);
-         session.delete(candidat); 
-         tx.commit();
-      }catch (HibernateException e) {
-         if (tx!=null) tx.rollback();
-         e.printStackTrace(); 
-      }finally {
-         session.close(); 
-      }
-   }
-    
-    
+            session.delete(candidat);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Fait une liste de tout les candidats
+     * @return list<>
+     */
+    public List<Candidat> getCandidats() {
+        Session session = factory.openSession();
+        Query query = session.createQuery("from Candidat");
+        List<Candidat> list = query.list();
+        return list;
+    }
+
 }
