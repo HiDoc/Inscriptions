@@ -239,15 +239,15 @@ public class Inscriptions implements Serializable
 		}
 	}
 	
-	public static void makeCompetition(String name, Calendar date, int duree, boolean team)
-	{
-		data.hibernate.Competition compet = new data.hibernate.Competition(name,date,duree,team);
-		Session s = hibernate.getSession();
-		Transaction t = s.beginTransaction();
-		s.persist(compet);
-        t.commit();
-        s.close();	
-	}
+//	public static void makeCompetition(String name, Calendar date, int duree, boolean team)
+//	{
+//		data.hibernate.Competition compet = new data.hibernate.Competition(name,date,duree,team);
+//		Session s = hibernate.getSession();
+//		Transaction t = s.beginTransaction();
+//		s.persist(compet);
+//        t.commit();
+//        s.close();	
+//	}
 	
 	@Override
 	public String toString()

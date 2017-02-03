@@ -48,7 +48,7 @@ public class MenuCompetition {
 				System.out.println("En équipe(o/n) :");
 				String team = MainMenu.scanner.next();
 				boolean boolTeam = (team) == "y" ? true : false;
-				Inscriptions.makeCompetition(name, date, duree, boolTeam);
+				//Inscriptions.makeCompetition(name, date, duree, boolTeam);
 			}
 		};
 	}
