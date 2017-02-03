@@ -68,5 +68,9 @@ public class Users extends Candidat implements Serializable {
     protected void setMail( String mail ){
         this.mail = mail;
     }
+    @Override
+    public String toString(){
+        return this.GetNom() + ' ' + this.prenom + "\n Adresse mail : " + this.mail; 
+    }
 
 }

@@ -53,7 +53,7 @@ public class ManageUsers extends ManageCandidat {
     }
      
     /**
-     * Renvoie la liste de tout les utilisateurs
+     * Renvoi la liste de tout les utilisateurs
      * @return
      */
     public List<Users> getUsers(){
@@ -62,4 +62,23 @@ public class ManageUsers extends ManageCandidat {
         List<Users> list = query.list(); 
         return list;
    }
+    /**
+     * Afficher les utilisateurs
+     */
+    public void showUsers(){
+        List<Users> list = getUsers();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).toString());
+        }
+    }
+
+    /**
+     * Afficher les utilisateurs
+     * @param list
+     */
+    public void showUsers(List<Users> list){
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).toString());
+        }
+    }
 }

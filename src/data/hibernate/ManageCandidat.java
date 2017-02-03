@@ -105,14 +105,34 @@ public class ManageCandidat {
     }
 
     /**
-     * Fait une liste de tout les candidats
-     * @return list<>
+     * Fait une liste de tout les candidats                       
+    * @return list<>
      */
     public List<Candidat> getCandidats() {
         Session session = factory.openSession();
         Query query = session.createQuery("from Candidat");
         List<Candidat> list = query.list();
         return list;
+    }
+
+    /**
+     * Afficher les candidats
+     */
+    public void showCandidats(){
+        List<Candidat> list = getCandidats();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).toString());
+        }
+    }
+
+    /**
+     * Afficher les candidats
+     * @param list
+     */
+    public void showCandidats(List<Candidat> list){
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).toString());
+        }
     }
 
 }

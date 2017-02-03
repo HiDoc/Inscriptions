@@ -50,7 +50,7 @@ public class Competition implements Serializable {
     private boolean enEquipe;
     
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "appartenir", joinColumns = { @JoinColumn(name = "id_co") }, inverseJoinColumns = { @JoinColumn(name = "id_competition") })
+    @JoinTable(name = "participer", joinColumns = { @JoinColumn(name = "id_co") }, inverseJoinColumns = { @JoinColumn(name = "id_competition") })
     private final Set<Candidat> candidats = new HashSet<>(0);
     public Set<Candidat> getCandidats() {
             return this.candidats;
@@ -95,5 +95,11 @@ public class Competition implements Serializable {
     }
     protected void setEnEquipe( boolean enEquipe){
         this.enEquipe = enEquipe;
+    }
+    
+    
+    @Override
+    public String toString(){
+        return "Compétion  " + this.nom + " commençant le"  + this.date + " d'une durée de " + this.duree;
     }
 }
