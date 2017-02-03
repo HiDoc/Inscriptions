@@ -248,7 +248,7 @@ public class Inscriptions implements Serializable
 //        t.commit();
 //        s.close();	
 //	}
-	
+//	
 	@Override
 	public String toString()
 	{

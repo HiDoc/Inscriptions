@@ -20,6 +20,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+
 
 /**
  *
@@ -83,6 +94,63 @@ public class Candidat implements Serializable {
         return this.nom;
     }
     
+    public Integer AddCandidat(String nom, Session factory) {
+
+       
+        Session session = factory;
+        Transaction tx = null;
+        Integer id = null;
+        try {
+            tx = session.beginTransaction();
+            Candidat candidat = new Candidat(nom);
+            id = (Integer) session.save(candidat);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return id;
+    }
+
+    public void SetNom(int id, String nom, Session factory) {
+        Session session = factory;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Candidat candidat
+                    = (Candidat) session.load(Candidat.class, id);
+            candidat.setNom(nom);
+            session.update(candidat);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
     
+    public void DropCandidat(Integer id, Session factory){
+      Session session = factory;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Candidat candidat
+                    = (Candidat) session.load(Candidat.class, id);
+         session.delete(candidat); 
+         tx.commit();
+      }catch (HibernateException e) {
+         if (tx!=null) tx.rollback();
+         e.printStackTrace(); 
+      }finally {
+         session.close(); 
+      }
+   }
 
 }
