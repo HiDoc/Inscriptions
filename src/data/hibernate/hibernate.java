@@ -22,7 +22,7 @@ import org.hibernate.service.ServiceRegistry;
 
 
 public class hibernate {
-
+/*
     public static Session getSession() throws HibernateException {
         Configuration configuration = new Configuration()
                 .configure("data/hibernate/database.cfg.xml");
@@ -36,7 +36,7 @@ public class hibernate {
     
     private static SessionFactory factory;    
    static  {
-        try {
+       try {
             factory = new Configuration().configure("data/hibernate/database.cfg.xml").buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
@@ -44,14 +44,16 @@ public class hibernate {
         }
 
     }
-
+*/
     
     public static void main(String[] args) {
-        
-        Session session =  factory.openSession();
+       
+        passerelle passerelle = new passerelle();
+       passerelle.open();
       
-       Candidat test = new Candidat();
-       test.DropCandidat(21, session);
+       Candidat test = new Candidat("jean");
+       
+       passerelle.save(test);
        
        
        
