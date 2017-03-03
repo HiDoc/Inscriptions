@@ -30,8 +30,10 @@ import javax.persistence.Temporal;
 @Table(name = "competition")
 @PrimaryKeyJoinColumn(name = "id_co", referencedColumnName = "id_ca")
 
-public class Competition implements Serializable {
+public class Competition implements Serializable { 
 
+    
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_co")
