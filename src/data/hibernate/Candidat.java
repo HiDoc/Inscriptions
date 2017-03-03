@@ -20,17 +20,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-
-
 
 /**
  *
@@ -42,20 +35,32 @@ import org.hibernate.cfg.Configuration;
 public class Candidat implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)    
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_ca")
     protected int id_ca;
 
     @Column(name = "nom")
     private String nom;
-    
+
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "appartenir", joinColumns = { @JoinColumn(name = "id_ca") }, inverseJoinColumns = { @JoinColumn(name = "id_user") })
+    @JoinTable(name = "participer", joinColumns = {
+        @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_user")})
     private final Set<Competition> competition = new HashSet<>(0);
+
     public Set<Competition> getCompetition() {
-            return this.competition; 
+        return this.competition;
     }
-    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "appartenir", joinColumns = {
+        @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_user")})
+    private final Set<Candidat> equipe = new HashSet<>(0);
+
+    public Set<Candidat> getEquipe() {
+        return this.equipe;
+    }
+
     /**
      * Constructeur par défault
      */
@@ -65,21 +70,21 @@ public class Candidat implements Serializable {
 
     /**
      * Constructeur
+     *
      * @param nom
      */
     public Candidat(String nom) {
         this.nom = nom;
     }
-    
 
     // Getter 
-    
-    public String GetNom(){
-        return this.nom ;
+    public String GetNom() {
+        return this.nom;
     }
 
     /**
      * Setter
+     *
      * @param nom
      */
     public void setNom(String nom) {
@@ -88,15 +93,22 @@ public class Candidat implements Serializable {
 
     /**
      * Getter
+     *
      * @return nom
      */
-    public String getNom(){
+    public String getNom() {
         return this.nom;
     }
-    
+
+    /**
+     * Ajouter un candidat
+     *
+     * @param nom
+     * @param factory
+     * @return
+     */
     public Integer AddCandidat(String nom, Session factory) {
 
-       
         Session session = factory;
         Transaction tx = null;
         Integer id = null;
@@ -116,6 +128,13 @@ public class Candidat implements Serializable {
         return id;
     }
 
+    /**
+     * Update le nom du candidat
+     *
+     * @param id
+     * @param nom
+     * @param factory
+     */
     public void SetNom(int id, String nom, Session factory) {
         Session session = factory;
         Transaction tx = null;
@@ -135,22 +154,30 @@ public class Candidat implements Serializable {
             session.close();
         }
     }
-    
-    public void DropCandidat(Integer id, Session factory){
-      Session session = factory;
+
+    /**
+     * Enlève un candidat
+     *
+     * @param id
+     * @param factory
+     */
+    public void DropCandidat(Integer id, Session factory) {
+        Session session = factory;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
             Candidat candidat
                     = (Candidat) session.load(Candidat.class, id);
-         session.delete(candidat); 
-         tx.commit();
-      }catch (HibernateException e) {
-         if (tx!=null) tx.rollback();
-         e.printStackTrace(); 
-      }finally {
-         session.close(); 
-      }
-   }
+            session.delete(candidat);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
 
 }

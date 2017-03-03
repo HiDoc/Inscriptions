@@ -118,7 +118,6 @@ public class MenuTeam {
 			@Override
 			public void elementSelectionne(int indice, String element) {}
 
-			@Override
 			public Option getOption(String compet) {
 				// TODO Auto-generated method stub
 				return new Option(compet, null, new Action()

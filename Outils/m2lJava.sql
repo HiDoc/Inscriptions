@@ -7,7 +7,7 @@ CREATE TABLE candidat (
 );
 
 CREATE TABLE users (
-    id_us INT PRIMARY KEY AUTO_INCREMENT,
+    id_us INT PRIMARY KEY,
     niveau INT DEFAULT 0,
     mail VARCHAR(128),
     prenom VARCHAR(128),

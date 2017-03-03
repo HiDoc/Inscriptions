@@ -28,7 +28,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "competition")
-@PrimaryKeyJoinColumn(name = "id_co",referencedColumnName = "id_ca")
+@PrimaryKeyJoinColumn(name = "id_co", referencedColumnName = "id_ca")
 
 public class Competition implements Serializable {
 
@@ -48,58 +48,67 @@ public class Competition implements Serializable {
 
     @Column(name = "enEquipe")
     private boolean enEquipe;
-    
+
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "participer", joinColumns = { @JoinColumn(name = "id_co") }, inverseJoinColumns = { @JoinColumn(name = "id_competition") })
+    @JoinTable(name = "participer", joinColumns = {
+        @JoinColumn(name = "id_co")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_competition")})
     private final Set<Candidat> candidats = new HashSet<>(0);
+
     public Set<Candidat> getCandidats() {
-            return this.candidats;
-    } 
-    
+        return this.candidats;
+    }
+
     public Competition() {
     }
+
     public Competition(String nom, Calendar date_d, int duree, boolean enEquipe) {
         this.nom = nom;
         this.date = date_d;
         this.duree = duree;
         this.enEquipe = enEquipe;
     }
-    
+
     /*
      Getters
-    */
-    protected String getNom(){
+     */
+    protected String getNom() {
         return this.nom;
     }
-    protected Calendar getDate(){
+
+    protected Calendar getDate() {
         return this.date;
     }
-    protected int getDuree(){
+
+    protected int getDuree() {
         return this.duree;
     }
-    protected boolean getEnEquipe(){
+
+    protected boolean getEnEquipe() {
         return this.enEquipe;
     }
-    
+
     /*
      Setters
-    */
-    protected void setNom( String nom ){
+     */
+    protected void setNom(String nom) {
         this.nom = nom;
     }
-    protected void setDate( Calendar date ){
+
+    protected void setDate(Calendar date) {
         this.date = date;
     }
-    protected void setDuree( int duree ){
+
+    protected void setDuree(int duree) {
         this.duree = duree;
     }
-    protected void setEnEquipe( boolean enEquipe){
+
+    protected void setEnEquipe(boolean enEquipe) {
         this.enEquipe = enEquipe;
     }
-    
-    
+
     @Override
-    public String toString(){
-        return "Compétion  " + this.nom + " commençant le"  + this.date + " d'une durée de " + this.duree;
+    public String toString() {
+        return "Compétion  " + this.nom + " commençant le" + this.date + " d'une durée de " + this.duree;
     }
 }

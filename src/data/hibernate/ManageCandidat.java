@@ -18,9 +18,7 @@ import org.hibernate.Query;
  * @author Armand
  */
 public class ManageCandidat {
-    
-    
-    
+
     private static SessionFactory factory;
 
     static {
@@ -35,8 +33,9 @@ public class ManageCandidat {
 
     /**
      * Ajouter un candidat
+     *
      * @param nom
-     * @return id 
+     * @return id
      */
     public Integer AddCandidat(String nom) {
 
@@ -60,6 +59,7 @@ public class ManageCandidat {
 
     /**
      * Update le nom du candidat
+     *
      * @param id
      * @param nom
      */
@@ -84,6 +84,7 @@ public class ManageCandidat {
 
     /**
      * Supprime un candidat
+     *
      * @param id
      */
     public void DropCandidat(Integer id) {
@@ -105,8 +106,9 @@ public class ManageCandidat {
     }
 
     /**
-     * Fait une liste de tout les candidats                       
-    * @return list<>
+     * Fait une liste de tout les candidats
+     *
+     * @return list<>
      */
     public List<Candidat> getCandidats() {
         Session session = factory.openSession();
@@ -118,7 +120,7 @@ public class ManageCandidat {
     /**
      * Afficher les candidats
      */
-    public void showCandidats(){
+    public void showCandidats() {
         List<Candidat> list = getCandidats();
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i).toString());
@@ -127,9 +129,10 @@ public class ManageCandidat {
 
     /**
      * Afficher les candidats
+     *
      * @param list
      */
-    public void showCandidats(List<Candidat> list){
+    public void showCandidats(List<Candidat> list) {
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i).toString());
         }
