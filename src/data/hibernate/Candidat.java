@@ -19,6 +19,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.HibernateException;
@@ -26,7 +27,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
- *
+ * Couche accès aux données de la classe Candidat
  * @author Flo
  */
 @Entity
@@ -67,7 +68,6 @@ public class Candidat implements Serializable {
 
     /**
      * Constructeur
-     *
      * @param nom
      */
     public Candidat(String nom) {
@@ -130,7 +130,6 @@ public class Candidat implements Serializable {
             if (tx != null) {
                 tx.rollback();
             }
-            e.printStackTrace();
         } finally {
             session.close();
         }
