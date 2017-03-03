@@ -31,12 +31,15 @@ import org.hibernate.Transaction;
  */
 @Entity
 @Table(name = "candidat")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Candidat implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_ca")
+    @OneToOne
+    @JoinColumn(
+        name="id_us", unique=true, nullable=false, updatable=false)
     protected int id_ca;
 
     @Column(name = "nom")
@@ -48,18 +51,12 @@ public class Candidat implements Serializable {
         @JoinColumn(name = "id_user")})
     private final Set<Competition> competition = new HashSet<>(0);
 
-    public Set<Competition> getCompetition() {
-        return this.competition;
-    }
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "appartenir", joinColumns = {
         @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
         @JoinColumn(name = "id_user")})
     private final Set<Candidat> equipe = new HashSet<>(0);
 
-    public Set<Candidat> getEquipe() {
-        return this.equipe;
-    }
 
     /**
      * Constructeur par défault
@@ -76,15 +73,19 @@ public class Candidat implements Serializable {
     public Candidat(String nom) {
         this.nom = nom;
     }
-
-    // Getter 
-    public String GetNom() {
+    
+    /**
+     * Getter
+    * Retourne le nom d'un Candidat
+    * @return nom
+     */
+    public String getNom() {
         return this.nom;
     }
 
     /**
      * Setter
-     *
+     * Attribue un nouveau nom au Candidat
      * @param nom
      */
     public void setNom(String nom) {
@@ -92,14 +93,22 @@ public class Candidat implements Serializable {
     }
 
     /**
-     * Getter
-     *
-     * @return nom
+     * Getter 
+     * Retourne les équipes d'un candidat
+     * @return Set<Candidat> Equipes
      */
-    public String getNom() {
-        return this.nom;
+    public Set<Candidat> getEquipe() {
+        return this.equipe;
     }
-
+    
+    /**
+     * Getter
+     * Retourne les compétitions d'un Candidat
+     * @return Set<Competition> Compétitions
+     */
+    public Set<Competition> getCompetition() {
+        return this.competition;
+    }
     /**
      * Ajouter un candidat
      *
