@@ -31,7 +31,7 @@ import org.hibernate.Transaction;
  */
 @Entity
 @Table(name = "candidat")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Candidat implements Serializable {
 
     @Id
