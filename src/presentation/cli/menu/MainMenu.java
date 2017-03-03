@@ -3,7 +3,7 @@ package presentation.cli.menu;
 import java.util.Scanner;
 
 import application.inscriptions.Inscriptions;
-import utilitaires.ligneDeCommande.Menu;
+import commandLine.*;
 
 public class MainMenu {	
 	
