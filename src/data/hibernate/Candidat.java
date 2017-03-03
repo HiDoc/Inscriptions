@@ -21,10 +21,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 /**
  * Couche accès aux données de la classe Candidat
  * @author Flo
@@ -71,16 +67,16 @@ public class Candidat implements Serializable {
     }
     
     /**
-     * Getter
-    * Retourne le nom d'un Candidat
-    * @return nom
+     * Getter de la classe Candidat
+     * Retourne le nom d'un Candidat
+     * @return nom
      */
     public String getNom() {
         return this.nom;
     }
 
     /**
-     * Setter
+     * Setter de la classe Candidat
      * Attribue un nouveau nom au Candidat
      * @param nom
      */
@@ -89,99 +85,19 @@ public class Candidat implements Serializable {
     }
 
     /**
-     * Getter 
-     * Retourne les équipes d'un candidat
-     * @return Set<Candidat> Equipes
+     * Getter de la classe Candidat
+     * @return Une liste d'équipes
      */
     public Set<Candidat> getEquipe() {
         return this.equipe;
     }
     
     /**
-     * Getter
-     * Retourne les compétitions d'un Candidat
-     * @return Set<Competition> Compétitions
+     * Getter de la classe Candidat
+     * @return Une liste de compétitions
      */
     public Set<Competition> getCompetition() {
         return this.competition;
-    }
-    /**
-     * Ajouter un candidat
-     *
-     * @param nom
-     * @param factory
-     * @return
-     */
-    public Integer AddCandidat(String nom, Session factory) {
-
-        Session session = factory;
-        Transaction tx = null;
-        Integer id = null;
-        try {
-            tx = session.beginTransaction();
-            Candidat candidat = new Candidat(nom);
-            id = (Integer) session.save(candidat);
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return id;
-    }
-
-    /**
-     * Update le nom du candidat
-     *
-     * @param id
-     * @param nom
-     * @param factory
-     */
-    public void SetNom(int id, String nom, Session factory) {
-        Session session = factory;
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Candidat candidat
-                    = (Candidat) session.load(Candidat.class, id);
-            candidat.setNom(nom);
-            session.update(candidat);
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-    }
-
-    /**
-     * Enlève un candidat
-     *
-     * @param id
-     * @param factory
-     */
-    public void DropCandidat(Integer id, Session factory) {
-        Session session = factory;
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Candidat candidat
-                    = (Candidat) session.load(Candidat.class, id);
-            session.delete(candidat);
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
     }
 
 }
