@@ -20,12 +20,16 @@ import org.hibernate.cfg.Configuration;
  *
  * @author Flo
  */
-@Entity
+@Entity 
 @Table(name = "users")
-@PrimaryKeyJoinColumn(name = "id_us", referencedColumnName = "id_ca")
 
 public class Users extends Candidat implements Serializable {
-
+    
+    @Id
+    @OneToOne(mappedBy="Candidat")
+    @Column(name = "id_us")
+    private int id_us;
+    
     @Column(name = "prenom")
     private String prenom;
 
@@ -34,7 +38,8 @@ public class Users extends Candidat implements Serializable {
 
     @Column(name = "mail")
     private String mail;
-
+    
+    @SuppressWarning("unused")
     public Users() {
     }
 
@@ -106,7 +111,6 @@ public class Users extends Candidat implements Serializable {
             if (tx != null) {
                 tx.rollback();
             }
-            e.printStackTrace();
         } finally {
             session.close();
         }

@@ -49,7 +49,6 @@ public class ManageUsers extends ManageCandidat {
             if (tx != null) {
                 tx.rollback();
             }
-            e.printStackTrace();
         } finally {
             session.close();
         }
