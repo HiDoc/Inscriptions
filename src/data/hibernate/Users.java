@@ -25,7 +25,7 @@ import org.hibernate.cfg.Configuration;
    
 public class Users extends Candidat implements Serializable {
      
-    @Column(insertable = false, updatable = false)
+    @Column(insertable = false, updatable = false, name= "id_ca")
     private int idU;
     
     @Column(name = "prenom")

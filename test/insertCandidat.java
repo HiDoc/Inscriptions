@@ -20,7 +20,7 @@ public class insertCandidat  {
     
     
     public insertCandidat() {
-        Candidat test = new Candidat("pute");
+        Candidat candidat = new Candidat("pute");
     }
     
     @BeforeClass
@@ -41,6 +41,6 @@ public class insertCandidat  {
 
    @Test 
    public void testInsert1(){
-       test.test("jean",3, "edrazed");
+      
    }
 }

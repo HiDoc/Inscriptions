@@ -72,3 +72,4 @@ nbproject/project.properties
 nbproject/project.properties
 *.properties
 *.properties
+src/data/hibernate/Users.java
