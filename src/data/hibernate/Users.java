@@ -107,34 +107,4 @@ public class Users extends Candidat implements Serializable {
         this.mail = mail;
     }
 
-    private static SessionFactory factory;
-
-    static {
-        try {
-            factory = new Configuration().configure("data/hibernate/database.cfg.xml").buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("Failed to create sessionFactory object." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-
-    }
-
-    public void DropUser(Integer id) {
-        Session session = factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Users candidat
-                    = (Users) session.load(Users.class, id);
-            session.delete(candidat);
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-        } finally {
-            session.close();
-        }
-
-    }
 }
