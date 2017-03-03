@@ -53,13 +53,13 @@ public class passerelle {
         session.close();
     }
 
-    static void delete(Object o) {
+    public static void delete(Object o) {
         Transaction tx = session.beginTransaction();
         session.delete(o);
         tx.commit();
     }
 
-    static void save(Object o) {
+    public static void save(Object o) {
         Transaction tx = session.beginTransaction();
         session.save(o);
         tx.commit();
