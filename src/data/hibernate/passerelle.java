@@ -93,5 +93,9 @@ public  class passerelle {
   return query.list().size();
  }
 
+ public static Object test(Object stock, int id ){
+      stock = (Object)session.get(Object.class, id);
+      return stock;
+ }
 }
 
