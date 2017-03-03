@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
 public class UsersTest {
     
     public UsersTest() {
+        
     }
     
     @BeforeClass
@@ -31,10 +32,12 @@ public class UsersTest {
     
     @Before
     public void setUp() {
+        passerelle.open();
     }
     
     @After
     public void tearDown() {
+        passerelle.close();
     }
 
     /**
