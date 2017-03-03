@@ -7,11 +7,7 @@ import java.util.List;
 
 import application.inscriptions.Inscriptions;
 import application.inscriptions.Main;
-import utilitaires.ligneDeCommande.Action;
-import utilitaires.ligneDeCommande.ActionListe;
-import utilitaires.ligneDeCommande.Liste;
-import utilitaires.ligneDeCommande.Menu;
-import utilitaires.ligneDeCommande.Option;
+import commandLine.*;
 
 
 public class MenuCompetition {
