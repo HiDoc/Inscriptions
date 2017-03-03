@@ -93,8 +93,8 @@ public  class passerelle {
   return query.list().size();
  }
 
- public static Object test(Object stock, int id ){
-      stock = (Object)session.get(Object.class, id);
+ public static Object test(Candidat stock, int id ){
+      stock = (Candidat)session.get(Object.class, id);
       return stock;
  }
 }
