@@ -76,7 +76,7 @@ public  class passerelle {
  public static <T> List<T> getData(String className)
  {
   Query query = session.createQuery("from " + className);
-  return new ArrayList<T>((List<T>) query.list());
+  return new ArrayList<>((List<T>) query.list());
  }
 
  @SuppressWarnings("unchecked")
@@ -93,9 +93,12 @@ public  class passerelle {
   return query.list().size();
  }
 
- public static Object select(Candidat stock, int id ){
-      stock = (Candidat)session.get(Candidat.class, id);
-      return stock;
+ public static <T> Object select(Object o, int id ){
+      return session.get(o.getClass(), id);
+ }
+ public static <T> List<T> select(Object o){
+     return session.createCriteria(o.getClass()).list();
+     
  }
 }
 

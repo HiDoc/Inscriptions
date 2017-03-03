@@ -8,7 +8,6 @@ package data.hibernate;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
