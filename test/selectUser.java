@@ -73,6 +73,6 @@ public class selectUser {
     public void testUserTwo(){
         String beEquals = this.results.get(1).getNom();
         System.out.println(beEquals);
-        assertEquals("Utilisateur un", "salut", beEquals );
+        assertEquals("Utilisateur un", "Joffrey", beEquals );
     }
 }
