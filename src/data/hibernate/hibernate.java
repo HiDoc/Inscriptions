@@ -48,17 +48,15 @@ public class hibernate {
     
     public static void main(String[] args) {
        
-        passerelle passerelle = new passerelle();
+       passerelle passerelle = new passerelle();
        passerelle.open();
+    
+    
+       Users test;
+        test = new Users("jean",1,"arararararara");
+     
       
-       Candidat test = new Candidat("jean");
-       
-       passerelle.save(test);
-       
-       
-       
-       
-       
+       passerelle.test(test, 10);
         
     }
 }
