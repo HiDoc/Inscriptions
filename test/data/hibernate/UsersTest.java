@@ -19,7 +19,6 @@ import static org.junit.Assert.*;
 public class UsersTest {
     
     public UsersTest() {
-        
     }
     
     @BeforeClass
@@ -33,6 +32,7 @@ public class UsersTest {
     @Before
     public void setUp() {
         passerelle.open();
+
     }
     
     @After
@@ -110,6 +110,31 @@ public class UsersTest {
         Users instance = new Users("prenom",1,"mail");
         instance.setMail(mail);
         assertEquals("Vérifie si le mail à été changé","setMail","setMail");
+    }
+    
+    /**
+     * Test of Select from one User
+     */
+    @Test
+    public void testSelectPrenom(){
+        Object resultUser = (Users)passerelle.select(new Users(),2);
+        System.out.println("Select User Surname");
+        Users instance = (Users)resultUser;
+        String prenom = instance.getPrenom();
+        System.out.println(prenom);
+        assertEquals("Utilisateur un", "salut", prenom );
+    }
+    
+    /**
+     * Test of Select from one User (name)
+     */
+    @Test
+    public void testSelectNom(){
+        System.out.println("Select User Name");
+        Users instance = (Users)passerelle.select(new Users(),2);
+        String nom = instance.getNom();
+        System.out.println(nom);
+        assertEquals("Utilisateur un", "test1", nom );
     }
     
 }
