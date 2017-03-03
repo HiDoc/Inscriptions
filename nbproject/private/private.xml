@@ -3,16 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/data/hibernate/ManageUsers.java</file>
             <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/data/hibernate/Users.java</file>
-            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/data/hibernate/ManageCandidat.java</file>
-            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/application/inscriptions/Candidat.java</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/data/hibernate/passerelle.java</file>
             <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/data/hibernate/Candidat.java</file>
-            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/presentation/cli/menu/MenuTeam.java</file>
-            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/application/inscriptions/Main.java</file>
             <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/data/hibernate/Competition.java</file>
-            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/data/hibernate/hibernate.java</file>
-            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/presentation/cli/menu/MainMenu.java</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/test/selectUser.java</file>
         </group>
     </open-files>
 </project-private>

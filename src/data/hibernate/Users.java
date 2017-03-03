@@ -8,7 +8,7 @@ package data.hibernate;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -22,11 +22,9 @@ import org.hibernate.cfg.Configuration;
  */
 @Entity 
 @Table(name = "users")
-   
+@PrimaryKeyJoinColumn(name = "id_us")   
+
 public class Users extends Candidat implements Serializable {
-     
-    @Column(insertable = false, updatable = false)
-    private int idU;
     
     @Column(name = "prenom")
     private String prenom;

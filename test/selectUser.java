@@ -38,8 +38,8 @@ public class selectUser {
         }
 
     }
+    Session session = factory.openSession();
     public selectUser() {
-        Session session = factory.openSession();
         this.results = session.createCriteria(Users.class).list();
     }
     
@@ -57,11 +57,21 @@ public class selectUser {
     
     @After
     public void tearDown() {
+        session.close();
     }
 
+    /**
+     * Vérifie si l'utilisateur un à comme prénom "salut"
+     */
     @Test
     public void testUserOne(){
         String beEquals = this.results.get(1).getPrenom();
+        System.out.println(beEquals);
+        assertEquals("Utilisateur un", "salut", beEquals );
+    }
+    @Test
+    public void testUserTwo(){
+        String beEquals = this.results.get(1).getNom();
         System.out.println(beEquals);
         assertEquals("Utilisateur un", "salut", beEquals );
     }
