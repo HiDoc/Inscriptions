@@ -26,20 +26,17 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
- *
+ * Couche accès aux données de la classe Candidat
  * @author Flo
  */
 @Entity
 @Table(name = "candidat")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Candidat implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_ca")
-    @OneToOne
-    @JoinColumn(
-        name="id_us", unique=true, nullable=false, updatable=false)
     protected int id_ca;
 
     @Column(name = "nom")
@@ -67,7 +64,6 @@ public class Candidat implements Serializable {
 
     /**
      * Constructeur
-     *
      * @param nom
      */
     public Candidat(String nom) {
@@ -130,7 +126,6 @@ public class Candidat implements Serializable {
             if (tx != null) {
                 tx.rollback();
             }
-            e.printStackTrace();
         } finally {
             session.close();
         }

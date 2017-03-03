@@ -69,3 +69,6 @@ nbproject/private/private.properties
 *.xml
 *.xml
 nbproject/project.properties
+nbproject/project.properties
+*.properties
+*.properties

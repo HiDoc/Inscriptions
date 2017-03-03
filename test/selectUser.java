@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 
+import data.hibernate.Users;
+import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,7 +22,25 @@ import static org.junit.Assert.*;
  */
 public class selectUser {
     
+    /**
+     * Construit un nouvel objet de type Users
+     * 
+     */
+    private static SessionFactory factory;
+    public List<Users> results; 
+    
+    static {
+        try {
+            factory = new Configuration().configure("data/hibernate/database.cfg.xml").buildSessionFactory();
+        } catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+
+    }
     public selectUser() {
+        Session session = factory.openSession();
+        this.results = session.createCriteria(Users.class).list();
     }
     
     @BeforeClass
@@ -36,9 +59,10 @@ public class selectUser {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void testUserOne(){
+        String beEquals = this.results.get(1).getPrenom();
+        System.out.println(beEquals);
+        assertEquals("Utilisateur un", "salut", beEquals );
+    }
 }
