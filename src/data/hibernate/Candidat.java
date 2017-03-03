@@ -33,7 +33,7 @@ public class Candidat implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_ca")
-    protected int id_ca;
+    private int id_ca;
 
     @Column(name = "nom")
     private String nom;
@@ -54,47 +54,45 @@ public class Candidat implements Serializable {
     /**
      * Constructeur par défault
      */
+    @SuppressWarnings("unused")
     public Candidat() {
-        this.nom = "default";
     }
 
     /**
-     * Constructeur
-     * @param nom
+     * Surcharge du constructeur
+     * @param nom une chaine de caractère
      */
     public Candidat(String nom) {
         this.nom = nom;
     }
     
     /**
-     * Getter de la classe Candidat
      * Retourne le nom d'un Candidat
-     * @return nom
+     * @return nom - une chaine de caractères
      */
     public String getNom() {
         return this.nom;
     }
 
     /**
-     * Setter de la classe Candidat
      * Attribue un nouveau nom au Candidat
-     * @param nom
+     * @param nom une chaine de caractères
      */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
     /**
-     * Getter de la classe Candidat
-     * @return Une liste d'équipes
+     * Retourne la liste des équipes du candidat
+     * @return un Set de Candidat
      */
     public Set<Candidat> getEquipe() {
         return this.equipe;
     }
     
     /**
-     * Getter de la classe Candidat
-     * @return Une liste de compétitions
+     * Retourne la liste des compétitions du candidat
+     * @return un Set de Competition
      */
     public Set<Competition> getCompetition() {
         return this.competition;
