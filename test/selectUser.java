@@ -40,7 +40,7 @@ public class selectUser {
     }
     public selectUser() {
         Session session = factory.openSession();
-        this.results = session.createQuery("from users").list();
+        this.results = session.createCriteria(Users.class).list();
     }
     
     @BeforeClass
@@ -61,6 +61,8 @@ public class selectUser {
 
     @Test
     public void testUserOne(){
-        assertEquals("Utilisateur un", "Joffrey", this.results.get(0).getNom());
+        String beEquals = this.results.get(1).getPrenom();
+        System.out.println(beEquals);
+        assertEquals("Utilisateur un", "salut", beEquals );
     }
 }

@@ -19,7 +19,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.HibernateException;
@@ -32,15 +31,12 @@ import org.hibernate.Transaction;
  */
 @Entity
 @Table(name = "candidat")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Candidat implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_ca")
-    @OneToOne
-    @JoinColumn(
-        name="id_us", unique=true, nullable=false, updatable=false)
     protected int id_ca;
 
     @Column(name = "nom")

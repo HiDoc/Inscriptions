@@ -8,8 +8,7 @@ package data.hibernate;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -23,19 +22,18 @@ import org.hibernate.cfg.Configuration;
  */
 @Entity 
 @Table(name = "users")
-
+   
 public class Users extends Candidat implements Serializable {
-    
-    @OneToOne(mappedBy="Candidat")
-    @Column(name = "id_us")
-    private int id_us;
+     
+    @Column(insertable = false, updatable = false)
+    private int idU;
     
     @Column(name = "prenom")
     private String prenom;
 
     @Column(name = "niveau")
     private int niveau;
-
+    
     @Column(name = "mail")
     private String mail;
     
@@ -61,7 +59,7 @@ public class Users extends Candidat implements Serializable {
      * Retourne le prénom de l'utilisateur
      * @return String prenom
      */
-    protected String getPrenom() {
+    public String getPrenom() {
         return this.prenom;
     }
 
@@ -79,7 +77,7 @@ public class Users extends Candidat implements Serializable {
      * Retourne le mail de l'utilisateur
      * @return String mail
      */
-    protected String getMail() {
+    public String getMail() {
         return this.mail;
     }
 
@@ -88,7 +86,7 @@ public class Users extends Candidat implements Serializable {
      * Modifie le prénom de l'utilisateur
      * @param prenom
      */
-    protected void setPrenom(String prenom) {
+    public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
 
@@ -97,7 +95,7 @@ public class Users extends Candidat implements Serializable {
      * Modifie le niveau d'accès aux droits de l'utilisateur
      * @param niveau
      */
-    protected void setNiveau(int niveau) {
+    public void setNiveau(int niveau) {
         this.niveau = niveau;
     }
 
@@ -106,7 +104,7 @@ public class Users extends Candidat implements Serializable {
      * Modifie le mail de l'utilisateur
      * @param mail
      */
-    protected void setMail(String mail) {
+    public void setMail(String mail) {
         this.mail = mail;
     }
 
