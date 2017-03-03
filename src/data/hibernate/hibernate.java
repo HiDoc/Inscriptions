@@ -54,10 +54,10 @@ public class hibernate {
     
        Users test;
         test = new Users("jean",1,"arararararara");
-     
+        passerelle.save(test);
       
-       passerelle.test(test, 10);
-        
+      
+       
     }
 }
     
