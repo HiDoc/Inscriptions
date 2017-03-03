@@ -32,8 +32,6 @@ import javax.persistence.Temporal;
 
 public class Competition implements Serializable { 
 
-    
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_co")
@@ -67,11 +65,11 @@ public class Competition implements Serializable {
     }
 
     /**
-     * Constructeur de la classe
-     * @param nom
-     * @param date_d
-     * @param duree
-     * @param enEquipe
+     * Surcharge du constructeur de la classe
+     * @param nom chaine de caractère
+     * @param date_d de type Calendar
+     * @param duree un nombre
+     * @param enEquipe un booléen
      */
     public Competition(String nom, Calendar date_d, int duree, boolean enEquipe) {
         this.nom = nom;
@@ -81,80 +79,72 @@ public class Competition implements Serializable {
     }
 
     /**
-     * Getter
      * Retourne le nom de la compétition
-     * @return String Nom
+     * @return une chaine de caractères
      */
     protected String getNom() {
         return this.nom;
     }
 
     /**
-     * Getter
      * Retourne la date de la compétition
-     * @return Calendar Date
+     * @return une date de type Calendar
      */
     protected Calendar getDate() {
         return this.date;
     }
 
     /**
-     * Getter
      * Retourne le temps de la compétition en secondes
-     * @return int Duree
+     * @return un nombre en secondes
      */
     protected int getDuree() {
         return this.duree;
     }
 
     /**
-     * Getter
      * Retourne vrai si la compétition se déroule en équipe 
-     * @return boolean enEquipe
+     * @return un booléan
      */
     protected boolean getEnEquipe() {
         return this.enEquipe;
     }
 
     /**
-     * Setter
      * Modifie le nom de la compétition
-     * @param nom
+     * @param nom une chaine de caractères
      */
     protected void setNom(String nom) {
         this.nom = nom;
     }
 
     /**
-     * Setter
      * Modifie la date de la compétition
-     * @param date
+     * @param date de type Calendar
      */
     protected void setDate(Calendar date) {
         this.date = date;
     }
 
     /**
-     * Setter
      * Modifie la durée en secondes de la compétition
-     * @param duree
+     * @param duree une nombre de secondes
      */
     protected void setDuree(int duree) {
         this.duree = duree;
     }
 
     /**
-     * Setter
      * Modifie si la compétition doit se faire en équipe
-     * @param enEquipe
+     * @param enEquipe de type booléan
      */
     protected void setEnEquipe(boolean enEquipe) {
         this.enEquipe = enEquipe;
     }
 
     /**
-     * Getter
-     * @return Une liste de Candidat inscrits à la compétition
+     * Retourne la liste des candidats inscrits à la compétition
+     * @return un Set de candidats 
      */
     public Set<Candidat> getCandidats() {
         return this.candidats;
