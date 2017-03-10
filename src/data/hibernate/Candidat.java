@@ -7,6 +7,7 @@ package data.hibernate;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -64,7 +65,7 @@ public class Candidat implements Serializable {
 
 
     /**
-     * Constructeur par défault
+     * Constructeur par défault vide pour la persistance
      */
     @SuppressWarnings("unused")
     public Candidat() {
@@ -85,7 +86,9 @@ public class Candidat implements Serializable {
     public String getNom() {
         return this.nom;
     }
-
+    private int getId(){
+        return this.id_ca;
+    }
     /**
      * Attribue un nouveau nom au Candidat
      * @param nom une chaine de caractères
@@ -108,6 +111,35 @@ public class Candidat implements Serializable {
      */
     public Set<Competition> getCompetition() {
         return this.competition;
+    }
+    
+    @Override
+    public int hashCode(){
+        int hash;
+        hash = getNom().hashCode();
+        hash = hash * 28 + getId();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Candidat other = (Candidat) obj;
+        if (this.id_ca != other.id_ca) {
+            return false;
+        }
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        return true;
     }
 
 }
