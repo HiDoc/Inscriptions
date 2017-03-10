@@ -57,8 +57,7 @@ public class Competition implements Serializable {
     private final Set<Candidat> candidats = new HashSet<>(0);
     
     /**
-     * Constructeur par défaut de la classe
-     *
+     * Constructeur par défaut vide pour la persistance
      */
     @SuppressWarnings("unused")
     public Competition() {
