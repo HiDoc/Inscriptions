@@ -37,17 +37,29 @@ public class Candidat implements Serializable {
 
     @Column(name = "nom")
     private String nom;
-
+    
+    /**
+     * Clés plusieurs à plusieurs sur la table participer
+     */
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "participer", joinColumns = {
         @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
         @JoinColumn(name = "id_user")})
+    /**
+     * Crée une liste de toutes les compétitions auxquelles le candidat est inscrit
+     */
     private final Set<Competition> competition = new HashSet<>(0);
-
+    
+    /**
+     * Clés plusieurs à plusieurs sur la table appartenir
+     */
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "appartenir", joinColumns = {
         @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
         @JoinColumn(name = "id_user")})
+    /**
+     * Crée une liste de toutes les équipes auxquelles le candidat est inscrit
+     */
     private final Set<Candidat> equipe = new HashSet<>(0);
 
 

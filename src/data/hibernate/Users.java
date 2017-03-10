@@ -38,11 +38,13 @@ public class Users extends Candidat implements Serializable {
     /**
      * Constructeur
      *
+     * @param nom de la classe mère Candidat
      * @param prenom
      * @param niveau
      * @param mail
      */
-    public Users(String prenom, int niveau, String mail) {
+    public Users(String nom,String prenom, int niveau, String mail) {
+        super(nom);
         this.prenom = prenom;
         this.niveau = niveau;
         this.mail = mail;

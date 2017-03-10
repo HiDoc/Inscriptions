@@ -46,7 +46,7 @@ public class UsersTest {
     @Test
     public void testGetPrenom() {
         System.out.println("getPrenom");
-        Users instance = new Users("prenom",1,"mail");
+            Users instance = new Users("nom","prenom",1,"mail");
         String expResult = "prenom";
         String result = instance.getPrenom();
         assertEquals(expResult, result);
@@ -58,7 +58,7 @@ public class UsersTest {
     @Test
     public void testGetNiveau() {
         System.out.println("getNiveau");
-        Users instance = new Users("prenom",1,"mail");
+        Users instance = new Users("nom","prenom",1,"mail");
         int expResult = 1;
         int result = instance.getNiveau();
         assertEquals(expResult, result);
@@ -70,7 +70,7 @@ public class UsersTest {
     @Test
     public void testGetMail() {
         System.out.println("getMail");
-        Users instance = new Users("prenom",1,"mail");
+        Users instance = new Users("nom","prenom",1,"mail");
         String expResult = "mail";
         String result = instance.getMail();
         assertEquals(expResult, result);
@@ -83,7 +83,7 @@ public class UsersTest {
     public void testSetPrenom() {
         System.out.println("setPrenom");
         String prenom = "setPrenom";
-        Users instance = new Users("prenom",1,"mail");
+        Users instance = new Users("nom","prenom",1,"mail");
         instance.setPrenom(prenom);
         assertEquals("Vérifie si le prénom à été changé","setPrenom","setPrenom");
     }
@@ -95,7 +95,7 @@ public class UsersTest {
     public void testSetNiveau() {
         System.out.println("setNiveau");
         int niveau = 0;
-        Users instance = new Users("prenom",1,"mail");
+        Users instance = new Users("nom","prenom",1,"mail");
         instance.setNiveau(niveau);
         assertEquals("Vérifie si le niveau à été changé",0,0);
     }
@@ -107,7 +107,7 @@ public class UsersTest {
     public void testSetMail() {
         System.out.println("setMail");
         String mail = "setMail";
-        Users instance = new Users("prenom",1,"mail");
+        Users instance = new Users("nom","prenom",1,"mail");
         instance.setMail(mail);
         assertEquals("Vérifie si le mail à été changé","setMail","setMail");
     }
@@ -135,6 +135,18 @@ public class UsersTest {
         String nom = instance.getNom();
         System.out.println(nom);
         assertEquals("Utilisateur un", "test1", nom );
+    }
+    
+    /**
+     * Test of Insert in table Users
+     */
+    @Test
+    public void testInsert(){
+        System.out.println("Insert User");
+        Users instance = new Users("nom","InsertTest", 1,"mail@mail.com");
+        int id = (int)passerelle.saveAndId(instance);
+        Users retrieve = (Users)passerelle.select(new Users(),id);
+        assertEquals("InsertTest", "InsertTest", retrieve.getPrenom());
     }
     
 }

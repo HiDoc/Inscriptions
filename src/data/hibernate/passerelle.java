@@ -66,7 +66,19 @@ public class passerelle {
     }
 
     /**
-     *
+     * Enregistre l'objet dans la base de données et renvoie l'ID de la bdd
+     * @param o
+     * @return int l'ID de l'objet
+     */
+    public static int saveAndId(Object o) {
+        Transaction tx = session.beginTransaction();
+        int id = (int)session.save(o);
+        tx.commit();
+        return id;
+    }
+
+    /**
+     * Compte le nombre d'objets dans une table
      * @param className une chaine de caractère
      * @return le nombre d'entrée dans une table spécifiée
      */
@@ -74,19 +86,6 @@ public class passerelle {
         Query query = session.createQuery("from " + className);
         return query.list().size();
     }
-
-
-    /**
-     * Sélectionne les entrées d'une table
-     * @param <T>
-     * @param o un objet 
-     * @return une liste d'objet de la classe de l'objet spécifié
-     */
-    public static <T> List<T> select(Object o) {
-        return session.createCriteria(o.getClass()).list();
-
-    }
-
     /**
      * Recherche dans les tables une entrée avec un ID
      * @param <T>
@@ -97,13 +96,23 @@ public class passerelle {
     public static <T> Object select(Object o, int id) {
         return session.get(o.getClass(), id);
     }
+
     /**
-     * Surcharge de la méthode select
+     * Selectionne une table par rapport à l'objet mis en paramètre
+     * @param <T>
+     * @param o un objet
+     * @return une liste d'objet de la classe de l'objet spécifié en paramètre
+     */
+    public static <T> List<T> table(Object o){
+        return session.createCriteria(o.getClass()).list();
+    }
+    /**
+     * Surcharge de la méthode table
      * @param <T>
      * @param className
-     * @return une liste d'objet de la classe spécififée en paramètre
+     * @return une liste d'objet de la classe spécififée en chaine de caractères
      */
-    public static <T> List<T> select(String className) {
+    public static <T> List<T> table(String className) {
         Query query = session.createQuery("from " + className);
         return new ArrayList<>((List<T>) query.list());
     }
