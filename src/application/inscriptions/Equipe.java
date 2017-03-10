@@ -13,11 +13,11 @@ import java.util.TreeSet;
 public class Equipe extends Candidat
 {
 	private static final long serialVersionUID = 4147819927233466035L;
-	private SortedSet<Personne> membres = new TreeSet<>();
+	private SortedSet<Users> membres = new TreeSet<>();
 	
 	Equipe(Inscriptions inscriptions, String nom)
 	{
-		super(inscriptions, nom);
+		//super(inscriptions, nom);
 	}
 
 	/**
@@ -25,7 +25,7 @@ public class Equipe extends Candidat
          * @return 
 	 */
 	
-	public SortedSet<Personne> getMembres()
+	public SortedSet<Users> getMembres()
 	{
 		return Collections.unmodifiableSortedSet(membres);
 	}
@@ -36,7 +36,7 @@ public class Equipe extends Candidat
 	 * @return
 	 */
 
-	public boolean add(Personne membre)
+	public boolean add(Users membre)
 	{
 		membre.add(this);
 		return membres.add(membre);
@@ -48,7 +48,7 @@ public class Equipe extends Candidat
 	 * @return
 	 */
 	
-	public boolean remove(Personne membre)
+	public boolean remove(Users membre)
 	{
 		membre.remove(this);
 		return membres.remove(membre);
