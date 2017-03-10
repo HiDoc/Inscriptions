@@ -1,185 +1,213 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package application.inscriptions;
 
-import java.awt.List;
+import data.hibernate.passerelle;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-
-import data.hibernate.hibernate;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
- * Représente une compétition, c'est-à-dire un ensemble de candidats 
- * inscrits à un événement, les inscriptions sont closes à la date dateCloture.
  *
+ * @author Flo
  */
+@Entity
+@Table(name = "competition")
+@PrimaryKeyJoinColumn(name = "id_co", referencedColumnName = "id_ca")
 
-public class Competition implements Comparable<Competition>, Serializable
-{
-	private static final long serialVersionUID = -2882150118573759729L;
-	private Inscriptions inscriptions;
-	private String nom;
-	private Set<Candidat> candidats;
-	private LocalDate dateCloture;
-	private boolean enEquipe = false;
+public class Competition implements Serializable { 
 
-	Competition(Inscriptions inscriptions, String nom, LocalDate dateCloture, boolean enEquipe)
-	{
-                
-		this.enEquipe = enEquipe;
-		this.inscriptions = inscriptions;
-		this.nom = nom;
-		this.dateCloture = dateCloture;
-		candidats = new TreeSet<>();
-	}
-	
-	/**
-	 * Retourne le nom de la compétition.
-	 * @return
-	 */
-	
-	public String getNom()
-	{
-		return nom;
-	}
-	
-	/**
-	 * Modifie le nom de la compétition.
-         * @param nom
-	 */
-	
-	public void setNom(String nom)
-	{
-		this.nom = nom ;
-	}
-	
-	/**
-	 * Retourne vrai si les inscriptions sont encore ouvertes, 
-	 * faux si les inscriptions sont closes.
-	 * @return
-	 */
-	
-	public boolean inscriptionsOuvertes()
-	{
-		// TODO retourner vrai si et seulement si la date système est antérieure à la date de clôture.
-		return true;
-	}
-	
-	/**
-	 * Retourne la date de cloture des inscriptions.
-	 * @return
-	 */
-	
-	public LocalDate getDateCloture()
-	{
-		return dateCloture;
-	}
-	
-	/**
-	 * Est vrai si et seulement si les inscriptions sont réservées aux équipes.
-	 * @return
-	 */
-	
-	public boolean estEnEquipe()
-	{
-		return enEquipe;
-	}
-	
-	/**
-	 * Modifie la date de cloture des inscriptions. Il est possible de la reculer 
-	 * mais pas de l'avancer.
-	 * @param dateCloture
-	 */
-	
-	public void setDateCloture(LocalDate dateCloture)
-	{
-		// TODO vérifier que l'on avance pas la date.
-		this.dateCloture = dateCloture;
-	}
-	
-	/**
-	 * Retourne l'ensemble des candidats inscrits.
-	 * @return
-	 */
-	
-	public Set<Candidat> getCandidats()
-	{
-		return Collections.unmodifiableSet(candidats);
-	}
-	
-	/**
-	 * Inscrit un candidat de type Personne à la compétition. Provoque une
-	 * exception si la compétition est réservée aux équipes ou que les 
-	 * inscriptions sont closes.
-	 * @param personne
-	 * @return
-	 */
-	
-	public boolean add(Personne personne)
-	{
-		// TODO vérifier que la date de clôture n'est pas passée
-		if (enEquipe)
-			throw new RuntimeException();
-		personne.add(this);
-		return candidats.add(personne);
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_co")
+    private int id_co;
 
-	/**
-	 * Inscrit un candidat de type Equipe à la compétition. Provoque une
-	 * exception si la compétition est réservée aux personnes ou que 
-	 * les inscriptions sont closes.
-         * @param equipe
-	 * @return
-	 */
+    @Column(name = "nom")
+    private String nom;
 
-	public boolean add(Equipe equipe)
-	{
-		// TODO vérifier que la date de clôture n'est pas passée
-		if (!enEquipe)
-			throw new RuntimeException();
-		equipe.add(this);
-		return candidats.add(equipe);
-	}
+    @Column(name = "date_d")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar date;
+    
+    @Column(name = "date_close")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar dateClose;
 
-	/**
-	 * Désinscrit un candidat.
-	 * @param candidat
-	 * @return
-	 */
-	
-	public boolean remove(Candidat candidat)
-	{
-		candidat.remove(this);
-		return candidats.remove(candidat);
-	}
-	
-	/**
-	 * Supprime la compétition de l'application.
-	 */
-	
-	public void delete()
-	{
-            candidats.stream().forEach((candidat) -> {
-                remove(candidat);
-            });
-		inscriptions.remove(this);
-	}
-	
+    @Column(name = "duree")
+    private int duree;
 
-	@Override
-	public int compareTo(Competition o)
-	{
-		return getNom().compareTo(o.getNom());
-	}
-	
-	@Override
-	public String toString()
-	{
-		return getNom();
-	}
+    @Column(name = "enEquipe")
+    private boolean enEquipe;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "participer", joinColumns = {
+        @JoinColumn(name = "id_co")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_competition")})
+    private final Set<Candidat> candidats = new HashSet<>(0);
+    
+    /**
+     * Constructeur par défaut vide pour la persistance
+     */
+    @SuppressWarnings("unused")
+    public Competition() {
+    }
+
+    /**
+     * Surcharge du constructeur de la classe
+     * @param nom chaine de caractère
+     * @param date_d de type Calendar
+     * @param duree un nombre
+     * @param enEquipe un booléen
+     */
+    public Competition(String nom, Calendar date_d, int duree, boolean enEquipe) {
+        this.nom = nom;
+        this.date = date_d;
+        this.duree = duree;
+        this.enEquipe = enEquipe;
+    }
+
+    /**
+     * Retourne le nom de la compétition
+     * @return une chaine de caractères
+     */
+    protected String getNom() {
+        return this.nom;
+    }
+
+    /**
+     * Retourne la date de la compétition
+     * @return une date de type Calendar
+     */
+    protected Calendar getDate() {
+        return this.date;
+    }
+
+    /**
+     * Retourne le temps de la compétition en secondes
+     * @return un nombre en secondes
+     */
+    protected int getDuree() {
+        return this.duree;
+    }
+    
+    /**
+     * Retourne la date de fermeture des inscription
+     * @return une date
+     */
+    protected Calendar getDateClose(){
+        return this.dateClose;
+    }
+    /**
+     * Retourne vrai si la compétition se déroule en équipe 
+     * @return un booléan
+     */
+    protected boolean getEnEquipe() {
+        return this.enEquipe;
+    }
+
+    /**
+     * Modifie le nom de la compétition
+     * @param nom une chaine de caractères
+     */
+    protected void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    /**
+     * Modifie la date de la compétition
+     * @param date de type Calendar
+     */
+    protected void setDate(Calendar date) {
+        this.date = date;
+    }
+
+    /**
+     * Modifie la durée en secondes de la compétition
+     * @param duree une nombre de secondes
+     */
+    protected void setDuree(int duree) {
+        this.duree = duree;
+    }
+
+    /**
+     * Modifie si la compétition doit se faire en équipe
+     * @param enEquipe de type booléan
+     */
+    protected void setEnEquipe(boolean enEquipe) {
+        this.enEquipe = enEquipe;
+    }
+    
+    /**
+     * Modifie la date de fermeture d'inscription de la compétition
+     * @param dateClose
+     */
+    protected void setDateClose(Calendar dateClose){
+        this.dateClose = dateClose;
+    }
+
+    /**
+     * Retourne la liste des candidats inscrits à la compétition
+     * @return un Set de candidats 
+     */
+    public Set<Candidat> getCandidats() {
+        return this.candidats;
+    }
+    
+    /**
+     * Vérifie si les inscriptions sont ouvertes
+     * @return booléen
+     */
+    protected boolean inscriptionsOuvertes(){
+        return this.dateClose.after(Calendar.getInstance());
+    }
+    
+    /**
+     * Ajoute un candidat à la compétition
+     * @param candidat
+     */
+    public void addCandidat(Candidat candidat){
+        if(("Candidat".equals(candidat.getClass().getName()) && (!this.enEquipe))){
+            this.candidats.add(candidat);
+            passerelle.save(this.candidats);
+        }
+        else throw new RuntimeException();
+    }
+
+    /**
+     * Enlève un candidat de la compétition
+     * @param candidat
+     */
+    public void removeCandidat(Candidat candidat){
+        this.candidats.remove(candidat);
+        passerelle.save(this.candidats);
+    }
+    
+    /**
+     * Supprime la compétition de l'application
+     * 
+     */
+    protected void remove(){
+        passerelle.delete(this);
+    }
+    
+    @Override
+    public String toString() {
+        return "Compétion  " + this.nom + " commençant le" + this.date + " d'une durée de " + this.duree;
+    }
 }

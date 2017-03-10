@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package data.hibernate;
+package application.inscriptions;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -106,42 +105,5 @@ public class Users extends Candidat implements Serializable {
      */
     public void setMail(String mail) {
         this.mail = mail;
-    }
-
-    @Override
-    public int hashCode(){
-        int hash;
-        hash = getMail().hashCode();
-        hash = hash * 12  + getPrenom().hashCode();
-        hash = hash * 21 + getNom().hashCode();
-        hash = hash * 32 + getNiveau();
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Users other = (Users) obj;
-        if (this.idU != other.idU) {
-            return false;
-        }
-        if (this.niveau != other.niveau) {
-            return false;
-        }
-        if (!Objects.equals(this.prenom, other.prenom)) {
-            return false;
-        }
-        if (!Objects.equals(this.mail, other.mail)) {
-            return false;
-        }
-        return true;
     }
 }

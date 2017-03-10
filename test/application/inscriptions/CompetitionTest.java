@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package data.hibernate;
+package application.inscriptions;
 
 import java.util.Calendar;
 import java.util.Set;
@@ -82,6 +82,20 @@ public class CompetitionTest {
     }
 
     /**
+     * Test of getDateClose method, of class Competition.
+     */
+    @Test
+    public void testGetDateClose() {
+        System.out.println("getDateClose");
+        Competition instance = new Competition();
+        Calendar expResult = null;
+        Calendar result = instance.getDateClose();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
      * Test of getEnEquipe method, of class Competition.
      */
     @Test
@@ -148,6 +162,19 @@ public class CompetitionTest {
     }
 
     /**
+     * Test of setDateClose method, of class Competition.
+     */
+    @Test
+    public void testSetDateClose() {
+        System.out.println("setDateClose");
+        Calendar dateClose = null;
+        Competition instance = new Competition();
+        instance.setDateClose(dateClose);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
      * Test of getCandidats method, of class Competition.
      */
     @Test
@@ -157,6 +184,58 @@ public class CompetitionTest {
         Set<Candidat> expResult = null;
         Set<Candidat> result = instance.getCandidats();
         assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of inscriptionsOuvertes method, of class Competition.
+     */
+    @Test
+    public void testInscriptionsOuvertes() {
+        System.out.println("inscriptionsOuvertes");
+        Competition instance = new Competition();
+        boolean expResult = false;
+        boolean result = instance.inscriptionsOuvertes();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addCandidat method, of class Competition.
+     */
+    @Test
+    public void testAddCandidat() {
+        System.out.println("addCandidat");
+        Candidat candidat = null;
+        Competition instance = new Competition();
+        instance.addCandidat(candidat);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of removeCandidat method, of class Competition.
+     */
+    @Test
+    public void testRemoveCandidat() {
+        System.out.println("removeCandidat");
+        Candidat candidat = null;
+        Competition instance = new Competition();
+        instance.removeCandidat(candidat);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of remove method, of class Competition.
+     */
+    @Test
+    public void testRemove() {
+        System.out.println("remove");
+        Competition instance = new Competition();
+        instance.remove();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

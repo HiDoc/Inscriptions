@@ -1,90 +1,144 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package application.inscriptions;
 
+import data.hibernate.passerelle;
 import java.io.Serializable;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
- * Candidat à un événement sportif, soit une personne physique, soit une équipe.
- *
+ * Couche accès aux données de la classe Candidat
+ * @author Flo
  */
+@Entity
+@Table(name = "candidat")
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Candidat implements Serializable {
 
-public abstract class Candidat implements Comparable<Candidat>, Serializable
-{
-	private static final long serialVersionUID = -6035399822298694746L;
-	private Inscriptions inscriptions;
-	private String nom;
-	private Set<Competition> competitions;
-	
-	Candidat(Inscriptions inscriptions, String nom)
-	{
-		this.inscriptions = inscriptions;	
-		this.nom = nom;
-		competitions = new TreeSet<>();
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_ca")
+    private int id_ca;
 
-	/**
-	 * Retourne le nom du candidat.
-	 * @return
-	 */
-	
-	public String getNom()
-	{
-		return nom;
-	}
+    @Column(name = "nom")
+    private String nom;
+    
+    /**
+     * Clés plusieurs à plusieurs sur la table participer
+     */
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "participer", joinColumns = {
+        @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_user")})
+    /**
+     * Crée une liste de toutes les compétitions auxquelles le candidat est inscrit
+     */
+    private final Set<Competition> competition = new HashSet<>(0);
+    
+    /**
+     * Clés plusieurs à plusieurs sur la table appartenir
+     */
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "appartenir", joinColumns = {
+        @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_user")})
+    /**
+     * Crée une liste de toutes les équipes auxquelles le candidat est inscrit
+     */
+    private final Set<Candidat> equipe = new HashSet<>(0);
 
-	/**
-	 * Modifie le nom du candidat.
-	 * @param nom
-	 */
-	
-	public void setNom(String nom)
-	{
-		this.nom = nom;
-	}
 
-	/**
-	 * Retourne toutes les compétitions auxquelles ce candidat est inscrit.s
-	 * @return
-	 */
+    /**
+     * Constructeur par défault vide pour la persistance
+     */
+    @SuppressWarnings("unused")
+    public Candidat() {
+    }
 
-	public Set<Competition> getCompetitions()
-	{
-		return Collections.unmodifiableSet(competitions);
-	}
-	
-	boolean add(Competition competition)
-	{
-		return competitions.add(competition);
-	}
+    /**
+     * Surcharge du constructeur
+     * @param nom une chaine de caractère
+     */
+    public Candidat(String nom) {
+        this.nom = nom;
+    }
+    
+    /**
+     * Retourne le nom d'un Candidat
+     * @return nom - une chaine de caractères
+     */
+    public String getNom() {
+        return this.nom;
+    }
+    /**
+     * Attribue un nouveau nom au Candidat
+     * @param nom une chaine de caractères
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-	boolean remove(Competition competition)
-	{
-		return competitions.remove(competition);
-	}
+    /**
+     * Retourne la liste des équipes du candidat
+     * @return un Set de Candidat
+     */
+    public Set<Candidat> getEquipe() {
+        return this.equipe;
+    }
+    
+    /**
+     * Retourne la liste des compétitions du candidat
+     * @return un Set de Competition
+     */
+    public Set<Competition> getCompetition() {
+        return this.competition;
+    }
+    
+    /**
+     * Inscrit un candidat à une compétition
+     * @param competition
+     */
+    public void inscription(Competition competition){
+        competition.addCandidat(this);
+    }
 
-	/**
-	 * Supprime un candidat de l'application.
-	 */
-	
-	public void delete()
-	{
-            competitions.stream().forEach((c) -> {
-                c.remove(this);
-            });
-		inscriptions.remove(this);
-	}
-	
-	@Override
-	public int compareTo(Candidat o)
-	{
-		return getNom().compareTo(o.getNom());
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "\n" + getNom() + " -> inscrit à " + getCompetitions();
-	}
+    /**
+     * Désinscrit un candidat à une compétition. Lance une erreur si le candidat 
+     * est déjà inscrit à cette compétition
+     * @param competition
+     */
+    public void desinscription(Competition competition){
+        if(!this.competition.contains(competition))
+            competition.removeCandidat(this);
+        else throw new RuntimeException("le candidat est déjà inscrit");
+    }
+    
+    public void addEquipe(){
+        
+    }
+
+    /**
+     * Supprime un candidat de l'application
+     */
+    public void remove(){
+        passerelle.delete(this);
+    }
+
+
 }
