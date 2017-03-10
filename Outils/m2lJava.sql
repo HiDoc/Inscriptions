@@ -1,5 +1,5 @@
-use m2lJava;
-drop table if exists participer, appartenir, competition, users, candidat;
+USE m2lJava;
+DROP TABLE IF EXISTS participer, appartenir, competition, users, candidat;
 
 CREATE TABLE candidat (
     id_ca INT PRIMARY KEY AUTO_INCREMENT,
@@ -11,13 +11,14 @@ CREATE TABLE users (
     niveau INT DEFAULT 0,
     mail VARCHAR(128),
     prenom VARCHAR(128),
-    Foreign key (id_ca) references candidat(id_ca)
+    FOREIGN KEY (id_ca) REFERENCES candidat(id_ca)
 );
 
 CREATE TABLE competition (
     id_co INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(128),
     date_d DATETIME,
+    date_close DATETIME,	
     duree INT,
     enEquipe BOOLEAN
 );
@@ -41,9 +42,13 @@ CREATE TABLE participer (
     FOREIGN KEY (co_id)
         REFERENCES competition (id_co)
 );
-use m2ljava;
-select * from candidat;
+CREATE VIEW Equipe AS(
+	SELECT * 
+	FROM candidat c 
+	WHERE NOT EXISTS (	SELECT * 
+						FROM users u 	
+						WHERE c.id_ca = u.id_ca)
+	);
 
-select * from users;
 
-grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';
+/*grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';*/

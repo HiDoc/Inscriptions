@@ -116,4 +116,13 @@ public class passerelle {
         Query query = session.createQuery("from " + className);
         return new ArrayList<>((List<T>) query.list());
     }
+    /**
+     * Accès à la vue équipe
+     * @param id
+     * @return boolean
+     */
+    public static boolean isEquipe(int id){
+        Query query = session.createQuery("from equipe where id_ca = " + id);
+        return query.list().size() > 0;
+    }
 }

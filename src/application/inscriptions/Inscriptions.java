@@ -8,12 +8,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collections;
-import java.time.LocalDate;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import data.hibernate.*;
 import java.util.ArrayList;
@@ -31,10 +28,12 @@ public class Inscriptions implements Serializable {
 
     private SortedSet<Competition> competitions = new TreeSet<>();
     private SortedSet<Candidat> candidats = new TreeSet<>();
+    private SortedSet<Candidat> equipes = new TreeSet<>();
 
     private Inscriptions() {
         this.competitions = getSort((ArrayList) passerelle.table("competition"));
         this.candidats = getSort((ArrayList) passerelle.table("candidat"));
+        this.equipes = getSort((ArrayList) passerelle.table("equipe"));
     }
 
     /**
@@ -56,25 +55,11 @@ public class Inscriptions implements Serializable {
     }
 
     /**
-     * Retourne toutes les personnes.
-     *
-     * @return
-     */
-    public SortedSet<Personne> getPersonnes() {
-        return getSort((ArrayList) passerelle.table("users"));
-    }
-
-    /**
      * Retourne toutes les équipes.
-     *
-     * @return
+     * @return Un SortedSet
      */
-    public SortedSet<Equipe> getEquipes() {
-        SortedSet<Equipe> equipes = new TreeSet<>();
-        getCandidats().stream().filter((c) -> (c instanceof Equipe)).forEach((c) -> {
-            equipes.add((Equipe) c);
-        });
-        return Collections.unmodifiableSortedSet(equipes);
+    public SortedSet<Candidat> getEquipes() {
+        return Collections.unmodifiableSortedSet(this.equipes);
     }
 
     /**
@@ -83,14 +68,13 @@ public class Inscriptions implements Serializable {
      *
      * @param nom
      * @param dateCloture
+     * @param duree
      * @param enEquipe
-     * @return
      */
-    public Competition createCompetition(String nom,
-            LocalDate dateCloture, boolean enEquipe) {
-        Competition competition = new Competition(this, nom, dateCloture, enEquipe);
-        competitions.add(competition);
-        return competition;
+    public void createCompetition(String nom, Calendar dateCloture,int duree, boolean enEquipe) {
+        Competition newC = new Competition(nom, dateCloture, duree, enEquipe);
+        this.competitions.add(newC);
+        passerelle.save(newC);
     }
 
     /**
@@ -100,12 +84,12 @@ public class Inscriptions implements Serializable {
      * @param nom
      * @param prenom
      * @param mail
-     * @return
+     * @param niveau
      */
-    public Personne createPersonne(String nom, String prenom, String mail) {
-        Personne personne = new Personne(this, nom, prenom, mail);
-        candidats.add(personne);
-        return personne;
+    public void createCandidat(String nom, String prenom, String mail, int niveau) {
+        Users personne = new Users(nom, prenom, niveau, mail);
+        this.candidats.add(personne);
+        passerelle.save(personne);
     }
 
     /**
@@ -113,20 +97,21 @@ public class Inscriptions implements Serializable {
      * de constructeur public dans {@link Equipe}.
      *
      * @param nom
-     * @return
      */
-    public Equipe createEquipe(String nom) {
-        Equipe equipe = new Equipe(this, nom);
-        candidats.add(equipe);
-        return equipe;
+    public void createEquipe(String nom) {
+        Candidat equipe = new Candidat(nom);
+        this.equipes.add(equipe);
+        passerelle.save(equipe);
     }
 
     void remove(Competition competition) {
         competitions.remove(competition);
+        passerelle.delete(competition);
     }
 
     void remove(Candidat candidat) {
         candidats.remove(candidat);
+        passerelle.delete(candidat);
     }
 
     /**
@@ -209,16 +194,7 @@ public class Inscriptions implements Serializable {
             }
         }
     }
-
-    public static void makeCompetition(String name, Calendar date, int duree, boolean team) {
-        data.hibernate.Competition compet = new data.hibernate.Competition(name, date, duree, team);
-        Session s = hibernate.getSession();
-        Transaction t = s.beginTransaction();
-        s.persist(compet);
-        t.commit();
-        s.close();
-    }
-
+    
     @Override
     public String toString() {
         return "Candidats : " + getCandidats().toString()

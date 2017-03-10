@@ -39,19 +39,19 @@ public class Candidat implements Serializable {
     @Column(name = "nom")
     private String nom;
     
-    /**
+    /*
      * Clés plusieurs à plusieurs sur la table participer
      */
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "participer", joinColumns = {
         @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
         @JoinColumn(name = "id_user")})
-    /**
+    /*
      * Crée une liste de toutes les compétitions auxquelles le candidat est inscrit
      */
     private final Set<Competition> competition = new HashSet<>(0);
     
-    /**
+    /*
      * Clés plusieurs à plusieurs sur la table appartenir
      */
     @ManyToMany(cascade = CascadeType.ALL)
@@ -101,7 +101,14 @@ public class Candidat implements Serializable {
     public Set<Candidat> getEquipe() {
         return this.equipe;
     }
-    
+
+    /**
+     * Retourne la liste des candidats inscrits dans cette équipe
+     * @return un Set de candidat
+     */
+    public Set<Candidat> getCandidats(){
+        return this.equipe;
+    }
     /**
      * Retourne la liste des compétitions du candidat
      * @return un Set de Competition
@@ -129,10 +136,35 @@ public class Candidat implements Serializable {
         else throw new RuntimeException("le candidat est déjà inscrit");
     }
     
-    public void addEquipe(){
-        
+    /**
+     * Ajoute une équipe à un candidat ou un candidat à une équipe
+     * @param candidat
+     */
+    public void addEquipe(Candidat candidat){
+        if(!this.equipe.contains(candidat)){
+            this.equipe.add(candidat);
+        }
+        else throw new RuntimeException("le candidat est déjà inscrit");
     }
 
+    /**
+     * Enlève une équipe à un candidat ou un candidat à une équipe
+     * @param candidat
+     */
+    public void removeEquipe(Candidat candidat){
+    if(this.equipe.contains(candidat)){
+            this.equipe.remove(candidat);
+        }
+        else throw new RuntimeException("le candidat n'est pas inscrit");    
+    }
+
+    /**
+     * Vérifie si le candidat est une équipe ou un utilisateur
+     * @return booléen
+     */
+    public boolean isEquipe(){
+        return passerelle.isEquipe(this.id_ca);
+    }
     /**
      * Supprime un candidat de l'application
      */

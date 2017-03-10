@@ -80,14 +80,28 @@ public class CandidatTest {
     }
 
     /**
+     * Test of getCandidats method, of class Candidat.
+     */
+    @Test
+    public void testGetCandidats() {
+        System.out.println("getCandidats");
+        Candidat instance = new Candidat();
+        Set<Candidat> expResult = null;
+        Set<Candidat> result = instance.getCandidats();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
      * Test of getCompetition method, of class Candidat.
      */
     @Test
     public void testGetCompetition() {
         System.out.println("getCompetition");
         Candidat instance = new Candidat();
-        Set<application.inscriptions.Competition> expResult = null;
-        Set<application.inscriptions.Competition> result = instance.getCompetition();
+        Set<Competition> expResult = null;
+        Set<Competition> result = instance.getCompetition();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -125,8 +139,36 @@ public class CandidatTest {
     @Test
     public void testAddEquipe() {
         System.out.println("addEquipe");
+        Candidat candidat = null;
         Candidat instance = new Candidat();
-        instance.addEquipe();
+        instance.addEquipe(candidat);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of removeEquipe method, of class Candidat.
+     */
+    @Test
+    public void testRemoveEquipe() {
+        System.out.println("removeEquipe");
+        Candidat candidat = null;
+        Candidat instance = new Candidat();
+        instance.removeEquipe(candidat);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isEquipe method, of class Candidat.
+     */
+    @Test
+    public void testIsEquipe() {
+        System.out.println("isEquipe");
+        Candidat instance = new Candidat();
+        boolean expResult = false;
+        boolean result = instance.isEquipe();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
