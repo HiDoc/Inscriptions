@@ -7,11 +7,11 @@ CREATE TABLE candidat (
 );
 
 CREATE TABLE users (
-    id_us INT PRIMARY KEY,
+    id_ca INT PRIMARY KEY,
     niveau INT DEFAULT 0,
     mail VARCHAR(128),
     prenom VARCHAR(128),
-    Foreign key (id_us) references candidat(id_ca)
+    Foreign key (id_ca) references candidat(id_ca)
 );
 
 CREATE TABLE competition (
@@ -43,5 +43,7 @@ CREATE TABLE participer (
 );
 use m2ljava;
 select * from candidat;
+
+select * from users;
 
 grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';

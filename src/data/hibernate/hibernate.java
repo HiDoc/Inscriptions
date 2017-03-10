@@ -11,6 +11,9 @@ package data.hibernate;
  * @author Flo
  */
 
+import static java.time.LocalDate.now;
+import static java.time.temporal.TemporalQueries.localDate;
+import java.util.Calendar;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -48,18 +51,16 @@ public class hibernate {
     
     public static void main(String[] args) {
        
-        passerelle passerelle = new passerelle();
+       passerelle passerelle = new passerelle();
        passerelle.open();
-      
-       Candidat test = new Candidat("jean");
-       
-       passerelle.save(test);
-       
-       
-       
-       
-       
+    
+    
+       Competition test;
+        test = new Competition();
+        passerelle.save(test);
         
+      
+       
     }
 }
     
