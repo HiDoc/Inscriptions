@@ -43,6 +43,10 @@ public class Competition implements Serializable {
     @Column(name = "date_d")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar date;
+    
+    @Column(name = "date_close")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar dateClose;
 
     @Column(name = "duree")
     private int duree;
@@ -100,7 +104,14 @@ public class Competition implements Serializable {
     protected int getDuree() {
         return this.duree;
     }
-
+    
+    /**
+     * Retourne la date de fermeture des inscription
+     * @return une date
+     */
+    protected Calendar getDateClose(){
+        return this.dateClose;
+    }
     /**
      * Retourne vrai si la compétition se déroule en équipe 
      * @return un booléan
@@ -140,6 +151,14 @@ public class Competition implements Serializable {
     protected void setEnEquipe(boolean enEquipe) {
         this.enEquipe = enEquipe;
     }
+    
+    /**
+     * Modifie la date de fermeture d'inscription de la compétition
+     * @param dateClose
+     */
+    protected void setDateClose(Calendar dateClose){
+        this.dateClose = dateClose;
+    }
 
     /**
      * Retourne la liste des candidats inscrits à la compétition
@@ -148,7 +167,44 @@ public class Competition implements Serializable {
     public Set<Candidat> getCandidats() {
         return this.candidats;
     }
+    
+    /**
+     * Vérifie si les inscriptions sont ouvertes
+     * @return booléen
+     */
+    protected boolean inscriptionsOuvertes(){
+        return this.dateClose.after(Calendar.getInstance());
+    }
+    
+    /**
+     * Ajoute un candidat à la compétition
+     * @param candidat
+     */
+    public void addCandidat(Candidat candidat){
+        if(("Candidat".equals(candidat.getClass().getName()) && (!this.enEquipe))){
+            this.candidats.add(candidat);
+            passerelle.save(this.candidats);
+        }
+        else throw new RuntimeException();
+    }
 
+    /**
+     * Enlève un candidat de la compétition
+     * @param candidat
+     */
+    public void removeCandidat(Candidat candidat){
+        this.candidats.remove(candidat);
+        passerelle.save(this.candidats);
+    }
+    
+    /**
+     * Supprime la compétition de l'application
+     * 
+     */
+    protected void remove(){
+        passerelle.delete(this);
+    }
+    
     @Override
     public String toString() {
         return "Compétion  " + this.nom + " commençant le" + this.date + " d'une durée de " + this.duree;

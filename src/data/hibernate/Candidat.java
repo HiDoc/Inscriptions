@@ -7,7 +7,6 @@ package data.hibernate;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -86,9 +85,6 @@ public class Candidat implements Serializable {
     public String getNom() {
         return this.nom;
     }
-    private int getId(){
-        return this.id_ca;
-    }
     /**
      * Attribue un nouveau nom au Candidat
      * @param nom une chaine de caractères
@@ -113,33 +109,24 @@ public class Candidat implements Serializable {
         return this.competition;
     }
     
-    @Override
-    public int hashCode(){
-        int hash;
-        hash = getNom().hashCode();
-        hash = hash * 28 + getId();
-        return hash;
+    /**
+     * Inscrit un candidat à une compétition
+     * @param competition
+     */
+    public void inscription(Competition competition){
+        competition.addCandidat(this);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Candidat other = (Candidat) obj;
-        if (this.id_ca != other.id_ca) {
-            return false;
-        }
-        if (!Objects.equals(this.nom, other.nom)) {
-            return false;
-        }
-        return true;
+    /**
+     * Désinscrit un candidat à une compétition. Lance une erreur si le candidat 
+     * est déjà inscrit à cette compétition
+     * @param competition
+     */
+    public void desinscription(Competition competition){
+        if(!this.competition.contains(competition))
+            competition.removeCandidat(this);
+        else throw new RuntimeException("le candidat est déjà inscrit");
     }
+
 
 }

@@ -61,11 +61,7 @@ public class Inscriptions implements Serializable {
      * @return
      */
     public SortedSet<Personne> getPersonnes() {
-        SortedSet<Personne> personnes = new TreeSet<>();
-        getCandidats().stream().filter((c) -> (c instanceof Personne)).forEach((c) -> {
-            personnes.add((Personne) c);
-        });
-        return Collections.unmodifiableSortedSet(personnes);
+        return getSort((ArrayList) passerelle.table("users"));
     }
 
     /**
