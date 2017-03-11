@@ -1,5 +1,6 @@
 USE m2lJava;
 DROP TABLE IF EXISTS participer, appartenir, competition, users, candidat;
+DROP VIEW IF EXISTS equipe;
 
 CREATE TABLE candidat (
     id_ca INT PRIMARY KEY AUTO_INCREMENT,
@@ -49,6 +50,5 @@ CREATE VIEW Equipe AS(
 						FROM users u 	
 						WHERE c.id_ca = u.id_ca)
 	);
-select * from equipe;
-
+select * from candidat;
 /*grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';*/

@@ -78,7 +78,13 @@ public class Candidat implements Serializable {
     public Candidat(String nom) {
         this.nom = nom;
     }
-    
+    /**
+     * Retourne l'id d'un candidat
+     * @return int 
+     */
+    protected int getId() {
+        return this.id_ca;
+    }
     /**
      * Retourne le nom d'un Candidat
      * @return nom - une chaine de caractères
@@ -171,6 +177,7 @@ public class Candidat implements Serializable {
     public void remove(){
         passerelle.delete(this);
     }
+
 
 
 }

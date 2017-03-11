@@ -20,8 +20,13 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+/**
+ * Classe passerelle : permet d'accéder à la base de données. Elle contient toutes les méthodes 
+ * permettant les interactions à la base de données.
+ * @author Flo
+ */
 public class passerelle {
-
+    
     private static Session session = null;
     private static SessionFactory sessionFactory = null;
     private static final String CONF_FILE = "data/hibernate/database.cfg.xml";
@@ -67,7 +72,7 @@ public class passerelle {
 
     /**
      * Enregistre l'objet dans la base de données et renvoie l'ID de la bdd
-     * @param o
+     * @param o un objet
      * @return int l'ID de l'objet
      */
     public static int saveAndId(Object o) {
@@ -118,11 +123,13 @@ public class passerelle {
     }
     /**
      * Accès à la vue équipe
+     * @param o
      * @param id
      * @return boolean
+     * TODO : Implementer la classe equipe pour récupérer le booléean
      */
     public static boolean isEquipe(int id){
-        Query query = session.createQuery("from equipe where id_ca = " + id);
-        return query.list().size() > 0;
+        return false;
+        //return query.list().size() > 0;
     }
 }

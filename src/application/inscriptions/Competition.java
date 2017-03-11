@@ -180,9 +180,10 @@ public class Competition implements Serializable {
     /**
      * Ajoute un candidat à la compétition
      * @param candidat
+     * TODO : ajouter la vérification de si le candidat est une équipe ou non
      */
     public void addCandidat(Candidat candidat){
-        if(("Candidat".equals(candidat.getClass().getName()) && (!this.enEquipe))){
+        if(!this.enEquipe){
             this.candidats.add(candidat);
             passerelle.save(this.candidats);
         }

@@ -5,6 +5,9 @@
  */
 package application.inscriptions;
 
+import data.hibernate.passerelle;
+import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -32,10 +35,12 @@ public class CandidatTest {
     
     @Before
     public void setUp() {
+        passerelle.open();
     }
     
     @After
     public void tearDown() {
+        passerelle.close();
     }
 
     /**
@@ -43,13 +48,11 @@ public class CandidatTest {
      */
     @Test
     public void testGetNom() {
-        System.out.println("getNom");
-        Candidat instance = new Candidat();
-        String expResult = "";
+        System.out.println("Réussite de la fonction getNom");
+        Candidat instance = new Candidat("nom");
+        String expResult = "nom";
         String result = instance.getNom();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -57,12 +60,11 @@ public class CandidatTest {
      */
     @Test
     public void testSetNom() {
-        System.out.println("setNom");
-        String nom = "";
-        Candidat instance = new Candidat();
+        System.out.println("Réussite de la fonction setNom");
+        String nom = "newNom";
+        Candidat instance = new Candidat("nom");
         instance.setNom(nom);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(nom, instance.getNom());
     }
 
     /**
@@ -70,13 +72,11 @@ public class CandidatTest {
      */
     @Test
     public void testGetEquipe() {
-        System.out.println("getEquipe");
+        System.out.println("Réussite de la fonction getEquipe");
         Candidat instance = new Candidat();
-        Set<Candidat> expResult = null;
+        Set<Candidat> expResult = new HashSet<>(0);
         Set<Candidat> result = instance.getEquipe();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -84,13 +84,11 @@ public class CandidatTest {
      */
     @Test
     public void testGetCandidats() {
-        System.out.println("getCandidats");
+        System.out.println("Réussite de la fonction getCandidats");
         Candidat instance = new Candidat();
-        Set<Candidat> expResult = null;
+        Set<Candidat> expResult = new HashSet<>(0);
         Set<Candidat> result = instance.getCandidats();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -98,13 +96,11 @@ public class CandidatTest {
      */
     @Test
     public void testGetCompetition() {
-        System.out.println("getCompetition");
+        System.out.println("Réussite de la fonction getCompetition");
         Candidat instance = new Candidat();
-        Set<Competition> expResult = null;
+        Set<Competition> expResult = new HashSet<>(0);
         Set<Competition> result = instance.getCompetition();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -112,12 +108,11 @@ public class CandidatTest {
      */
     @Test
     public void testInscription() {
-        System.out.println("inscription");
-        Competition competition = null;
+        System.out.println("Réussite de la fonction inscription");
+        Competition competition = new Competition("nom",Calendar.getInstance(),280, false);
         Candidat instance = new Candidat();
         instance.inscription(competition);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(competition.getCandidats().contains(instance));
     }
 
     /**
@@ -125,12 +120,12 @@ public class CandidatTest {
      */
     @Test
     public void testDesinscription() {
-        System.out.println("desinscription");
-        Competition competition = null;
+        System.out.println("Réussite de la fonction desinscription");
+        Competition competition = new Competition();
         Candidat instance = new Candidat();
+        instance.inscription(competition);
         instance.desinscription(competition);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertFalse(instance.getCompetition().contains(competition));
     }
 
     /**
@@ -138,12 +133,11 @@ public class CandidatTest {
      */
     @Test
     public void testAddEquipe() {
-        System.out.println("addEquipe");
-        Candidat candidat = null;
+        System.out.println("Réussite de la fonction addEquipe");
+        Candidat candidat = new Candidat();
         Candidat instance = new Candidat();
         instance.addEquipe(candidat);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.getCandidats().contains(candidat));
     }
 
     /**
@@ -151,12 +145,12 @@ public class CandidatTest {
      */
     @Test
     public void testRemoveEquipe() {
-        System.out.println("removeEquipe");
-        Candidat candidat = null;
+        System.out.println("Réussite de la fonction removeEquipe");
+        Candidat candidat = new Candidat();
         Candidat instance = new Candidat();
+        instance.addEquipe(candidat);
         instance.removeEquipe(candidat);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertFalse(instance.getCandidats().contains(candidat));
     }
 
     /**
@@ -164,13 +158,11 @@ public class CandidatTest {
      */
     @Test
     public void testIsEquipe() {
-        System.out.println("isEquipe");
+        System.out.println("Réussite de la fonction isEquipe");
         Candidat instance = new Candidat();
         boolean expResult = false;
         boolean result = instance.isEquipe();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -178,7 +170,7 @@ public class CandidatTest {
      */
     @Test
     public void testRemove() {
-        System.out.println("remove");
+        System.out.println("Réussite de la fonction remove");
         Candidat instance = new Candidat();
         instance.remove();
         // TODO review the generated test code and remove the default call to fail.
