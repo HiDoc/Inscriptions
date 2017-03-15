@@ -32,7 +32,7 @@ public class Inscriptions implements Serializable {
     private SortedSet<Competition> competitions = new TreeSet<>();
     private SortedSet<Candidat> candidats = new TreeSet<>();
 
-    private Inscriptions() {
+    public Inscriptions() {
         this.competitions = getSort((ArrayList) passerelle.table("competition"));
         this.candidats = getSort((ArrayList) passerelle.table("candidat"));
     }
@@ -60,7 +60,7 @@ public class Inscriptions implements Serializable {
      *
      * @return
      */
-    public SortedSet<Personne> getPersonnes() {
+    public SortedSet<Candidat> getPersonnes() {
         return getSort((ArrayList) passerelle.table("users"));
     }
 

@@ -17,9 +17,9 @@
         <property name="hibernate.show_sql">true</property>
         <property name="jta.UserTransaction">java:comp/UserTransaction</property>
  
-        <mapping class="data.hibernate.Candidat" />
-        <mapping class="data.hibernate.Competition"/>
-        <mapping class="data.hibernate.Users"/> 
+        <mapping class="application.inscriptions.Candidat" />
+        <mapping class="application.inscriptions.Competition"/>
+        <mapping class="application.inscriptions.Users"/> 
       
          
     </session-factory>

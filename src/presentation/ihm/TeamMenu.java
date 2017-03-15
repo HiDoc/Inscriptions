@@ -1,19 +1,169 @@
 package presentation.ihm;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class TeamMenu implements SubMenu{
+public class TeamMenu extends SubMenu{
 	
 	private JTextField nom = new JTextField(20);
 	private JPanel panel = new JPanel();
 	
-	public JPanel getPanel()
-	{
-		panel.add(new JLabel("Nom :"));
-		panel.add(this.nom);
+	public JPanel getPanel() {
+		JPanel panel = new JPanel();
+
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setBorder(BorderFactory.createLineBorder(Color.decode("#EEEEEE"), 5));
+		panel.add(addTeam());
+		panel.add(editTeam());
+		panel.add(selectTeam());
+		panel.add(addAndRemove());
+		panel.add(new JButton("Effacer"));
 		return panel;
+	}
+	
+	private JPanel addTeam()
+	{
+		JPanel addUser = new JPanel();
+		addUser.add(new JLabel("Nom :"));
+		addUser.add(nom);
+
+		addUser.setBorder(BorderFactory.createTitledBorder("Ajouter une personne"));
+		addUser.add(new JButton("Ajouter"));
+		addUser.add(Box.createVerticalStrut(50));
+		return addUser;
+	}
+	
+	private JPanel selectTeam()
+	{
+		JPanel panel = new JPanel();
+		panel.add(new JLabel("Selectionner une équipe : "));
+		panel.setBorder(BorderFactory.createTitledBorder("Selectionner une équipe"));
+		JComboBox box = new JComboBox();
+		box.addItem("toto");
+		box.addItem("riri");
+		box.addItem("fifi");
+		box.addItem("loulou");
+		box.addItem("yolo");
+		box.setPreferredSize(new Dimension(200,20));
+		panel.add(Box.createHorizontalStrut(100));
+		panel.add(box);
+		panel.add(Box.createVerticalStrut(50));
+		return panel;
+	}
+
+	private JPanel addAndRemove()
+	{
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(1,2));
+		panel.add(addRemoveUsers());
+		panel.add(addRemoveCompets());
+		return panel;
+	}
+	
+	private JPanel addRemoveUsers()
+	{
+		JPanel panel = new JPanel();
+		panel.add(Box.createVerticalStrut(10));
+		//panel.setLayout(new GridLayout(2,1));
+		JComboBox boxTeams = new JComboBox();
+		boxTeams.addItem("toto");
+		boxTeams.addItem("riri");
+		boxTeams.addItem("fifi");
+		boxTeams.addItem("loulou");
+		boxTeams.addItem("yolo");
+		boxTeams.setPreferredSize(new Dimension(200,20));
+		boxTeams.addActionListener(addTeamAL(boxTeams));
+		JPanel teams = new JPanel();
+		teams.add(new JLabel("Ajouter à l'équipe :"));
+		teams.add(boxTeams);
+		JComboBox boxCompets = new JComboBox();
+		boxCompets.addItem("toto");
+		boxCompets.addItem("riri");
+		boxCompets.addItem("fifi");
+		boxCompets.addItem("loulou");
+		boxCompets.addItem("yolo");
+		boxCompets.setPreferredSize(new Dimension(200,20));
+		JPanel compets = new JPanel();
+		compets.add(new JLabel("Ajouter à la compétition :"));
+		compets.add(boxCompets);
+		panel.setBorder(BorderFactory.createTitledBorder("Ajouter a"));
+		panel.add(teams);
+		panel.add(Box.createVerticalStrut(20));
+//		panel.add(Box.createHorizontalStrut(100));
+		panel.add(compets);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.add(Box.createVerticalStrut(10));
+		return panel;
+	}
+	
+	private ActionListener addTeamAL(JComboBox box)
+	{
+		return new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				System.out.println(box.getSelectedItem());
+			}
+		};
+	}
+	private JPanel addRemoveCompets()
+	{
+		JPanel panel = new JPanel();
+		JComboBox boxTeams = new JComboBox();
+		boxTeams.addItem("toto");
+		boxTeams.addItem("riri");
+		boxTeams.addItem("fifi");
+		boxTeams.addItem("loulou");
+		boxTeams.addItem("yolo");
+		boxTeams.setPreferredSize(new Dimension(200,20));
+		JPanel teams = new JPanel();
+		teams.add(new JLabel("Enlever de l'équipe :"));
+		teams.add(boxTeams);
+		JComboBox boxCompets = new JComboBox();
+		boxCompets.addItem("toto");
+		boxCompets.addItem("riri");
+		boxCompets.addItem("fifi");
+		boxCompets.addItem("loulou");
+		boxCompets.addItem("yolo");
+		boxCompets.setPreferredSize(new Dimension(200,20));
+		panel.setBorder(BorderFactory.createTitledBorder("Enlever de"));
+		panel.add(Box.createVerticalStrut(10));
+		panel.add(teams);
+		
+		JPanel compets = new JPanel();
+		compets.add(new JLabel("Enlever de la compétition :"));
+		compets.add(boxCompets);
+		panel.add(teams);
+		panel.add(Box.createVerticalStrut(20));
+//		panel.add(Box.createHorizontalStrut(100));
+		panel.add(compets);
+		panel.add(Box.createVerticalStrut(30));
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		return panel;
+	}
+	
+	private JPanel editTeam()
+	{
+		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createTitledBorder("Editer placeholder"));
+		panel.add(new JLabel("Nom :"));
+		panel.add(new JTextField(20));
+		panel.add(Box.createVerticalStrut(50));
+		return panel;
+		
 	}
 }

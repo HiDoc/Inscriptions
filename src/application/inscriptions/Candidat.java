@@ -93,7 +93,16 @@ public class Candidat implements Serializable {
     public void setNom(String nom) {
         this.nom = nom;
     }
-
+    
+    /**
+     * Renvoie l'id, bitch
+     * @return id_ca
+     */
+    
+	public int getId_ca() {
+		return id_ca;
+	}
+    
     /**
      * Retourne la liste des équipes du candidat
      * @return un Set de Candidat
@@ -139,6 +148,10 @@ public class Candidat implements Serializable {
     public void remove(){
         passerelle.delete(this);
     }
-
+    
+    @Override
+    public String toString() {
+    	return id_ca+":"+nom;
+    }
 
 }
