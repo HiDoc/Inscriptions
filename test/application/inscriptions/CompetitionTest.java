@@ -29,15 +29,18 @@ public class CompetitionTest {
     Competition instance = CompetitionCreator();
     
     public CompetitionTest() {
+       
     }
     
     @BeforeClass
     public static void setUpClass() {
          passerelle.open();
+       
     }
     
     @AfterClass
     public static void tearDownClass() {
+        
          passerelle.close();
     }
     
@@ -71,6 +74,37 @@ public class CompetitionTest {
          
     }
 
+    
+    /**
+     * test insertion of competition complete into database
+     */
+    @Test
+    public void insertDatabaseFullOne(){
+        int expResult = passerelle.count("Competition");
+        passerelle.save(instance);
+        int  result = passerelle.count("Competition");
+        assertEquals(expResult+1,result);
+    }
+    
+    /**
+     * test insertion of default constructor into database
+     */
+     @Test
+    public void insertDatabaseEmptyOne(){
+        int expResult = passerelle.count("Competition");
+        Candidat d =  new  Candidat();
+        passerelle.save(d);
+        int  result = passerelle.count("Competition");
+        assertEquals(expResult+1,result);
+    }
+    
+    
+    
+    
+    /**
+     * test suppression compettion from database
+     */
+    
     /**
      * Test of getNom method, of class Competition.
      */
@@ -82,6 +116,7 @@ public class CompetitionTest {
         assertEquals(expResult, result);
        
     }
+    
 
     /**
      * Test of getDate method, of class Competition.
@@ -245,6 +280,7 @@ public class CompetitionTest {
         Candidat candidat = new Candidat();
         Competition instance = new Competition();
         instance.addCandidat(candidat);
+        
        
     }
 
