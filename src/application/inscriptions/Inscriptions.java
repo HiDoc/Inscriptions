@@ -222,6 +222,10 @@ public class Inscriptions implements Serializable {
         TreeSet set = new TreeSet(list);
         return set;
     }
+    public boolean compareList(ArrayList a, ArrayList b){
+        a.removeAll(b);
+        return a.isEmpty();
+    }
 //	public static void main(String[] args)
 //	{
 //		Inscriptions myInscriptions = Inscriptions.getInscriptions();

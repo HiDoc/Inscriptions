@@ -8,6 +8,7 @@ package application.inscriptions;
 import data.hibernate.passerelle;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -31,20 +32,20 @@ public class InscriptionsTest {
     
     @BeforeClass
     public static void setUpClass() {
+        passerelle.open();
     }
     
     @AfterClass
     public static void tearDownClass() {
+        passerelle.close();
     }
     
     @Before
     public void setUp() {
-        passerelle.open();
     }
     
     @After
     public void tearDown() {
-        passerelle.close();
     }
 
     /**
@@ -53,11 +54,11 @@ public class InscriptionsTest {
     @Test
     public void testGetCompetitions() {
         System.out.println("getCompetitions");
-        SortedSet<Competition> compare = null;
-        List<Competition> instances = passerelle.table("competition");
+        ArrayList<Competition> compare = null;
+        ArrayList<Competition> instances = (ArrayList)passerelle.table("competition");
         instances.stream().forEach(compare::add);
-        SortedSet<Competition> result = this.instance.getCompetitions();
-        ListAssert.assertEquals(compare, result);
+        ArrayList<Competition> result = (ArrayList<Competition>) (this.instance.getCompetitions().stream());
+        assertTrue(this.instance.compareList(compare,instances));
     }
 
     /**

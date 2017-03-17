@@ -70,6 +70,6 @@ BEGIN
 	UNTIL v_i > nbr END REPEAT;
 END|
 DELIMITER ;
-CALL fillTables(50);
+
 select * from competition;
 /*grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';*/

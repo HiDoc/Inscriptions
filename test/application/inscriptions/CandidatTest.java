@@ -27,20 +27,20 @@ public class CandidatTest {
     
     @BeforeClass
     public static void setUpClass() {
+        passerelle.open();
     }
     
     @AfterClass
     public static void tearDownClass() {
+        passerelle.close();
     }
     
     @Before
     public void setUp() {
-        passerelle.open();
     }
     
     @After
     public void tearDown() {
-        passerelle.close();
     }
 
     /**
