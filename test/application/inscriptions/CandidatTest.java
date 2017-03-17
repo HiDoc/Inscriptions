@@ -22,31 +22,25 @@ import static org.junit.Assert.*;
  */
 public class CandidatTest {
     
-    Candidat instance;
     public CandidatTest() {
-        this.instance = (Candidat) passerelle.select(new Candidat(), 1);
     } 
    
     @BeforeClass
     public static void setUpClass() {
-        passerelle.open();
-        passerelle.save(new Candidat("name"));
-        
     }
     
     @AfterClass
     public static void tearDownClass() {
-        passerelle.close();
     }
     
     @Before
     public void setUp() {
-        this.instance = (Candidat) passerelle.select(new Candidat(), this.instance.getId());
-        passerelle.save(this.instance);
+        passerelle.open();
     }
     
     @After
     public void tearDown() {
+        passerelle.close();
     }
 
     /**
@@ -56,8 +50,10 @@ public class CandidatTest {
     public void testGetNom() {
         System.out.println("Réussite de la fonction getNom");
         String expResult = "name";
-        String nom = this.instance.getNom();
-        assertEquals(expResult, nom);
+        Candidat instance = ((Candidat)passerelle.select(new Candidat(), 1));
+        System.out.println(instance.getNom());
+        passerelle.save(instance);
+        assertEquals(expResult, instance.getNom());
     }
 
     /**
@@ -67,8 +63,11 @@ public class CandidatTest {
     public void testSetNom() {
         System.out.println("Réussite de la fonction setNom");
         String nom = "newNom";
-        this.instance.setNom(nom);
-        assertEquals(nom, instance.getNom());
+        Candidat instance = (Candidat) passerelle.select(new Candidat(), 1);
+        instance.setNom(nom);
+        passerelle.save(instance);
+        System.out.println(instance.getId());
+        assertEquals(nom, ((Candidat) passerelle.select(new Candidat(), 1)).getNom());
     }
 
     /**
