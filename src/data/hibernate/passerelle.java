@@ -101,6 +101,9 @@ public class passerelle {
     public static <T> Object select(Object o, int id) {
         return session.get(o.getClass(), id);
     }
+    public static <T> Object select(String o, int id) {
+        return session.get(o, id);
+    }
 
     /**
      * Selectionne une table par rapport à l'objet mis en paramètre

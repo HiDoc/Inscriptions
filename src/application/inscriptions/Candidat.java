@@ -9,9 +9,11 @@ import data.hibernate.passerelle;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,13 +31,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "candidat")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Candidat implements Serializable {
+public class Candidat implements Serializable, Comparable<Candidat> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_ca")
     private int id_ca;
 
+    @Basic(fetch=EAGER)
     @Column(name = "nom")
     private String nom;
     
@@ -99,15 +102,6 @@ public class Candidat implements Serializable {
     public void setNom(String nom) {
         this.nom = nom;
     }
-    
-    /**
-     * Renvoie l'id, bitch
-     * @return id_ca
-     */
-    
-	public int getId_ca() {
-		return id_ca;
-	}
     
     /**
      * Retourne la liste des équipes du candidat
@@ -191,6 +185,12 @@ public class Candidat implements Serializable {
     @Override
     public String toString() {
     	return id_ca+":"+nom;
+    }
+
+    @Override
+    public int compareTo(Candidat candidat) {
+        int i = getNom().compareTo(candidat.getNom());
+        return i + (getId() == candidat.getId() ? 0 : 1) ;
     }
 
 

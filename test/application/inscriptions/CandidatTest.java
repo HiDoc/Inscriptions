@@ -22,12 +22,16 @@ import static org.junit.Assert.*;
  */
 public class CandidatTest {
     
+    Candidat instance;
     public CandidatTest() {
-    }
-    
+        this.instance = (Candidat) passerelle.select(new Candidat(), 1);
+    } 
+   
     @BeforeClass
     public static void setUpClass() {
         passerelle.open();
+        passerelle.save(new Candidat("name"));
+        
     }
     
     @AfterClass
@@ -37,6 +41,9 @@ public class CandidatTest {
     
     @Before
     public void setUp() {
+        this.instance = (Candidat) passerelle.select("candidat", this.instance.getId());
+        System.out.println(this.instance.getNom());
+        System.out.println(this.instance.getId());
     }
     
     @After
@@ -49,10 +56,9 @@ public class CandidatTest {
     @Test
     public void testGetNom() {
         System.out.println("Réussite de la fonction getNom");
-        Candidat instance = new Candidat("nom");
-        String expResult = "nom";
-        String result = instance.getNom();
-        assertEquals(expResult, result);
+        String expResult = "name";
+        String nom = this.instance.getNom();
+        assertEquals(expResult, nom);
     }
 
     /**
@@ -62,8 +68,7 @@ public class CandidatTest {
     public void testSetNom() {
         System.out.println("Réussite de la fonction setNom");
         String nom = "newNom";
-        Candidat instance = new Candidat("nom");
-        instance.setNom(nom);
+        this.instance.setNom(nom);
         assertEquals(nom, instance.getNom());
     }
 
