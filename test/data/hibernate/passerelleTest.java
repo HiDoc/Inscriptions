@@ -45,8 +45,6 @@ public class passerelleTest {
     public void testOpen() {
         System.out.println("open");
         passerelle.open();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -56,8 +54,6 @@ public class passerelleTest {
     public void testClose() {
         System.out.println("close");
         passerelle.close();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -68,8 +64,6 @@ public class passerelleTest {
         System.out.println("delete");
         Object o = null;
         passerelle.delete(o);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -80,8 +74,6 @@ public class passerelleTest {
         System.out.println("save");
         Object o = null;
         passerelle.save(o);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -94,8 +86,6 @@ public class passerelleTest {
         int expResult = 0;
         int result = passerelle.saveAndId(o);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -108,8 +98,6 @@ public class passerelleTest {
         int expResult = 0;
         int result = passerelle.count(className);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -123,8 +111,6 @@ public class passerelleTest {
         Object expResult = null;
         Object result = passerelle.select(o, id);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -137,8 +123,6 @@ public class passerelleTest {
         List expResult = null;
         List result = passerelle.table(o);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -151,8 +135,6 @@ public class passerelleTest {
         List expResult = null;
         List result = passerelle.table(className);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -165,8 +147,6 @@ public class passerelleTest {
         boolean expResult = false;
         boolean result = passerelle.isEquipe(id);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

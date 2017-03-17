@@ -50,5 +50,8 @@ CREATE VIEW Equipe AS(
 						FROM users u 	
 						WHERE c.id_ca = u.id_ca)
 	);
-select * from candidat;
+
+
+
+
 /*grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';*/

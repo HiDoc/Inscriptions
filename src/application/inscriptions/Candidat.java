@@ -61,7 +61,7 @@ public class Candidat implements Serializable {
     /**
      * Crée une liste de toutes les équipes auxquelles le candidat est inscrit
      */
-    private final Set<Candidat> equipe = new HashSet<>(0);
+    private final Set<Equipe> equipe = new HashSet<>(0);
 
 
     /**
@@ -104,7 +104,7 @@ public class Candidat implements Serializable {
      * Retourne la liste des équipes du candidat
      * @return un Set de Candidat
      */
-    public Set<Candidat> getEquipe() {
+    public Set<Equipe> getEquipe() {
         return this.equipe;
     }
 
@@ -112,7 +112,7 @@ public class Candidat implements Serializable {
      * Retourne la liste des candidats inscrits dans cette équipe
      * @return un Set de candidat
      */
-    public Set<Candidat> getCandidats(){
+    public Set<Equipe> getCandidats(){
         return this.equipe;
     }
     /**
@@ -144,11 +144,12 @@ public class Candidat implements Serializable {
     
     /**
      * Ajoute une équipe à un candidat ou un candidat à une équipe
+     * Override dans la classe Equipe
      * @param candidat
      */
     public void addEquipe(Candidat candidat){
-        if(!this.equipe.contains(candidat)){
-            this.equipe.add(candidat);
+        if(!this.equipe.contains((Equipe)candidat)){
+            this.equipe.add((Equipe) candidat);
         }
         else throw new RuntimeException("le candidat est déjà inscrit");
     }
@@ -158,8 +159,8 @@ public class Candidat implements Serializable {
      * @param candidat
      */
     public void removeEquipe(Candidat candidat){
-    if(this.equipe.contains(candidat)){
-            this.equipe.remove(candidat);
+    if(this.equipe.contains((Equipe)candidat)){
+            this.equipe.remove((Equipe)candidat);
         }
         else throw new RuntimeException("le candidat n'est pas inscrit");    
     }

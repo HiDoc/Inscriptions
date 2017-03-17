@@ -75,7 +75,7 @@ public class CandidatTest {
         System.out.println("Réussite de la fonction getEquipe");
         Candidat instance = new Candidat();
         Set<Candidat> expResult = new HashSet<>(0);
-        Set<Candidat> result = instance.getEquipe();
+        Set<Equipe> result = instance.getEquipe();
         assertEquals(expResult, result);
     }
 
@@ -87,7 +87,7 @@ public class CandidatTest {
         System.out.println("Réussite de la fonction getCandidats");
         Candidat instance = new Candidat();
         Set<Candidat> expResult = new HashSet<>(0);
-        Set<Candidat> result = instance.getCandidats();
+        Set<Equipe> result = instance.getCandidats();
         assertEquals(expResult, result);
     }
 
@@ -134,10 +134,10 @@ public class CandidatTest {
     @Test
     public void testAddEquipe() {
         System.out.println("Réussite de la fonction addEquipe");
-        Candidat candidat = new Candidat();
-        Candidat instance = new Candidat();
+        Candidat candidat = (Users) new Candidat();
+        Equipe instance = (Equipe) new Candidat();
         instance.addEquipe(candidat);
-        assertTrue(instance.getCandidats().contains(candidat));
+        assertTrue(candidat.getCandidats().contains(instance));
     }
 
     /**

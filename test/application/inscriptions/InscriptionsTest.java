@@ -5,6 +5,7 @@
  */
 package application.inscriptions;
 
+import data.hibernate.passerelle;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.SortedSet;
@@ -22,7 +23,9 @@ import static org.junit.Assert.*;
  */
 public class InscriptionsTest {
     
+    Inscriptions instance;
     public InscriptionsTest() {
+        this.instance = new Inscriptions();
     }
     
     @BeforeClass
@@ -35,10 +38,12 @@ public class InscriptionsTest {
     
     @Before
     public void setUp() {
+        passerelle.open();
     }
     
     @After
     public void tearDown() {
+        passerelle.close();
     }
 
     /**
@@ -47,12 +52,9 @@ public class InscriptionsTest {
     @Test
     public void testGetCompetitions() {
         System.out.println("getCompetitions");
-        Inscriptions instance = null;
         SortedSet<Competition> expResult = null;
-        SortedSet<Competition> result = instance.getCompetitions();
+        SortedSet<Competition> result = this.instance.getCompetitions();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

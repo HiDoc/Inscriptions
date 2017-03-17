@@ -18,6 +18,7 @@
         <mapping class="application.inscriptions.Candidat" />
         <mapping class="application.inscriptions.Competition"/>
         <mapping class="application.inscriptions.Users"/> 
+        <mapping class="application.inscriptions.Equipe"/> 
       
     </session-factory>
 </hibernate-configuration>
