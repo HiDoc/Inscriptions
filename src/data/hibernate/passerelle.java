@@ -60,6 +60,9 @@ public class passerelle {
     public static void flush(){
         session.flush();
     }
+    public static void update(Object o){
+        session.update(o);
+    }
     public static void refresh(Object o){
         session.refresh(o);
     }
@@ -104,7 +107,7 @@ public class passerelle {
      * @param id un nombre
      * @return un objet spécifique sélectionné par son id
      */
-    public static <T> Object select(Object o, int id) {
+    public static <T> Object get(Object o, int id) {
         Transaction tx = session.beginTransaction();
         Object object = session.get(o.getClass(), id);
         tx.commit();

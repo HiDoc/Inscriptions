@@ -6,7 +6,6 @@
 package application.inscriptions;
 
 import data.hibernate.passerelle;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.After;
@@ -50,7 +49,7 @@ public class CandidatTest {
     public void testGetNom() {
         System.out.println("Réussite de la fonction getNom");
         String expResult = "name";
-        Candidat instance = ((Candidat)passerelle.select(new Candidat(), 1));
+        Candidat instance =((Candidat)passerelle.get(Candidat.class, 1));
         passerelle.refresh(instance);
         assertEquals(expResult, instance.getNom());
     }
@@ -62,10 +61,10 @@ public class CandidatTest {
     public void testSetNom() {
         System.out.println("Réussite de la fonction setNom");
         String nom = "newNom";
-        Candidat instance = (Candidat) passerelle.select(new Candidat(), 1);
-        passerelle.save(instance);
+        Candidat instance = (Candidat) passerelle.get(new Candidat(), 2);
         instance.setNom(nom);
-        passerelle.save(instance);
+        passerelle.update(instance);
+        passerelle.flush();
         assertEquals(nom, ((Candidat) passerelle.select(new Candidat(), 1)).getNom());
     }
 
