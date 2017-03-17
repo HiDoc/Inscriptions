@@ -57,6 +57,12 @@ public class passerelle {
     public static void close() {
         session.close();
     }
+    public static void flush(){
+        session.flush();
+    }
+    public static void refresh(Object o){
+        session.refresh(o);
+    }
 
     public static void delete(Object o) {
         Transaction tx = session.beginTransaction();

@@ -51,8 +51,7 @@ public class CandidatTest {
         System.out.println("Réussite de la fonction getNom");
         String expResult = "name";
         Candidat instance = ((Candidat)passerelle.select(new Candidat(), 1));
-        System.out.println(instance.getNom());
-        passerelle.save(instance);
+        passerelle.refresh(instance);
         assertEquals(expResult, instance.getNom());
     }
 
@@ -64,9 +63,9 @@ public class CandidatTest {
         System.out.println("Réussite de la fonction setNom");
         String nom = "newNom";
         Candidat instance = (Candidat) passerelle.select(new Candidat(), 1);
+        passerelle.save(instance);
         instance.setNom(nom);
         passerelle.save(instance);
-        System.out.println(instance.getId());
         assertEquals(nom, ((Candidat) passerelle.select(new Candidat(), 1)).getNom());
     }
 
