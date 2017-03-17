@@ -55,6 +55,15 @@ public class Inscriptions implements Serializable {
     }
 
     /**
+     * Retourne toutes les personnes.
+     *
+     * @return
+     */
+    public SortedSet<Candidat> getPersonnes() {
+        return getSort((ArrayList) passerelle.table("users"));
+    }
+
+    /**
      * Retourne toutes les équipes.
      * @return Un SortedSet
      */
