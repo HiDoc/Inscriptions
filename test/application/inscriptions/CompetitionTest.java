@@ -6,6 +6,8 @@
 package application.inscriptions;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -25,6 +27,7 @@ public class CompetitionTest {
     
     @BeforeClass
     public static void setUpClass() {
+         
     }
     
     @AfterClass
@@ -38,6 +41,18 @@ public class CompetitionTest {
     @After
     public void tearDown() {
     }
+    
+    private Competition CompetitionCreator(){
+        String nom = "test";
+        GregorianCalendar Calendar_test = new GregorianCalendar();
+        Date date_test = new Date(95, 10, 10);
+        Calendar_test.setTime(date_test);
+        int duree_test = 5;
+        boolean en_equipe = true;
+        Competition test = new Competition(nom,Calendar_test,duree_test,en_equipe);
+        return test;
+         
+    }
 
     /**
      * Test of getNom method, of class Competition.
@@ -45,12 +60,12 @@ public class CompetitionTest {
     @Test
     public void testGetNom() {
         System.out.println("getNom");
-        Competition instance = new Competition();
-        String expResult = "";
+       
+        Competition instance = CompetitionCreator();
+        String expResult = "test";
         String result = instance.getNom();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
     }
 
     /**
@@ -59,12 +74,11 @@ public class CompetitionTest {
     @Test
     public void testGetDate() {
         System.out.println("getDate");
-        Competition instance = new Competition();
-        Calendar expResult = null;
+        Competition instance =CompetitionCreator();
+        GregorianCalendar expResult = new GregorianCalendar();
         Calendar result = instance.getDate();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
