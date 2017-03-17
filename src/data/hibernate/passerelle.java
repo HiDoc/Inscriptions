@@ -99,10 +99,10 @@ public class passerelle {
      * @return un objet spécifique sélectionné par son id
      */
     public static <T> Object select(Object o, int id) {
-        return session.get(o.getClass(), id);
-    }
-    public static <T> Object select(String o, int id) {
-        return session.get(o, id);
+        Transaction tx = session.beginTransaction();
+        Object object = session.get(o.getClass(), id);
+        tx.commit();
+        return object;
     }
 
     /**
@@ -112,7 +112,10 @@ public class passerelle {
      * @return une liste d'objet de la classe de l'objet spécifié en paramètre
      */
     public static <T> List<T> table(Object o){
-        return session.createCriteria(o.getClass()).list();
+        Transaction tx = session.beginTransaction();
+        Object object = session.createCriteria(o.getClass()).list();
+        tx.commit();
+        return (List<T>) object;
     }
     /**
      * Surcharge de la méthode table

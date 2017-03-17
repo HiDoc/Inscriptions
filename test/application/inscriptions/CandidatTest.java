@@ -41,9 +41,8 @@ public class CandidatTest {
     
     @Before
     public void setUp() {
-        this.instance = (Candidat) passerelle.select("candidat", this.instance.getId());
-        System.out.println(this.instance.getNom());
-        System.out.println(this.instance.getId());
+        this.instance = (Candidat) passerelle.select(new Candidat(), this.instance.getId());
+        passerelle.save(this.instance);
     }
     
     @After
@@ -111,14 +110,14 @@ public class CandidatTest {
     /**
      * Test of inscription method, of class Candidat.
      */
-    @Test
-    public void testInscription() {
-        System.out.println("Réussite de la fonction inscription");
-        Competition competition = new Competition("nom",Calendar.getInstance(),280, false);
-        Candidat instance = new Candidat();
-        instance.inscription(competition);
-        assertTrue(competition.getCandidats().contains(instance));
-    }
+//    @Test
+//    public void testInscription() {
+//        System.out.println("Réussite de la fonction inscription");
+//        Competition competition = new Competition("nom",Calendar.getInstance(),280, false);
+//        Candidat instance = new Candidat();
+//        instance.inscription(competition);
+//        assertTrue(competition.getCandidats().contains(instance));
+//    }
 
     /**
      * Test of desinscription method, of class Candidat.
