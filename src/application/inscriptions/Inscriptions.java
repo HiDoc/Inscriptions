@@ -31,9 +31,11 @@ public class Inscriptions implements Serializable {
     private SortedSet<Candidat> equipes = new TreeSet<>();
 
     public Inscriptions() {
-        this.competitions = getSort((ArrayList) passerelle.table("competition"));
-        this.candidats = getSort((ArrayList) passerelle.table("candidat"));
-        this.equipes = getSort((ArrayList) passerelle.table("equipe"));
+        passerelle.open();
+        this.competitions = getSort((ArrayList) passerelle.table("Competition"));
+        this.candidats = getSort((ArrayList) passerelle.table("Candidat"));
+        this.equipes = getSort((ArrayList) passerelle.table("Equipe"));
+        passerelle.close();
     }
 
     /**

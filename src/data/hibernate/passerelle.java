@@ -123,7 +123,6 @@ public class passerelle {
     }
     /**
      * Accès à la vue équipe
-     * @param o
      * @param id
      * @return boolean
      * TODO : Implementer la classe equipe pour récupérer le booléean
