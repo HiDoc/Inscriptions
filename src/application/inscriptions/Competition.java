@@ -29,7 +29,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name = "competition")
-@PrimaryKeyJoinColumn(name = "id_co", referencedColumnName = "id_ca")
+
 
 public class Competition implements Serializable { 
 
@@ -74,12 +74,14 @@ public class Competition implements Serializable {
      * @param date_d de type Calendar
      * @param duree un nombre
      * @param enEquipe un booléen
+     * @param dateClose un Calendar
      */
-    public Competition(String nom, Calendar date_d, int duree, boolean enEquipe) {
+    public Competition(String nom, Calendar date_d, int duree, boolean enEquipe,Calendar dateClose) {
         this.nom = nom;
         this.date = date_d;
         this.duree = duree;
         this.enEquipe = enEquipe;
+        this.dateClose = dateClose;
     }
 
     /**
@@ -185,7 +187,7 @@ public class Competition implements Serializable {
     public void addCandidat(Candidat candidat){
         if(!this.enEquipe){
             this.candidats.add(candidat);
-            passerelle.save(this.candidats);
+            passerelle.save(this.candidats); 
         }
         else throw new RuntimeException();
     }

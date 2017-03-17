@@ -5,6 +5,9 @@
  */
 package application.inscriptions;
 
+
+import java.util.HashSet;
+import data.hibernate.passerelle;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -22,34 +25,48 @@ import static org.junit.Assert.*;
  */
 public class CompetitionTest {
     
+    
+    Competition instance = CompetitionCreator();
+    
     public CompetitionTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
-         
+         passerelle.open();
     }
     
     @AfterClass
     public static void tearDownClass() {
+         passerelle.close();
     }
     
     @Before
     public void setUp() {
+      
+     
     }
     
     @After
     public void tearDown() {
+       
     }
     
+    /**
+     * Set up a Competition with fixed value for test
+     * @return a competition 
+     */
     private Competition CompetitionCreator(){
         String nom = "test";
-        GregorianCalendar Calendar_test = new GregorianCalendar();
+        GregorianCalendar Calendar_debut = new GregorianCalendar();
         Date date_test = new Date(95, 10, 10);
-        Calendar_test.setTime(date_test);
-        int duree_test = 5;
+        Calendar_debut.setTime(date_test);
+        date_test = new Date(96,10,10);
+        Calendar Calendar_fin = new GregorianCalendar();
+        Calendar_fin.setTime(date_test);
+        int duree_test = 0;
         boolean en_equipe = true;
-        Competition test = new Competition(nom,Calendar_test,duree_test,en_equipe);
+        Competition test = new Competition(nom,Calendar_debut,duree_test,en_equipe, Calendar_fin);
         return test;
          
     }
@@ -60,10 +77,8 @@ public class CompetitionTest {
     @Test
     public void testGetNom() {
         System.out.println("getNom");
-       
-        Competition instance = CompetitionCreator();
         String expResult = "test";
-        String result = instance.getNom();
+        String result = this.instance.getNom();
         assertEquals(expResult, result);
        
     }
@@ -76,6 +91,8 @@ public class CompetitionTest {
         System.out.println("getDate");
         Competition instance =CompetitionCreator();
         GregorianCalendar expResult = new GregorianCalendar();
+        Date date_test = new Date(95, 10, 10);
+        expResult.setTime(date_test);
         Calendar result = instance.getDate();
         assertEquals(expResult, result);
         
@@ -87,12 +104,10 @@ public class CompetitionTest {
     @Test
     public void testGetDuree() {
         System.out.println("getDuree");
-        Competition instance = new Competition();
+        Competition instance = CompetitionCreator();
         int expResult = 0;
         int result = instance.getDuree();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -101,12 +116,13 @@ public class CompetitionTest {
     @Test
     public void testGetDateClose() {
         System.out.println("getDateClose");
-        Competition instance = new Competition();
-        Calendar expResult = null;
+        Competition instance = CompetitionCreator();
+        GregorianCalendar expResult = new GregorianCalendar();
+        Date date_test = new Date(96, 10, 10);
+        expResult.setTime(date_test);
         Calendar result = instance.getDateClose();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+     
     }
 
     /**
@@ -115,12 +131,11 @@ public class CompetitionTest {
     @Test
     public void testGetEnEquipe() {
         System.out.println("getEnEquipe");
-        Competition instance = new Competition();
-        boolean expResult = false;
+        Competition instance = CompetitionCreator();
+        boolean expResult = true;
         boolean result = instance.getEnEquipe();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -129,11 +144,12 @@ public class CompetitionTest {
     @Test
     public void testSetNom() {
         System.out.println("setNom");
-        String nom = "";
+        String nom = "test";
         Competition instance = new Competition();
         instance.setNom(nom);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String result = instance.getNom();
+        assertEquals(nom,result);
+     
     }
 
     /**
@@ -142,11 +158,14 @@ public class CompetitionTest {
     @Test
     public void testSetDate() {
         System.out.println("setDate");
-        Calendar date = null;
+        Calendar calendar = new GregorianCalendar();
+        Date date_test = new Date(10,10,10);
+        calendar.setTime(date_test);
         Competition instance = new Competition();
-        instance.setDate(date);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setDate(calendar);
+        Calendar result = instance.getDate();
+        assertEquals(calendar,result);
+      
     }
 
     /**
@@ -158,8 +177,9 @@ public class CompetitionTest {
         int duree = 0;
         Competition instance = new Competition();
         instance.setDuree(duree);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int result = instance.getDuree();
+        assertEquals(duree, result);
+       
     }
 
     /**
@@ -171,8 +191,8 @@ public class CompetitionTest {
         boolean enEquipe = false;
         Competition instance = new Competition();
         instance.setEnEquipe(enEquipe);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       boolean result = instance.getEnEquipe();
+       assertEquals(result,enEquipe);
     }
 
     /**
@@ -181,11 +201,13 @@ public class CompetitionTest {
     @Test
     public void testSetDateClose() {
         System.out.println("setDateClose");
-        Calendar dateClose = null;
+       Calendar calendar = new GregorianCalendar();
+        Date date_test = new Date(10,10,10);
+        calendar.setTime(date_test);
         Competition instance = new Competition();
-        instance.setDateClose(dateClose);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setDateClose(calendar);
+        Calendar result = instance.getDateClose();
+        assertEquals(calendar,result);
     }
 
     /**
@@ -198,8 +220,7 @@ public class CompetitionTest {
         Set<Candidat> expResult = null;
         Set<Candidat> result = instance.getCandidats();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
     }
 
     /**
@@ -212,8 +233,7 @@ public class CompetitionTest {
         boolean expResult = false;
         boolean result = instance.inscriptionsOuvertes();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -222,11 +242,10 @@ public class CompetitionTest {
     @Test
     public void testAddCandidat() {
         System.out.println("addCandidat");
-        Candidat candidat = null;
+        Candidat candidat = new Candidat();
         Competition instance = new Competition();
         instance.addCandidat(candidat);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
     }
 
     /**
