@@ -36,12 +36,12 @@ CREATE TABLE appartenir (
 );
 
 CREATE TABLE participer (
-    ca_id INT,
-    co_id INT,
-    PRIMARY KEY (ca_id , co_id),
-    FOREIGN KEY (ca_id)
+    id_ca INT,
+    id_co INT,
+    PRIMARY KEY (id_ca , id_co),
+    FOREIGN KEY (id_ca)
         REFERENCES candidat (id_ca),
-    FOREIGN KEY (co_id)
+    FOREIGN KEY (id_co)
         REFERENCES competition (id_co)
 );
 CREATE VIEW Equipe AS(
@@ -71,4 +71,5 @@ BEGIN
 END|
 DELIMITER ;
 CALL filltables(1);
+select * from participer;
 grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';
