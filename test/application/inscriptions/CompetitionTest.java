@@ -69,7 +69,7 @@ public class CompetitionTest {
         Calendar Calendar_fin = new GregorianCalendar();
         Calendar_fin.setTime(date_test);
         int duree_test = 0;
-        boolean en_equipe = false;
+        boolean en_equipe = true;
         Competition test = new Competition(nom,Calendar_debut,duree_test,en_equipe, Calendar_fin);
         return test;
          
@@ -275,6 +275,7 @@ public class CompetitionTest {
     @Test
     public void testAddCandidat() {
         System.out.println("addCandidat");
+        Candidat candidat = new Candidat();
         passerelle.save(candidat);
         instance.addCandidat(candidat);
         

@@ -184,17 +184,11 @@ public class Competition implements Serializable {
      * TODO : ajouter la vérification de si le candidat est une équipe ou non
      */
     public void addCandidat(Candidat candidat){
-        if(!this.enEquipe && !passerelle.isEquipe(candidat.getId())){
+        if(!this.enEquipe){
             this.candidats.add(candidat);
             passerelle.save(this.candidats); 
         }
-        else if (!this.enEquipe && !passerelle.isEquipe(candidat.getId())){
-            this.candidats.add(candidat);
-            passerelle.save(this.candidats);
-        }
-        else{
-            throw new RuntimeException();
-        }
+        else{System.out.println("yolo");}
     }
 
     /**
