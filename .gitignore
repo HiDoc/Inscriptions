@@ -51,36 +51,7 @@ Inscriptions.srz
 
 /build/
 
-nbproject/project.properties
-src/data/hibernate/database.cfg.xml
-src/data/hibernate/database.cfg.xml
 nbproject/private/private.properties
-nbproject/private/private.xml
-*.properties
-nbproject/private/private.xml
-*.properties
-*.properties
-nbproject/private/private.xml
-nbproject/private/private.properties
-nbproject/project.properties
-src/data/hibernate/hibernate.java
+*.xml
 
-nbproject/private/private.properties
-*.xml
-*.xml
-nbproject/project.properties
-nbproject/project.properties
-*.properties
-*.properties
-nbproject/private/private.xml
-nbproject/private/private.xml
-*.xml
-/dist/
-nbproject/private/private.properties
-nbproject/private/private.xml
-nbproject/private/private.properties
-nbproject/private/private.xml
-nbproject/private/private.xml
-nbproject/private/private.xml
-nbproject/private/private.xml
 nbproject/private/private.xml
