@@ -25,6 +25,7 @@ public class CandidatTest {
    
     @BeforeClass
     public static void setUpClass() {
+        passerelle.open();
     }
     
     @AfterClass
@@ -33,7 +34,6 @@ public class CandidatTest {
     
     @Before
     public void setUp() {
-        passerelle.open();
     }
     
     @After
