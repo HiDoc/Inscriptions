@@ -82,11 +82,11 @@ public class Inscriptions implements Serializable {
      * @param duree
      * @param enEquipe
      */
-    public void createCompetition(String nom, Calendar dateCloture,int duree, boolean enEquipe) {
-        Competition newC = new Competition(nom, dateCloture, duree, enEquipe);
-        this.competitions.add(newC);
-        passerelle.save(newC);
-    }
+//    public void createCompetition(String nom, Calendar dateCloture,int duree, boolean enEquipe) {
+//        Competition newC = new Competition(nom, dateCloture, duree, enEquipe);
+//        this.competitions.add(newC);
+//        passerelle.save(newC);
+//    }
 
     /**
      * Créée une Candidat de type Personne. Ceci est le seul moyen, il n'y a pas

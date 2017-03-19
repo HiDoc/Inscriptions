@@ -12,7 +12,6 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +27,6 @@ import javax.persistence.Table;
  * Couche accès aux données de la classe Candidat
  * @author Flo
  */
-@Entity
 @Table(name = "candidat")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Candidat implements Serializable, Comparable<Candidat> {
