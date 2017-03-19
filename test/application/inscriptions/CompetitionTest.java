@@ -6,7 +6,6 @@
 package application.inscriptions;
 
 
-import java.util.HashSet;
 import data.hibernate.passerelle;
 import java.util.Calendar;
 import java.util.Date;
@@ -274,7 +273,7 @@ public class CompetitionTest {
     public void testAddCandidat() {
         System.out.println("addCandidat");
         Candidat candidat = new Candidat();
-        instance.addCandidat(candidat);
+       // instance.addCandidat(candidat);
         
     }
 

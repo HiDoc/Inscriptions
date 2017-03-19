@@ -5,9 +5,6 @@
  */
 package application.inscriptions;
 import data.hibernate.passerelle;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -86,7 +83,7 @@ public class CandidatTest {
         System.out.println("Réussite de la fonction inscription");
         Competition competition = (Competition) passerelle.get(Competition.class, 1);
         this.instance.inscription(competition);
-        passerelle.refresh(this.instance);
+        passerelle.refresh(instance);
         assertTrue(this.instance.getCompetition().contains(competition));
     }
 

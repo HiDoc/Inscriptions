@@ -11,7 +11,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -26,9 +25,6 @@ import javax.persistence.Table;
    
 public class Users extends Candidat implements Serializable {
     
-     
-    
-    
     @Column(name = "prenom")
     private String prenom;
 
@@ -38,7 +34,7 @@ public class Users extends Candidat implements Serializable {
     @Column(name = "mail")
     private String mail;
     
-        /*
+    /*
      * Clés plusieurs à plusieurs sur la table appartenir
      */
     @ManyToMany(cascade = CascadeType.ALL)

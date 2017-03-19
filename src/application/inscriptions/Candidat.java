@@ -52,7 +52,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
     /*
      * Crée une liste de toutes les compétitions auxquelles le candidat est inscrit
      */
-    private final Set<Competition> competition = new HashSet<>(0);
+    private final Set<Competition> competitions = new HashSet<>(0);
 
     /**
      * Constructeur par défault vide pour la persistance
@@ -95,15 +95,15 @@ public class Candidat implements Serializable, Comparable<Candidat> {
      * @return un Set de Competition
      */
     public Set<Competition> getCompetition() {
-        return this.competition;
+        return this.competitions;
     }
     
     /**
-     * Inscrit un candidat à une compétition
+     * Inscrit un candidat à une compétition     * 
      * @param competition
      */
     public void inscription(Competition competition){
-        competition.addCandidat(this);
+        competitions.add(competition);
     }
 
     /**
@@ -112,9 +112,9 @@ public class Candidat implements Serializable, Comparable<Candidat> {
      * @param competition
      */
     public void desinscription(Competition competition){
-        if(!this.competition.contains(competition))
-            competition.removeCandidat(this);
-        else throw new RuntimeException("le candidat est déjà inscrit");
+        if (competitions.contains(competition)){
+            competitions.remove(competition);
+        }
     }
     
     /**
