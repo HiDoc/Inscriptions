@@ -48,7 +48,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "participer", joinColumns = {
         @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_ca")})
+        @JoinColumn(name = "id_co")})
     /*
      * Crée une liste de toutes les compétitions auxquelles le candidat est inscrit
      */
