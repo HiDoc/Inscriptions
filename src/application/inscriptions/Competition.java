@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package application.inscriptions;
-
 import data.hibernate.passerelle;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -188,7 +187,7 @@ public class Competition implements Serializable {
             this.candidats.add(candidat);
             passerelle.save(this.candidats); 
         }
-        else throw new RuntimeException();
+        else{System.out.println("yolo");}
     }
 
     /**

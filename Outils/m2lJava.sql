@@ -71,6 +71,5 @@ BEGIN
 END|
 DELIMITER ;
 
-select * from candidat;
 
-/*grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';*/
+grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';
