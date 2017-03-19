@@ -27,7 +27,7 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class passerelle {
     
-    private static Session session = null;
+    public static Session session = null;
     private static SessionFactory sessionFactory = null;
     private static final String CONF_FILE = "data/hibernate/database.cfg.xml";
 

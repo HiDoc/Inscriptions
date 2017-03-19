@@ -69,7 +69,7 @@ public class CompetitionTest {
         Calendar Calendar_fin = new GregorianCalendar();
         Calendar_fin.setTime(date_test);
         int duree_test = 0;
-        boolean en_equipe = true;
+        boolean en_equipe = false;
         Competition test = new Competition(nom,Calendar_debut,duree_test,en_equipe, Calendar_fin);
         return test;
          
@@ -123,7 +123,6 @@ public class CompetitionTest {
     @Test
     public void testGetDate() {
         System.out.println("getDate");
-        Competition instance =CompetitionCreator();
         GregorianCalendar expResult = new GregorianCalendar();
         Date date_test = new Date(95, 10, 10);
         expResult.setTime(date_test);
@@ -138,7 +137,6 @@ public class CompetitionTest {
     @Test
     public void testGetDuree() {
         System.out.println("getDuree");
-        Competition instance = CompetitionCreator();
         int expResult = 0;
         int result = instance.getDuree();
         assertEquals(expResult, result);
@@ -276,10 +274,8 @@ public class CompetitionTest {
     public void testAddCandidat() {
         System.out.println("addCandidat");
         Candidat candidat = new Candidat();
-        passerelle.save(candidat);
         instance.addCandidat(candidat);
         
-       
     }
 
     /**
@@ -306,7 +302,9 @@ public class CompetitionTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
+    
+    
+    
     /**
      * Test of toString method, of class Competition.
      */

@@ -55,9 +55,15 @@ public class Competition implements Serializable {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "participer", joinColumns = {
-        @JoinColumn(name = "id_co")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_competition")})
-    private final Set<Candidat> candidats = new HashSet<>(0);
+            @JoinColumn(name = "co_id", nullable  = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "id_competition")})
+    private  Set<Candidat> candidats = new HashSet<>(0);
+     protected void setCandidat(Set<Candidat> candidats){
+        this.candidats = candidats;
+    }
+    
+    
+    
     
     /**
      * Constructeur par défaut vide pour la persistance
@@ -160,6 +166,7 @@ public class Competition implements Serializable {
     protected void setDateClose(Calendar dateClose){
         this.dateClose = dateClose;
     }
+    
 
     /**
      * Retourne la liste des candidats inscrits à la compétition
@@ -183,12 +190,30 @@ public class Competition implements Serializable {
      * TODO : ajouter la vérification de si le candidat est une équipe ou non
      */
     public void addCandidat(Candidat candidat){
-        if(!this.enEquipe){
-            this.candidats.add(candidat);
-            passerelle.save(this.candidats); 
+        if(!this.enEquipe && !candidat.isEquipe()){
+            passerelle.session.beginTransaction();
+            Set<Candidat> set = new HashSet<>();
+            System.out.println(set);
+            
+            
+            set.add(candidat);
+            System.out.println(set);
+            
+            
+            this.setCandidat(set);
+            System.out.println("yolo");
+           passerelle.session.getTransaction().commit();
         }
-        else{System.out.println("yolo");}
-    }
+        else if (this.enEquipe && candidat.isEquipe()){
+          Set<Candidat> set = this.getCandidats();
+            set.add(candidat);
+            this.setCandidat(candidats);
+            this.candidats.add(candidat);
+              this.setCandidat(candidats);
+        }
+        else {System.out.println("yolo");}
+                
+        }
 
     /**
      * Enlève un candidat de la compétition
