@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package application.inscriptions;
-
 import data.hibernate.passerelle;
 import java.io.Serializable;
 import java.util.Calendar;

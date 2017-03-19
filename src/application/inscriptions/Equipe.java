@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -23,9 +24,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name ="equipe")
 public class Equipe extends Candidat implements Serializable {
+    
 
-    @Column(insertable = false, updatable = false, name= "id_ca")
-    private int id;
   
     @Column(name="nom")
     private String nom;
@@ -64,5 +64,7 @@ public class Equipe extends Candidat implements Serializable {
         }
         else throw new RuntimeException("le candidat n'est pas inscrit");    
     }
+
+    
     
 }

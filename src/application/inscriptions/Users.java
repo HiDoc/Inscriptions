@@ -8,6 +8,7 @@ package application.inscriptions;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -18,9 +19,9 @@ import javax.persistence.Table;
 @Table(name = "users")
    
 public class Users extends Candidat implements Serializable {
+    
      
-    @Column(insertable = false, updatable = false, name= "id_ca")
-    private int idU;
+    
     
     @Column(name = "prenom")
     private String prenom;
@@ -105,5 +106,13 @@ public class Users extends Candidat implements Serializable {
      */
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public int getIdU() {
+        return idU;
+    }
+
+    public void setIdU(int idU) {
+        this.idU = idU;
     }
 }

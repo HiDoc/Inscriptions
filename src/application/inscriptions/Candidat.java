@@ -21,12 +21,15 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
 /**
  * Couche accès aux données de la classe Candidat
  * @author Flo
  */
+@Entity
 @Table(name = "candidat")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Candidat implements Serializable, Comparable<Candidat> {
