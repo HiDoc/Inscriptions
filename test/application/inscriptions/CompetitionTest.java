@@ -27,32 +27,33 @@ public class CompetitionTest {
     
     
     Competition instance = CompetitionCreator();
-    
+    Candidat candidat = CandidatcandidatCreator(); 
     public CompetitionTest() {
        
     }
     
     @BeforeClass
     public static void setUpClass() {
-         passerelle.open();
-       
+        
+         
     }
+       
     
     @AfterClass
     public static void tearDownClass() {
         
-         passerelle.close();
+        
     }
     
     @Before
     public void setUp() {
-      
-     
+                 passerelle.open();
+                 
     }
     
     @After
     public void tearDown() {
-       
+        passerelle.close();
     }
     
     /**
@@ -73,6 +74,11 @@ public class CompetitionTest {
         return test;
          
     }
+    
+    private Candidat CandidatcandidatCreator(){
+        Candidat _candidat = new Candidat("test");
+        return _candidat;
+    }
 
     
     /**
@@ -87,23 +93,16 @@ public class CompetitionTest {
     }
     
     /**
-     * test insertion of default constructor into database
-     */
-     @Test
-    public void insertDatabaseEmptyOne(){
-        int expResult = passerelle.count("Competition");
-        Candidat d =  new  Candidat();
-        passerelle.save(d);
-        int  result = passerelle.count("Competition");
-        assertEquals(expResult+1,result);
-    }
-    
-    
-    
-    
-    /**
      * test suppression compettion from database
      */
+    @Test
+    public void suppressionCompetition(){
+        int expresult = passerelle.count("Competition");
+        passerelle.save(instance);
+        passerelle.delete(instance);
+        int result = passerelle.count("Competition");
+        assertEquals(expresult, result);
+    }
     
     /**
      * Test of getNom method, of class Competition.
@@ -264,7 +263,6 @@ public class CompetitionTest {
     @Test
     public void testInscriptionsOuvertes() {
         System.out.println("inscriptionsOuvertes");
-        Competition instance = new Competition();
         boolean expResult = false;
         boolean result = instance.inscriptionsOuvertes();
         assertEquals(expResult, result);
@@ -278,7 +276,7 @@ public class CompetitionTest {
     public void testAddCandidat() {
         System.out.println("addCandidat");
         Candidat candidat = new Candidat();
-        Competition instance = new Competition();
+        passerelle.save(candidat);
         instance.addCandidat(candidat);
         
        

@@ -188,7 +188,7 @@ public class Competition implements Serializable {
             this.candidats.add(candidat);
             passerelle.save(this.candidats); 
         }
-        else throw new RuntimeException();
+        else{System.out.println("yolo");}
     }
 
     /**
