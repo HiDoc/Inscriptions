@@ -189,31 +189,31 @@ public class Competition implements Serializable {
      * @param candidat
      * TODO : ajouter la vérification de si le candidat est une équipe ou non
      */
-//    public void addCandidat(Candidat candidat){
-//        if(!this.enEquipe && !candidat.isEquipe()){
-//            passerelle.session.beginTransaction();
-//            Set<Candidat> set = new HashSet<>();
-//            System.out.println(set);
-//            
-//            
-//            set.add(candidat);
-//            System.out.println(set);
-//            
-//            
-//            this.setCandidat(set);
-//            System.out.println("yolo");
-//           passerelle.session.getTransaction().commit();
-//        }
-//        else if (this.enEquipe && candidat.getClass()== this.enEquipe){
-//          Set<Candidat> set = this.getCandidats();
-//            set.add(candidat);
-//            this.setCandidat(candidats);
-//            this.candidats.add(candidat);
-//              this.setCandidat(candidats);
-//        }
-//        else {System.out.println("yolo");}
-//                
-//        }
+    public void addCandidat(Candidat candidat){
+        if(!this.enEquipe && !candidat.isEquipe()){
+            passerelle.session.beginTransaction();
+            Set<Candidat> set = new HashSet<>();
+            System.out.println(set);
+            
+            
+            set.add(candidat);
+            System.out.println(set);
+            
+            
+            this.setCandidat(set);
+            System.out.println("yolo");
+           passerelle.session.getTransaction().commit();
+        }
+        else if (this.enEquipe && candidat.getClass()== this.enEquipe){
+          Set<Candidat> set = this.getCandidats();
+            set.add(candidat);
+            this.setCandidat(candidats);
+            this.candidats.add(candidat);
+              this.setCandidat(candidats);
+        }
+        else {System.out.println("yolo");}
+                
+        }
 
     /**
      * Enlève un candidat de la compétition
