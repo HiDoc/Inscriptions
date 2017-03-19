@@ -6,9 +6,15 @@
 package application.inscriptions;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -31,6 +37,19 @@ public class Users extends Candidat implements Serializable {
     
     @Column(name = "mail")
     private String mail;
+    
+        /*
+     * Clés plusieurs à plusieurs sur la table appartenir
+     */
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "appartenir", joinColumns = {
+        @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_user")})
+    /**
+     * Crée une liste de toutes les équipes auxquelles le candidat est inscrit
+     */
+    private final Set<Equipe> equipes = new HashSet<>(0);
+
     
     /**
      * Constructeur vide pour la persistance
@@ -107,12 +126,33 @@ public class Users extends Candidat implements Serializable {
     public void setMail(String mail) {
         this.mail = mail;
     }
-
-    public int getIdU() {
-        return idU;
+    /**
+     * Retourne la liste des équipes du candidat
+     * @return un Set de Candidat
+     */
+    public Set<Equipe> getEquipe() {
+        return this.equipes;
+    }
+    /**
+     * Ajouter un candidat à l'équipe
+     * @param equipe
+     */
+    public void addEquipe(Equipe equipe){
+        if(!this.equipes.contains((Equipe)equipe)){
+            this.equipes.add((Equipe) equipe);
+        }
+        else throw new RuntimeException("le candidat est déjà inscrit");
     }
 
-    public void setIdU(int idU) {
-        this.idU = idU;
+    /**
+     * Enlever un candidat de l'équipe
+     * @param equipe
+     */
+    public void removeEquipe(Equipe equipe){
+    if(this.equipes.contains((Equipe)equipe)){
+            this.equipes.remove((Equipe)equipe);
+        }
+        else throw new RuntimeException("le candidat n'est pas inscrit");    
     }
+
 }

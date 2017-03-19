@@ -22,7 +22,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
 /**
@@ -49,24 +48,11 @@ public class Candidat implements Serializable, Comparable<Candidat> {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "participer", joinColumns = {
         @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_user")})
+        @JoinColumn(name = "id_ca")})
     /*
      * Crée une liste de toutes les compétitions auxquelles le candidat est inscrit
      */
     private final Set<Competition> competition = new HashSet<>(0);
-    
-    /*
-     * Clés plusieurs à plusieurs sur la table appartenir
-     */
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "appartenir", joinColumns = {
-        @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_user")})
-    /**
-     * Crée une liste de toutes les équipes auxquelles le candidat est inscrit
-     */
-    private final Set<Equipe> equipe = new HashSet<>(0);
-
 
     /**
      * Constructeur par défault vide pour la persistance
@@ -105,21 +91,6 @@ public class Candidat implements Serializable, Comparable<Candidat> {
     }
     
     /**
-     * Retourne la liste des équipes du candidat
-     * @return un Set de Candidat
-     */
-    public Set<Equipe> getEquipe() {
-        return this.equipe;
-    }
-
-    /**
-     * Retourne la liste des candidats inscrits dans cette équipe
-     * @return un Set de candidat
-     */
-    public Set<Equipe> getCandidats(){
-        return this.equipe;
-    }
-    /**
      * Retourne la liste des compétitions du candidat
      * @return un Set de Competition
      */
@@ -146,36 +117,6 @@ public class Candidat implements Serializable, Comparable<Candidat> {
         else throw new RuntimeException("le candidat est déjà inscrit");
     }
     
-    /**
-     * Ajoute une équipe à un candidat ou un candidat à une équipe
-     * Override dans la classe Equipe
-     * @param candidat
-     */
-    public void addEquipe(Candidat candidat){
-        if(!this.equipe.contains((Equipe)candidat)){
-            this.equipe.add((Equipe) candidat);
-        }
-        else throw new RuntimeException("le candidat est déjà inscrit");
-    }
-
-    /**
-     * Enlève une équipe à un candidat ou un candidat à une équipe
-     * @param candidat
-     */
-    public void removeEquipe(Candidat candidat){
-    if(this.equipe.contains((Equipe)candidat)){
-            this.equipe.remove((Equipe)candidat);
-        }
-        else throw new RuntimeException("le candidat n'est pas inscrit");    
-    }
-
-    /**
-     * Vérifie si le candidat est une équipe ou un utilisateur
-     * @return booléen
-     */
-    public boolean isEquipe(){
-        return passerelle.isEquipe(this.id_ca);
-    }
     /**
      * Supprime un candidat de l'application
      */
