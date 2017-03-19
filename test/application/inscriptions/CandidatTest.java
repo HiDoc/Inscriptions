@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package application.inscriptions;
-
 import data.hibernate.passerelle;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,7 +38,6 @@ public class CandidatTest {
     
     @After
     public void tearDown() {
-        passerelle.close();
     }
 
     /**
@@ -63,9 +61,7 @@ public class CandidatTest {
         String nom = "newNom";
         Candidat instance = (Candidat) passerelle.get(new Candidat(), 2);
         instance.setNom(nom);
-        passerelle.update(instance);
-        passerelle.flush();
-        assertEquals(nom, ((Candidat) passerelle.select(new Candidat(), 1)).getNom());
+        assertEquals(nom, ((Candidat) passerelle.get(new Candidat(), 1)).getNom());
     }
 
     /**
