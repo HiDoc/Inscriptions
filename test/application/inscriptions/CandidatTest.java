@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 public class CandidatTest {
     
     Candidat instance;
+    Competition competition;
     public CandidatTest() {
     } 
    
@@ -34,6 +35,7 @@ public class CandidatTest {
     @Before
     public void setUp() {
         passerelle.open();
+        this.competition = (Competition) passerelle.get(Competition.class, 1);
         this.instance = (Candidat) passerelle.get(Candidat.class,1);
         Set <Competition> compet = this.instance.getCompetition();
         
@@ -70,9 +72,10 @@ public class CandidatTest {
     @Test
     public void testGetCompetition() {
         System.out.println("Réussite de la fonction getCompetition");
-        Competition competition = (Competition) passerelle.get(Competition.class, 1);
+        
         Set<Competition> expResult = this.instance.getCompetition();
-        assertTrue(expResult.contains(competition));
+        assertTrue(expResult.contains(this.competition));
+        
     }
 
     /**
@@ -81,9 +84,8 @@ public class CandidatTest {
     @Test
     public void testInscription() {
         System.out.println("Réussite de la fonction inscription");
-        Competition competition = (Competition) passerelle.get(Competition.class, 1);
         this.instance.inscription(competition);
-        passerelle.refresh(instance);
+        
         assertTrue(this.instance.getCompetition().contains(competition));
     }
 
