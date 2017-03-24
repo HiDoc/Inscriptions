@@ -31,9 +31,9 @@ public class Inscriptions implements Serializable {
 
     public Inscriptions() {
         passerelle.open();
-        this.competitions = getSort((ArrayList) passerelle.table("Competition"));
-        this.candidats = getSort((ArrayList) passerelle.table("Candidat"));
-        this.equipes = getSort((ArrayList) passerelle.table("Equipe"));
+        this.competitions = getSort((ArrayList) passerelle.table(Competition.class));
+        this.candidats = getSort((ArrayList) passerelle.table(Candidat.class));
+        this.equipes = getSort((ArrayList) passerelle.table(Equipe.class));
         passerelle.close();
     }
 
@@ -61,7 +61,7 @@ public class Inscriptions implements Serializable {
      * @return
      */
     public SortedSet<Candidat> getPersonnes() {
-        return getSort((ArrayList) passerelle.table("users"));
+        return getSort((ArrayList) passerelle.table(Users.class));
     }
 
     /**

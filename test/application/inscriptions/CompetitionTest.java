@@ -26,11 +26,9 @@ import static org.junit.Assert.*;
  */
 public class CompetitionTest {
     
-    
-    Competition instance = CompetitionCreator();
-    Candidat candidat = CandidatcandidatCreator();
+         Competition instance;
+        Set<Candidat> candid;
     public CompetitionTest() {
-       
     }
     
     @BeforeClass
@@ -48,9 +46,9 @@ public class CompetitionTest {
     
     @Before
     public void setUp() {
-                 passerelle.open();
-                   Set<Candidat> candid = instance.getCandidats();
-                 
+                 passerelle.open(); 
+                instance = (Competition) passerelle.get(Competition.class,1);
+                candid = instance.getCandidats();
     }
     
     @After
@@ -81,30 +79,7 @@ public class CompetitionTest {
         Candidat _candidat = new Candidat("test");
         return _candidat;
     }
-
     
-    /**
-     * test insertion of competition complete into database
-     */
-    @Test
-    public void insertDatabaseFullOne(){
-        int expResult = passerelle.count("Competition");
-        passerelle.save(instance);
-        int  result = passerelle.count("Competition");
-        assertEquals(expResult+1,result);
-    }
-    
-    /**
-     * test suppression compettion from database
-     */
-    @Test
-    public void suppressionCompetition(){
-        int expresult = passerelle.count("Competition");
-        passerelle.save(instance);
-        passerelle.delete(instance);
-        int result = passerelle.count("Competition");
-        assertEquals(expresult, result);
-    }
     
     /**
      * Test of getNom method, of class Competition.
@@ -275,9 +250,12 @@ public class CompetitionTest {
     @Test
     public void testAddCandidat() {
         System.out.println("addCandidat");
-        passerelle.save(candidat);
+        Candidat candidat = (Candidat) passerelle.get(Candidat.class, 2);
         instance.addCandidat(candidat);
-        passerelle.refresh(instance);
+        passerelle.save(instance);
+        assertTrue(instance.getCandidats().contains(candidat));
+        
+        
         
     }
 
@@ -289,22 +267,12 @@ public class CompetitionTest {
         System.out.println("removeCandidat");
         Candidat candidat = null;
         Competition instance = new Competition();
-        instance.removeCandidat(candidat);
+        instance.removeCandidat(candidat);  
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of remove method, of class Competition.
-     */
-    @Test
-    public void testRemove() {
-        System.out.println("remove");
-        Competition instance = new Competition();
-        instance.remove();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    
     
     
     
