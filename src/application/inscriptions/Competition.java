@@ -225,7 +225,7 @@ public class Competition implements Serializable {
      */
     public void removeCandidat(Candidat candidat){
         this.candidats.remove(candidat);
-        passerelle.save(this);s
+        passerelle.save(this);
     }
     
     /**
