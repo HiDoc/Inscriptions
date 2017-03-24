@@ -103,7 +103,9 @@ public class Candidat implements Serializable, Comparable<Candidat> {
      * @param competition
      */
     public void inscription(Competition competition){
-        competitions.add(competition);
+        if (!competitions.contains(competition)){
+            competitions.add(competition);
+        }
     }
 
     /**

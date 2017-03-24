@@ -11,6 +11,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Set;
+import org.hibernate.HibernateException;
+import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -26,7 +28,7 @@ public class CompetitionTest {
     
     
     Competition instance = CompetitionCreator();
-    Candidat candidat = CandidatcandidatCreator(); 
+    Candidat candidat = CandidatcandidatCreator();
     public CompetitionTest() {
        
     }
@@ -47,6 +49,7 @@ public class CompetitionTest {
     @Before
     public void setUp() {
                  passerelle.open();
+                   Set<Candidat> candid = instance.getCandidats();
                  
     }
     
@@ -68,7 +71,7 @@ public class CompetitionTest {
         Calendar Calendar_fin = new GregorianCalendar();
         Calendar_fin.setTime(date_test);
         int duree_test = 0;
-        boolean en_equipe = false;
+        boolean en_equipe = true;
         Competition test = new Competition(nom,Calendar_debut,duree_test,en_equipe, Calendar_fin);
         return test;
          
@@ -272,18 +275,9 @@ public class CompetitionTest {
     @Test
     public void testAddCandidat() {
         System.out.println("addCandidat");
-        try{
-            transaction = passerelle.session.beginTransaction();
         passerelle.save(candidat);
-        Candidat candidat = new Candidat();
         instance.addCandidat(candidat);
-        }
-         catch (HibernazeffezteException e) {
-			transaction.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+        passerelle.refresh(instance);
         
     }
 

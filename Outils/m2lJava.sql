@@ -36,12 +36,12 @@ CREATE TABLE appartenir (
 );
 
 CREATE TABLE participer (
-    ca_id INT,
-    co_id INT,
-    PRIMARY KEY (ca_id , co_id),
-    FOREIGN KEY (ca_id)
+    id_ca INT,
+    id_co INT,
+    PRIMARY KEY (id_ca , id_co),
+    FOREIGN KEY (id_ca)
         REFERENCES candidat (id_ca),
-    FOREIGN KEY (co_id)
+    FOREIGN KEY (id_co)
         REFERENCES competition (id_co)
 );
 CREATE VIEW equipe AS(
@@ -57,7 +57,7 @@ CREATE PROCEDURE fillTables(nbr int)
 BEGIN
 	DECLARE v_i INT DEFAULT 0;
 	DECLARE nom VARCHAR(64) DEFAULT 'nom_';
-	DECLARE prenom DATETIME DEFAULT 'prenom_';
+	DECLARE prenom VARCHAR(64) DEFAULT 'prenom_';
     DECLARE duree int default 76000;
     DECLARE mail varchar(64) DEFAULT '';
     DECLARE date_d datetime default '2017-03-03 12:00:00';
@@ -70,5 +70,12 @@ BEGIN
 	UNTIL v_i >= nbr END REPEAT;
 END|
 DELIMITER ;
+<<<<<<< HEAD
 CALL filltables(1);
 grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';
+=======
+CALL filltables(2);
+insert into participer values(1,1);
+select * from users;
+/*grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';*/
+>>>>>>> d47cdfa81b5bcfee15eb847d739ded7c731bd32f
