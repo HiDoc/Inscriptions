@@ -106,8 +106,8 @@ public class CandidatTest {
     @Test
     public void testRemove() {
         System.out.println("Réussite de la fonction remove");
-        Candidat instance = new Candidat();
-        instance.remove();
+        this.instance.remove();
+        
     }
     
 }
