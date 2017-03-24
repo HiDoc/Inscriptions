@@ -87,7 +87,7 @@ public class TeamMenu extends SubMenu{
 		boxTeams.setPreferredSize(new Dimension(200,20));
 		boxTeams.addActionListener(addTeamAL(boxTeams));
 		JPanel teams = new JPanel();
-		teams.add(new JLabel("Ajouter à l'équipe :"));
+		teams.add(new JLabel("Ajouter un membre :"));
 		teams.add(boxTeams);
 		JComboBox boxCompets = new JComboBox();
 		boxCompets.addItem("toto");
@@ -97,9 +97,9 @@ public class TeamMenu extends SubMenu{
 		boxCompets.addItem("yolo");
 		boxCompets.setPreferredSize(new Dimension(200,20));
 		JPanel compets = new JPanel();
-		compets.add(new JLabel("Ajouter à la compétition :"));
+		compets.add(new JLabel("Enlever un membre :"));
 		compets.add(boxCompets);
-		panel.setBorder(BorderFactory.createTitledBorder("Ajouter a"));
+		panel.setBorder(BorderFactory.createTitledBorder("Gerer les membres"));
 		panel.add(teams);
 		panel.add(Box.createVerticalStrut(20));
 //		panel.add(Box.createHorizontalStrut(100));
@@ -131,7 +131,7 @@ public class TeamMenu extends SubMenu{
 		boxTeams.addItem("yolo");
 		boxTeams.setPreferredSize(new Dimension(200,20));
 		JPanel teams = new JPanel();
-		teams.add(new JLabel("Enlever de l'équipe :"));
+		teams.add(new JLabel("Ajouter a la competition :"));
 		teams.add(boxTeams);
 		JComboBox boxCompets = new JComboBox();
 		boxCompets.addItem("toto");
@@ -140,12 +140,12 @@ public class TeamMenu extends SubMenu{
 		boxCompets.addItem("loulou");
 		boxCompets.addItem("yolo");
 		boxCompets.setPreferredSize(new Dimension(200,20));
-		panel.setBorder(BorderFactory.createTitledBorder("Enlever de"));
+		panel.setBorder(BorderFactory.createTitledBorder("Gérer les compétitions :"));
 		panel.add(Box.createVerticalStrut(10));
 		panel.add(teams);
 		
 		JPanel compets = new JPanel();
-		compets.add(new JLabel("Enlever de la compétition :"));
+		compets.add(new JLabel("Enlever de la compétition: "));
 		compets.add(boxCompets);
 		panel.add(teams);
 		panel.add(Box.createVerticalStrut(20));

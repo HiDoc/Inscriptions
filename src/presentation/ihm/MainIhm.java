@@ -33,8 +33,8 @@ public class MainIhm {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setFont(new Font("", Font.PLAIN, 200));
-		 frame.getContentPane().setLayout(new BorderLayout());
-		 frame.getContentPane().add(setFrame(), BorderLayout.CENTER);
+		frame.getContentPane().setLayout(new BorderLayout());
+		frame.getContentPane().add(setFrame(), BorderLayout.CENTER);
 		
 		//frame.setSize(WIDTH, HEIGHT);
 		frame.pack();

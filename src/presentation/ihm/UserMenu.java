@@ -30,12 +30,13 @@ public class UserMenu extends SubMenu{
 	private JTextField nom = new JTextField(20);
 	private JTextField prenom = new JTextField(20);
 	private JTextField email = new JTextField(20);
-	//private Inscriptions inscriptions = new Inscriptions();
-	//private SortedSet<Candidat> users;
+	private Inscriptions inscriptions;
+//	private SortedSet<Candidat> users;
 	
 	
 	public JPanel getPanel() {
 		JPanel panel = new JPanel();
+		Inscriptions inscriptions = Inscriptions.getInscriptions();
 		//users = inscriptions.getCandidats();
 		//panel.setPreferredSize(new Dimension(MainIhm.WIDTH, MainIhm.HEIGHT));
 		panel.setFont(new Font("Serif", Font.PLAIN, FrameParams.FONT_SIZE));

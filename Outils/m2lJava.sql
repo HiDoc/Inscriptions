@@ -1,6 +1,6 @@
 USE m2lJava;
-DROP TABLE IF EXISTS participer, appartenir, competition, users, candidat;
 DROP VIEW IF EXISTS equipe;
+DROP TABLE IF EXISTS participer, appartenir, competition, users, candidat;
 DROP PROCEDURE IF EXISTS fillTables;
 
 CREATE TABLE candidat (
@@ -44,7 +44,7 @@ CREATE TABLE participer (
     FOREIGN KEY (co_id)
         REFERENCES competition (id_co)
 );
-CREATE VIEW Equipe AS(
+CREATE VIEW equipe AS(
 	SELECT * 
 	FROM candidat c 
 	WHERE NOT EXISTS (	SELECT * 
@@ -55,7 +55,7 @@ CREATE VIEW Equipe AS(
 DELIMITER |
 CREATE PROCEDURE fillTables(nbr int)      
 BEGIN
-	DECLARE v_i INT DEFAULT 1;
+	DECLARE v_i INT DEFAULT 0;
 	DECLARE nom VARCHAR(64) DEFAULT 'nom_';
 	DECLARE prenom DATETIME DEFAULT 'prenom_';
     DECLARE duree int default 76000;
@@ -67,7 +67,7 @@ BEGIN
 		insert into users values(v_i, default, concat(nom, v_i, prenom, v_i, '@mail.com') , concat(prenom, v_i));
 		insert into competition values(default,concat(nom, v_i), date_d, date_c,duree, default);
 		SET v_i = v_i + 1;
-	UNTIL v_i > nbr END REPEAT;
+	UNTIL v_i >= nbr END REPEAT;
 END|
 DELIMITER ;
 CALL filltables(1);
