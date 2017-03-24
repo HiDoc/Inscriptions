@@ -27,7 +27,7 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class passerelle {
     
-    private static Session session = null;
+    public static Session session = null;
     private static SessionFactory sessionFactory = null;
     private static final String CONF_FILE = "data/hibernate/database.cfg.xml";
 
@@ -103,13 +103,13 @@ public class passerelle {
     /**
      * Recherche dans les tables une entrée avec un ID
      * @param <T>
-     * @param o un objet
+     * @param cls
      * @param id un nombre
      * @return un objet spécifique sélectionné par son id
      */
-    public static <T> Object get(Object o, int id) {
+    public static <T> Object get(Class<T> cls, int id) {
         Transaction tx = session.beginTransaction();
-        Object object = session.get(o.getClass(), id);
+        Object object = session.get(cls, id);
         tx.commit();
         return object;
     }

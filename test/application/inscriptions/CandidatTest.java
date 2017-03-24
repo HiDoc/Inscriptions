@@ -5,7 +5,6 @@
  */
 package application.inscriptions;
 import data.hibernate.passerelle;
-import java.util.HashSet;
 import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -20,12 +19,12 @@ import static org.junit.Assert.*;
  */
 public class CandidatTest {
     
+    Candidat instance;
     public CandidatTest() {
     } 
    
     @BeforeClass
     public static void setUpClass() {
-        passerelle.open();
     }
     
     @AfterClass
@@ -34,10 +33,15 @@ public class CandidatTest {
     
     @Before
     public void setUp() {
+        passerelle.open();
+        this.instance = (Candidat) passerelle.get(Candidat.class,1);
+        Set <Competition> compet = this.instance.getCompetition();
+        
     }
     
     @After
     public void tearDown() {
+        passerelle.close();
     }
 
     /**
@@ -46,10 +50,7 @@ public class CandidatTest {
     @Test
     public void testGetNom() {
         System.out.println("Réussite de la fonction getNom");
-        String expResult = "name";
-        Candidat instance =((Candidat)passerelle.get(Candidat.class, 1));
-        passerelle.refresh(instance);
-        assertEquals(expResult, instance.getNom());
+        assertEquals("newNom", this.instance.getNom());
     }
 
     /**
@@ -59,58 +60,32 @@ public class CandidatTest {
     public void testSetNom() {
         System.out.println("Réussite de la fonction setNom");
         String nom = "newNom";
-        Candidat instance = (Candidat) passerelle.get(new Candidat(), 2);
+        this.instance = (Candidat) passerelle.get(Candidat.class, 1);
         instance.setNom(nom);
-        assertEquals(nom, ((Candidat) passerelle.get(new Candidat(), 1)).getNom());
+        assertEquals(nom, ((Candidat) passerelle.get(Candidat.class, 1)).getNom());
     }
-
-    /**
-     * Test of getEquipe method, of class Candidat.
-     */
-    @Test
-    public void testGetEquipe() {
-        System.out.println("Réussite de la fonction getEquipe");
-        Candidat instance = new Candidat();
-        Set<Candidat> expResult = new HashSet<>(0);
-        Set<Equipe> result = instance.getEquipe();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of getCandidats method, of class Candidat.
-     */
-    @Test
-    public void testGetCandidats() {
-        System.out.println("Réussite de la fonction getCandidats");
-        Candidat instance = new Candidat();
-        Set<Candidat> expResult = new HashSet<>(0);
-        Set<Equipe> result = instance.getCandidats();
-        assertEquals(expResult, result);
-    }
-
     /**
      * Test of getCompetition method, of class Candidat.
      */
     @Test
     public void testGetCompetition() {
         System.out.println("Réussite de la fonction getCompetition");
-        Candidat instance = new Candidat();
-        Set<Competition> expResult = new HashSet<>(0);
-        Set<Competition> result = instance.getCompetition();
-        assertEquals(expResult, result);
+        Competition competition = (Competition) passerelle.get(Competition.class, 1);
+        Set<Competition> expResult = this.instance.getCompetition();
+        assertTrue(expResult.contains(competition));
     }
 
     /**
      * Test of inscription method, of class Candidat.
      */
-//    @Test
-//    public void testInscription() {
-//        System.out.println("Réussite de la fonction inscription");
-//        Competition competition = new Competition("nom",Calendar.getInstance(),280, false);
-//        Candidat instance = new Candidat();
-//        instance.inscription(competition);
-//        assertTrue(competition.getCandidats().contains(instance));
-//    }
+    @Test
+    public void testInscription() {
+        System.out.println("Réussite de la fonction inscription");
+        Competition competition = (Competition) passerelle.get(Competition.class, 1);
+        this.instance.inscription(competition);
+        passerelle.refresh(instance);
+        assertTrue(this.instance.getCompetition().contains(competition));
+    }
 
     /**
      * Test of desinscription method, of class Candidat.
@@ -126,43 +101,6 @@ public class CandidatTest {
     }
 
     /**
-     * Test of addEquipe method, of class Candidat.
-     */
-    @Test
-    public void testAddEquipe() {
-        System.out.println("Réussite de la fonction addEquipe");
-        Candidat candidat = (Users) new Candidat();
-        Equipe instance = (Equipe) new Candidat();
-        instance.addEquipe(candidat);
-        assertTrue(candidat.getCandidats().contains(instance));
-    }
-
-    /**
-     * Test of removeEquipe method, of class Candidat.
-     */
-    @Test
-    public void testRemoveEquipe() {
-        System.out.println("Réussite de la fonction removeEquipe");
-        Candidat candidat = new Candidat();
-        Candidat instance = new Candidat();
-        instance.addEquipe(candidat);
-        instance.removeEquipe(candidat);
-        assertFalse(instance.getCandidats().contains(candidat));
-    }
-
-    /**
-     * Test of isEquipe method, of class Candidat.
-     */
-    @Test
-    public void testIsEquipe() {
-        System.out.println("Réussite de la fonction isEquipe");
-        Candidat instance = new Candidat();
-        boolean expResult = false;
-        boolean result = instance.isEquipe();
-        assertEquals(expResult, result);
-    }
-
-    /**
      * Test of remove method, of class Candidat.
      */
     @Test
@@ -170,8 +108,6 @@ public class CandidatTest {
         System.out.println("Réussite de la fonction remove");
         Candidat instance = new Candidat();
         instance.remove();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

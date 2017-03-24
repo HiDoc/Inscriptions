@@ -70,6 +70,5 @@ BEGIN
 	UNTIL v_i > nbr END REPEAT;
 END|
 DELIMITER ;
-
-
+CALL filltables(1);
 grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';
