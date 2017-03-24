@@ -18,6 +18,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Projections;
 import org.hibernate.service.ServiceRegistry;
 
 /**
@@ -93,12 +94,11 @@ public class passerelle {
 
     /**
      * Compte le nombre d'objets dans une table
-     * @param className une chaine de caractère
+     * @param className
      * @return le nombre d'entrée dans une table spécifiée
      */
-    public static int count(String className) {
-        Query query = session.createQuery("from " + className);
-        return query.list().size();
+    public static long count(String className) {
+        return (long) ( session.createQuery("select count(*) from " + className).iterate().next() );
     }
     /**
      * Recherche dans les tables une entrée avec un ID
@@ -117,33 +117,13 @@ public class passerelle {
     /**
      * Selectionne une table par rapport à l'objet mis en paramètre
      * @param <T>
-     * @param o un objet
+     * @param cls
      * @return une liste d'objet de la classe de l'objet spécifié en paramètre
      */
-    public static <T> List<T> table(Object o){
+    public static <T> List<T> table(Class<T> cls){
         Transaction tx = session.beginTransaction();
-        Object object = session.createCriteria(o.getClass()).list();
+        Object object = session.createCriteria(cls).list();
         tx.commit();
         return (List<T>) object;
-    }
-    /**
-     * Surcharge de la méthode table
-     * @param <T>
-     * @param className
-     * @return une liste d'objet de la classe spécififée en chaine de caractères
-     */
-    public static <T> List<T> table(String className) {
-        Query query = session.createQuery("from " + className);
-        return new ArrayList<>((List<T>) query.list());
-    }
-    /**
-     * Accès à la vue équipe
-     * @param id
-     * @return boolean
-     * TODO : Implementer la classe equipe pour récupérer le booléean
-     */
-    public static boolean isEquipe(int id){
-        return false;
-        //return query.list().size() > 0;
     }
 }

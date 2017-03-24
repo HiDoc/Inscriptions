@@ -5,7 +5,13 @@
  */
 package data.hibernate;
 
+import application.inscriptions.Candidat;
+import application.inscriptions.Competition;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import static javafx.scene.input.KeyCode.T;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,15 +25,33 @@ import static org.junit.Assert.*;
  */
 public class passerelleTest {
     
+    Candidat candidat = new Candidat("name");
+    Competition competition = CompetitionCreator();
+    private Competition CompetitionCreator(){
+        String nom = "test";
+        GregorianCalendar Calendar_debut = new GregorianCalendar();
+        Date date_test = new Date(95, 10, 10);
+        Calendar_debut.setTime(date_test);
+        date_test = new Date(96,10,10);
+        Calendar Calendar_fin = new GregorianCalendar();
+        Calendar_fin.setTime(date_test);
+        int duree_test = 0;
+        boolean en_equipe = true;
+        Competition test = new Competition(nom,Calendar_debut,duree_test,en_equipe, Calendar_fin);
+        return test;
+         
+    }
     public passerelleTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
+        passerelle.open();
     }
     
     @AfterClass
     public static void tearDownClass() {
+        passerelle.close();
     }
     
     @Before
@@ -43,8 +67,6 @@ public class passerelleTest {
      */
     @Test
     public void testOpen() {
-        System.out.println("open");
-        passerelle.open();
     }
 
     /**
@@ -52,8 +74,6 @@ public class passerelleTest {
      */
     @Test
     public void testClose() {
-        System.out.println("close");
-        passerelle.close();
     }
 
     /**
@@ -61,9 +81,10 @@ public class passerelleTest {
      */
     @Test
     public void testDelete() {
-        System.out.println("delete");
-        Object o = null;
-        passerelle.delete(o);
+        long before = passerelle.count("Candidat");
+        passerelle.save(candidat);
+        long after = passerelle.count("Candidat");
+        assertEquals(before , after - 1);
     }
 
     /**
@@ -71,9 +92,10 @@ public class passerelleTest {
      */
     @Test
     public void testSave() {
-        System.out.println("save");
-        Object o = null;
-        passerelle.save(o);
+        long before = passerelle.count("Candidat");
+        passerelle.save(this.candidat);
+        long after = passerelle.count("Candidat");
+        assertEquals(before + 1 , after);
     }
 
     /**
@@ -82,10 +104,9 @@ public class passerelleTest {
     @Test
     public void testSaveAndId() {
         System.out.println("saveAndId");
-        Object o = null;
-        int expResult = 0;
-        int result = passerelle.saveAndId(o);
-        assertEquals(expResult, result);
+        long expResult = passerelle.count("Candidat");
+        int result = passerelle.saveAndId(this.candidat);
+        assertEquals(expResult + 1, result);
     }
 
     /**
@@ -94,23 +115,19 @@ public class passerelleTest {
     @Test
     public void testCount() {
         System.out.println("count");
-        String className = "";
-        int expResult = 0;
-        int result = passerelle.count(className);
-        assertEquals(expResult, result);
+        long result = passerelle.count("Candidat");
+        assertTrue(result > 0);
     }
 
     /**
      * Test of select method, of class passerelle.
      */
     @Test
-    public void testSelect() {
+    public void testGet() {
         System.out.println("select");
-        Object o = null;
-        int id = 0;
-        Object expResult = null;
-        Object result = passerelle.select(o, id);
-        assertEquals(expResult, result);
+        int id = passerelle.saveAndId(this.candidat);
+        Candidat expCandidat = (Candidat) passerelle.get(Candidat.class, id);
+        assertTrue(this.candidat.compareTo(expCandidat) == 0);
     }
 
     /**
@@ -119,34 +136,10 @@ public class passerelleTest {
     @Test
     public void testTable_Object() {
         System.out.println("table");
-        Object o = null;
-        List expResult = null;
-        List result = passerelle.table(o);
-        assertEquals(expResult, result);
+        long expResult = passerelle.count("Candidat");
+        List result = passerelle.table(Candidat.class);
+        assertEquals(expResult, result.size());
     }
 
-    /**
-     * Test of table method, of class passerelle.
-     */
-    @Test
-    public void testTable_String() {
-        System.out.println("table");
-        String className = "";
-        List expResult = null;
-        List result = passerelle.table(className);
-        assertEquals(expResult, result);
-    }
 
-    /**
-     * Test of isEquipe method, of class passerelle.
-     */
-    @Test
-    public void testIsEquipe() {
-        System.out.println("isEquipe");
-        int id = 0;
-        boolean expResult = false;
-        boolean result = passerelle.isEquipe(id);
-        assertEquals(expResult, result);
-    }
-    
 }
