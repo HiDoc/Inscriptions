@@ -72,5 +72,6 @@ END|
 DELIMITER ;
 CALL filltables(2);
 insert into participer values(1,1);
+select * from participer;
 select * from users;
 /*grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';*/
