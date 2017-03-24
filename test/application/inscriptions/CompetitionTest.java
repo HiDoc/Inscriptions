@@ -272,8 +272,18 @@ public class CompetitionTest {
     @Test
     public void testAddCandidat() {
         System.out.println("addCandidat");
+        try{
+            transaction = passerelle.session.beginTransaction();
+        passerelle.save(candidat);
         Candidat candidat = new Candidat();
-       // instance.addCandidat(candidat);
+        instance.addCandidat(candidat);
+        }
+         catch (HibernateException e) {
+			transaction.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
         
     }
 
