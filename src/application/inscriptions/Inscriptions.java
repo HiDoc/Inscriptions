@@ -13,6 +13,7 @@ import java.util.TreeSet;
 
 import data.hibernate.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Point d'entrée dans l'application, un seul objet de type Inscription permet
@@ -31,7 +32,7 @@ public class Inscriptions implements Serializable {
 
     public Inscriptions() {
         passerelle.open();
-        this.competitions = getSort((ArrayList) passerelle.table(Competition.class));
+        //this.competitions = getSort((ArrayList) passerelle.table(Competition.class));
         this.candidats = getSort((ArrayList) passerelle.table(Candidat.class));
         this.equipes = getSort((ArrayList) passerelle.table(Equipe.class));
         passerelle.close();
@@ -77,15 +78,25 @@ public class Inscriptions implements Serializable {
      * constructeur public dans {@link Competition}.
      *
      * @param nom
+     * @param dateDebut
      * @param dateCloture
      * @param duree
      * @param enEquipe
      */
-//    public void createCompetition(String nom, Calendar dateCloture,int duree, boolean enEquipe) {
-//        Competition newC = new Competition(nom, dateCloture, duree, enEquipe);
-//        this.competitions.add(newC);
-//        passerelle.save(newC);
-//    }
+    public void createCompetition(String nom, Calendar dateDebut, Calendar dateCloture,int duree, boolean enEquipe) {
+        Competition newC = new Competition(nom, dateDebut, dateCloture, duree, enEquipe);
+        this.competitions.add(newC);
+        passerelle.save(newC);
+    }
+
+    /**
+     * Surcharge du constructeur de la création de compétition
+     * @param newC
+     */
+    public void createCompetition(Competition newC) {
+        this.competitions.add(newC);
+        passerelle.save(newC);
+    }
 
     /**
      * Créée une Candidat de type Personne. Ceci est le seul moyen, il n'y a pas
@@ -225,26 +236,10 @@ public class Inscriptions implements Serializable {
         a.removeAll(b);
         return a.isEmpty();
     }
-//	public static void main(String[] args)
-//	{
-//		Inscriptions myInscriptions = Inscriptions.getInscriptions();
-//		Competition flechettes = myInscriptions.createCompetition("Mondial de fléchettes", null, false);
-//		Personne tony = myInscriptions.createPersonne("Tony", "Dent de plomb", "azerty"), 
-//				boris = myInscriptions.createPersonne("Boris", "le Hachoir", "ytreza");
-//		flechettes.add(tony);
-//		Equipe lesManouches = myInscriptions.createEquipe("Les Manouches");
-//		lesManouches.add(boris);
-//		lesManouches.add(tony);
-//		System.out.println(myInscriptions);
-//		lesManouches.delete();
-//		System.out.println(myInscriptions);
-//		try
-//		{
-//			myInscriptions.sauvegarder();
-//		} 
-//		catch (IOException e)
-//		{
-//			System.out.println("Sauvegarde impossible." + e);
-//		}
-//	}
+	public static void main(String[] args)
+	{
+                Inscriptions myIns = new Inscriptions();
+                myIns.candidats.forEach(candidat -> System.out.println(candidat.getNom()));
+                
+	}
 }
