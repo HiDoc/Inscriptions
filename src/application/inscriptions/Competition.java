@@ -53,14 +53,12 @@ public class Competition implements Serializable {
     @Column(name = "enEquipe")
     private boolean enEquipe;
 
-      @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "participer", joinColumns = {
         @JoinColumn(name = "id_co")}, inverseJoinColumns = {
         @JoinColumn(name = "id_ca")})
-    private  Set<Candidat> candidats = new HashSet<>(0);
-     protected void setCandidat(Set<Candidat> candidats){
-        this.candidats = candidats;
-    }
+    private final  Set<Candidat> candidats = new HashSet<>(0);
+    
     
     
     
@@ -190,7 +188,7 @@ public class Competition implements Serializable {
      * TODO : ajouter la vérification de si le candidat est une équipe ou non
      */
     public void addCandidat(Candidat candidat){
-        this.candidats.add(candidat);
+        candidats.add(candidat);
         }
 
     /**
