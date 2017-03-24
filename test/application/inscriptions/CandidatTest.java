@@ -35,13 +35,7 @@ public class CandidatTest {
     @Before
     public void setUp() {
         passerelle.open();
-<<<<<<< HEAD
-        this.instance = (Candidat) passerelle.get(Candidat.class,1); 
-        Set <Competition> compet = this.instance.getCompetition();
-=======
         this.instance = (Candidat) passerelle.get(Candidat.class,1);
->>>>>>> d47cdfa81b5bcfee15eb847d739ded7c731bd32f
-        
     }
     
     @After

@@ -36,7 +36,7 @@ public class UserMenu extends SubMenu{
 	
 	public JPanel getPanel() {
 		JPanel panel = new JPanel();
-		Inscriptions inscriptions = Inscriptions.getInscriptions();
+//		Inscriptions inscriptions = Inscriptions.getInscriptions();
 		//users = inscriptions.getCandidats();
 		//panel.setPreferredSize(new Dimension(MainIhm.WIDTH, MainIhm.HEIGHT));
 		panel.setFont(new Font("Serif", Font.PLAIN, FrameParams.FONT_SIZE));
@@ -73,16 +73,29 @@ public class UserMenu extends SubMenu{
 		panel.add(new JLabel("Selectionner un utilisateur : "));
 		panel.setBorder(BorderFactory.createTitledBorder("Selectionner une personne"));
 		JComboBox box = new JComboBox();
-		box.addItem("toto");
-		box.addItem("riri");
-		box.addItem("fifi");
-		box.addItem("loulou");
-		box.addItem("yolo");
+		box.addItem(new UserTest("toto","duck", 1));
+		box.addItem(new UserTest("riri","duckk", 2));
+		box.addItem(new UserTest("fifi","duckk", 3));
 		box.setPreferredSize(new Dimension(200,20));
+		box.addActionListener(selectBoxListener(box), this);
 		panel.add(Box.createHorizontalStrut(100));
 		panel.add(box);
 		panel.add(Box.createVerticalStrut(50));
 		return panel;
+	}
+	
+	private ActionListener selectBoxListener(JComboBox box, UserMenu menu)
+	{
+		return new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				UserTest selected = (UserTest) box.getSelectedItem();
+				System.out.println(selected.id);
+				menu.nom.setText(selected.nom);
+				menu.prenom.setText(selected.prenom);
+			}
+		};
 	}
 
 	private JPanel addAndRemove()

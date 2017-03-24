@@ -1,3 +1,5 @@
+DROP DATABASE m2lJava;
+CREATE DATABASE m2lJava;
 USE m2lJava;
 DROP VIEW IF EXISTS equipe;
 DROP TABLE IF EXISTS participer, appartenir, competition, users, candidat;
@@ -55,7 +57,7 @@ CREATE VIEW equipe AS(
 DELIMITER |
 CREATE PROCEDURE fillTables(nbr int)      
 BEGIN
-	DECLARE v_i INT DEFAULT 0;
+	DECLARE v_i INT DEFAULT 1;
 	DECLARE nom VARCHAR(64) DEFAULT 'nom_';
 	DECLARE prenom VARCHAR(64) DEFAULT 'prenom_';
     DECLARE duree int default 76000;
@@ -67,15 +69,10 @@ BEGIN
 		insert into users values(v_i, default, concat(nom, v_i, prenom, v_i, '@mail.com') , concat(prenom, v_i));
 		insert into competition values(default,concat(nom, v_i), date_d, date_c,duree, default);
 		SET v_i = v_i + 1;
-	UNTIL v_i >= nbr END REPEAT;
+	UNTIL v_i > nbr END REPEAT;
 END|
 DELIMITER ;
-<<<<<<< HEAD
-CALL filltables(1);
-grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';
-=======
 CALL filltables(2);
 insert into participer values(1,1);
 select * from users;
-/*grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';*/
->>>>>>> d47cdfa81b5bcfee15eb847d739ded7c731bd32f
+grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';
