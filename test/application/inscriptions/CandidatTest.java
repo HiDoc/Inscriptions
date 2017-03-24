@@ -37,7 +37,6 @@ public class CandidatTest {
         passerelle.open();
         this.competition = (Competition) passerelle.get(Competition.class, 1);
         this.instance = (Candidat) passerelle.get(Candidat.class,1);
-        Set <Competition> compet = this.instance.getCompetition();
         
     }
     
@@ -72,7 +71,6 @@ public class CandidatTest {
     @Test
     public void testGetCompetition() {
         System.out.println("Réussite de la fonction getCompetition");
-        
         Set<Competition> expResult = this.instance.getCompetition();
         assertTrue(expResult.contains(this.competition));
         
@@ -85,7 +83,7 @@ public class CandidatTest {
     public void testInscription() {
         System.out.println("Réussite de la fonction inscription");
         this.instance.inscription(competition);
-        
+        passerelle.save(this.instance);
         assertTrue(this.instance.getCompetition().contains(competition));
     }
 
@@ -95,10 +93,8 @@ public class CandidatTest {
     @Test
     public void testDesinscription() {
         System.out.println("Réussite de la fonction desinscription");
-        Competition competition = new Competition();
-        Candidat instance = new Candidat();
-        instance.inscription(competition);
-        instance.desinscription(competition);
+        this.instance.desinscription(this.competition);
+        passerelle.save(this.instance);
         assertFalse(instance.getCompetition().contains(competition));
     }
 
@@ -111,5 +107,5 @@ public class CandidatTest {
         Candidat instance = new Candidat();
         instance.remove();
     }
-    
+   
 }
