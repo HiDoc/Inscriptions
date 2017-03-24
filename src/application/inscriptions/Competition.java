@@ -78,7 +78,7 @@ public class Competition implements Serializable {
      * @param enEquipe un booléen
      * @param dateClose un Calendar
      */
-    public Competition(String nom, Calendar date_d, int duree, boolean enEquipe,Calendar dateClose) {
+    public Competition(String nom, Calendar date_d,Calendar dateClose, int duree, boolean enEquipe) {
         this.nom = nom;
         this.date = date_d;
         this.duree = duree;

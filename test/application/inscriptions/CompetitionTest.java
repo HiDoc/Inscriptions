@@ -250,9 +250,10 @@ public class CompetitionTest {
     @Test
     public void testAddCandidat() {
         System.out.println("addCandidat");
-        Candidat candidat = (Candidat) passerelle.get(Candidat.class, 1);
+        Candidat candidat = (Candidat) passerelle.get(Candidat.class, 2);
         instance.addCandidat(candidat);
-        passerelle.refresh(instance);
+        passerelle.save(instance);
+        assertTrue(instance.getCandidats().contains(candidat));
         
         
         
