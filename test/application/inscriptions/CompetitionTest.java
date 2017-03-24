@@ -70,7 +70,7 @@ public class CompetitionTest {
         Calendar_fin.setTime(date_test);
         int duree_test = 0;
         boolean en_equipe = true;
-        Competition test = new Competition(nom,Calendar_debut,duree_test,en_equipe, Calendar_fin);
+        Competition test = new Competition(nom,Calendar_debut,Calendar_fin,duree_test,en_equipe);
         return test;
          
     }
@@ -225,8 +225,8 @@ public class CompetitionTest {
     @Test
     public void testGetCandidats() {
         System.out.println("getCandidats");
-        Competition instance = new Competition();
-        Set<Candidat> expResult = null;
+        Competition competition = (Competition) passerelle.get(Competition.class, 1);
+        Set<Candidat> expResult = competition.getCandidats();
         Set<Candidat> result = instance.getCandidats();
         assertEquals(expResult, result);
        
@@ -265,29 +265,9 @@ public class CompetitionTest {
     @Test
     public void testRemoveCandidat() {
         System.out.println("removeCandidat");
-        Candidat candidat = null;
-        Competition instance = new Competition();
-        instance.removeCandidat(candidat);  
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Candidat candidat = (Candidat) passerelle.get(Candidat.class, 1);
+        instance.removeCandidat(candidat);
+        passerelle.save(this.instance);
+       assertTrue(!instance.getCandidats().contains(candidat));
     }
-
-    
-    
-    
-    
-    /**
-     * Test of toString method, of class Competition.
-     */
-    @Test
-    public void testToString() {
-        System.out.println("toString");
-        Competition instance = new Competition();
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }
