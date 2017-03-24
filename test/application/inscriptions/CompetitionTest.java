@@ -278,7 +278,7 @@ public class CompetitionTest {
         Candidat candidat = new Candidat();
         instance.addCandidat(candidat);
         }
-         catch (HibernazefteException e) {
+         catch (HibernazeffezteException e) {
 			transaction.rollback();
 			e.printStackTrace();
 		} finally {
