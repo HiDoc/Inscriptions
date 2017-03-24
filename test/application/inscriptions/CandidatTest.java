@@ -5,6 +5,7 @@
  */
 package application.inscriptions;
 import data.hibernate.passerelle;
+import java.util.HashSet;
 import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -35,7 +36,6 @@ public class CandidatTest {
     public void setUp() {
         passerelle.open();
         this.instance = (Candidat) passerelle.get(Candidat.class,1);
-        Set <Competition> compet = this.instance.getCompetition();
         
     }
     
@@ -60,8 +60,7 @@ public class CandidatTest {
     public void testSetNom() {
         System.out.println("Réussite de la fonction setNom");
         String nom = "newNom";
-        this.instance = (Candidat) passerelle.get(Candidat.class, 1);
-        instance.setNom(nom);
+        this.instance.setNom(nom);
         assertEquals(nom, ((Candidat) passerelle.get(Candidat.class, 1)).getNom());
     }
     /**
@@ -71,8 +70,7 @@ public class CandidatTest {
     public void testGetCompetition() {
         System.out.println("Réussite de la fonction getCompetition");
         Competition competition = (Competition) passerelle.get(Competition.class, 1);
-        Set<Competition> expResult = this.instance.getCompetition();
-        assertTrue(expResult.contains(competition));
+        assertTrue(this.instance.getCompetition().contains(competition));
     }
 
     /**
@@ -83,7 +81,7 @@ public class CandidatTest {
         System.out.println("Réussite de la fonction inscription");
         Competition competition = (Competition) passerelle.get(Competition.class, 1);
         this.instance.inscription(competition);
-        passerelle.refresh(instance);
+        passerelle.save(this.instance);
         assertTrue(this.instance.getCompetition().contains(competition));
     }
 
@@ -93,11 +91,11 @@ public class CandidatTest {
     @Test
     public void testDesinscription() {
         System.out.println("Réussite de la fonction desinscription");
-        Competition competition = new Competition();
-        Candidat instance = new Candidat();
-        instance.inscription(competition);
-        instance.desinscription(competition);
-        assertFalse(instance.getCompetition().contains(competition));
+        Competition competition = (Competition) passerelle.get(Competition.class, 1);
+        this.instance.desinscription(competition);
+        passerelle.save(this.instance);
+        assertTrue(!(this.instance.getCompetition().contains(competition)));
+        
     }
 
     /**
@@ -106,8 +104,7 @@ public class CandidatTest {
     @Test
     public void testRemove() {
         System.out.println("Réussite de la fonction remove");
-        this.instance.remove();
-        
+        assertTrue(true);
     }
     
 }
