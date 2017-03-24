@@ -189,10 +189,10 @@ public class Competition implements Serializable {
     /**
      * Ajoute un candidat à la compétition
      * @param candidat
-     * TODO : ajouter la vérification de si le candidat est une équipe ou non
      */
     public void addCandidat(Candidat candidat){
-        if(!this.enEquipe && !candidat.isEquipe()){
+        // Si la compétition n'est pas en équipe et que le candidat n'est pas une équipe
+        if(!this.enEquipe && !(candidat.getClass() == Equipe.class)){
             passerelle.session.beginTransaction();
             Set<Candidat> set = new HashSet<>();
             System.out.println(set);
@@ -206,13 +206,15 @@ public class Competition implements Serializable {
             System.out.println("yolo");
            passerelle.session.getTransaction().commit();
         }
-        else if (this.enEquipe && candidat.getClass()== this.enEquipe){
+        // Si la compétition est en équipe et que le candidat est une équipe
+        else if (this.enEquipe && (candidat.getClass()== Equipe.class)){
           Set<Candidat> set = this.getCandidats();
             set.add(candidat);
             this.setCandidat(candidats);
             this.candidats.add(candidat);
               this.setCandidat(candidats);
         }
+        // ToDO : envoyer une erreur qui précise que l'opération n'est pas possible
         else {System.out.println("yolo");}
                 
         }
@@ -223,7 +225,7 @@ public class Competition implements Serializable {
      */
     public void removeCandidat(Candidat candidat){
         this.candidats.remove(candidat);
-        passerelle.save(this.candidats);
+        passerelle.save(this);s
     }
     
     /**

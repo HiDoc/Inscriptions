@@ -71,5 +71,5 @@ BEGIN
 END|
 DELIMITER ;
 CALL filltables(1);
-select * from participer;
+select * from competition;
 grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';

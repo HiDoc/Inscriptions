@@ -5,7 +5,6 @@
  */
 package application.inscriptions;
 
-
 import data.hibernate.passerelle;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,86 +22,82 @@ import static org.junit.Assert.*;
  * @author Flo
  */
 public class CompetitionTest {
-    
-    
+
     Competition instance = CompetitionCreator();
-    Candidat candidat = CandidatcandidatCreator(); 
+    Candidat candidat = CandidatcandidatCreator();
+
     public CompetitionTest() {
-       
+
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
-        
-         
+
     }
-       
-    
+
     @AfterClass
     public static void tearDownClass() {
-        
-        
+
     }
-    
+
     @Before
     public void setUp() {
-                 passerelle.open();
-                 
+        passerelle.open();
+
     }
-    
+
     @After
     public void tearDown() {
         passerelle.close();
     }
-    
+
     /**
      * Set up a Competition with fixed value for test
-     * @return a competition 
+     *
+     * @return a competition
      */
-    private Competition CompetitionCreator(){
+    private Competition CompetitionCreator() {
         String nom = "test";
         GregorianCalendar Calendar_debut = new GregorianCalendar();
         Date date_test = new Date(95, 10, 10);
         Calendar_debut.setTime(date_test);
-        date_test = new Date(96,10,10);
+        date_test = new Date(96, 10, 10);
         Calendar Calendar_fin = new GregorianCalendar();
         Calendar_fin.setTime(date_test);
         int duree_test = 0;
         boolean en_equipe = false;
-        Competition test = new Competition(nom,Calendar_debut,duree_test,en_equipe, Calendar_fin);
+        Competition test = new Competition(nom, Calendar_debut, duree_test, en_equipe, Calendar_fin);
         return test;
-         
     }
-    
-    private Candidat CandidatcandidatCreator(){
+
+    private Candidat CandidatcandidatCreator() {
         Candidat _candidat = new Candidat("test");
         return _candidat;
     }
 
-    
     /**
      * test insertion of competition complete into database
      */
     @Test
-    public void insertDatabaseFullOne(){
+    public void insertDatabaseFullOne() {
         int expResult = passerelle.count("Competition");
         passerelle.save(instance);
-        int  result = passerelle.count("Competition");
-        assertEquals(expResult+1,result);
+        int result = passerelle.count("Competition");
+        assertEquals(expResult + 1, result);
     }
-    
+
     /**
      * test suppression compettion from database
      */
     @Test
-    public void suppressionCompetition(){
+    public void suppressionCompetition() {
         int expresult = passerelle.count("Competition");
         passerelle.save(instance);
         passerelle.delete(instance);
         int result = passerelle.count("Competition");
         assertEquals(expresult, result);
     }
-    
+
     /**
      * Test of getNom method, of class Competition.
      */
@@ -112,9 +107,8 @@ public class CompetitionTest {
         String expResult = "test";
         String result = this.instance.getNom();
         assertEquals(expResult, result);
-       
+
     }
-    
 
     /**
      * Test of getDate method, of class Competition.
@@ -127,7 +121,7 @@ public class CompetitionTest {
         expResult.setTime(date_test);
         Calendar result = instance.getDate();
         assertEquals(expResult, result);
-        
+
     }
 
     /**
@@ -153,7 +147,7 @@ public class CompetitionTest {
         expResult.setTime(date_test);
         Calendar result = instance.getDateClose();
         assertEquals(expResult, result);
-     
+
     }
 
     /**
@@ -163,10 +157,10 @@ public class CompetitionTest {
     public void testGetEnEquipe() {
         System.out.println("getEnEquipe");
         Competition instance = CompetitionCreator();
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = instance.getEnEquipe();
         assertEquals(expResult, result);
-        
+
     }
 
     /**
@@ -179,8 +173,8 @@ public class CompetitionTest {
         Competition instance = new Competition();
         instance.setNom(nom);
         String result = instance.getNom();
-        assertEquals(nom,result);
-     
+        assertEquals(nom, result);
+
     }
 
     /**
@@ -190,13 +184,13 @@ public class CompetitionTest {
     public void testSetDate() {
         System.out.println("setDate");
         Calendar calendar = new GregorianCalendar();
-        Date date_test = new Date(10,10,10);
+        Date date_test = new Date(10, 10, 10);
         calendar.setTime(date_test);
         Competition instance = new Competition();
         instance.setDate(calendar);
         Calendar result = instance.getDate();
-        assertEquals(calendar,result);
-      
+        assertEquals(calendar, result);
+
     }
 
     /**
@@ -210,7 +204,7 @@ public class CompetitionTest {
         instance.setDuree(duree);
         int result = instance.getDuree();
         assertEquals(duree, result);
-       
+
     }
 
     /**
@@ -222,8 +216,8 @@ public class CompetitionTest {
         boolean enEquipe = false;
         Competition instance = new Competition();
         instance.setEnEquipe(enEquipe);
-       boolean result = instance.getEnEquipe();
-       assertEquals(result,enEquipe);
+        boolean result = instance.getEnEquipe();
+        assertEquals(result, enEquipe);
     }
 
     /**
@@ -232,13 +226,13 @@ public class CompetitionTest {
     @Test
     public void testSetDateClose() {
         System.out.println("setDateClose");
-       Calendar calendar = new GregorianCalendar();
-        Date date_test = new Date(10,10,10);
+        Calendar calendar = new GregorianCalendar();
+        Date date_test = new Date(10, 10, 10);
         calendar.setTime(date_test);
         Competition instance = new Competition();
         instance.setDateClose(calendar);
         Calendar result = instance.getDateClose();
-        assertEquals(calendar,result);
+        assertEquals(calendar, result);
     }
 
     /**
@@ -251,7 +245,7 @@ public class CompetitionTest {
         Set<Candidat> expResult = null;
         Set<Candidat> result = instance.getCandidats();
         assertEquals(expResult, result);
-       
+
     }
 
     /**
@@ -263,7 +257,7 @@ public class CompetitionTest {
         boolean expResult = false;
         boolean result = instance.inscriptionsOuvertes();
         assertEquals(expResult, result);
-        
+
     }
 
     /**
@@ -273,8 +267,8 @@ public class CompetitionTest {
     public void testAddCandidat() {
         System.out.println("addCandidat");
         Candidat candidat = new Candidat();
-       // instance.addCandidat(candidat);
-        
+        // instance.addCandidat(candidat);
+
     }
 
     /**
@@ -301,9 +295,7 @@ public class CompetitionTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
-    
-    
+
     /**
      * Test of toString method, of class Competition.
      */
@@ -317,5 +309,5 @@ public class CompetitionTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }

@@ -105,13 +105,7 @@ public class passerelleTest {
      */
     @Test
     public void testSelect() {
-        System.out.println("select");
-        Object o = null;
-        int id = 0;
-        Object expResult = null;
-        Object result = passerelle.select(o, id);
-        assertEquals(expResult, result);
-    }
+        }
 
     /**
      * Test of table method, of class passerelle.
