@@ -11,7 +11,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import static javafx.scene.input.KeyCode.T;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -37,7 +36,7 @@ public class passerelleTest {
         Calendar_fin.setTime(date_test);
         int duree_test = 0;
         boolean en_equipe = true;
-        Competition test = new Competition(nom,Calendar_debut,duree_test,en_equipe, Calendar_fin);
+        Competition test = new Competition(nom,Calendar_debut, Calendar_fin,duree_test,en_equipe);
         return test;
          
     }
