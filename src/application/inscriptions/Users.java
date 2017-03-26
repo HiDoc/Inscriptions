@@ -150,5 +150,10 @@ public class Users extends Candidat implements Serializable {
         }
         else throw new RuntimeException("le candidat n'est pas inscrit");    
     }
+    
+    public String toString()
+    {
+    	return this.prenom+" "+super.getNom();
+    }
 
 }

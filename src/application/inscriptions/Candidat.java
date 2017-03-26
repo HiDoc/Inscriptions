@@ -72,7 +72,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
      * Retourne l'id d'un candidat
      * @return int 
      */
-    protected int getId() {
+    public int getId() {
         return this.id_ca;
     }
     /**

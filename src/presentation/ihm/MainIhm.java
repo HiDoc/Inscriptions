@@ -5,14 +5,14 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import application.inscriptions.Inscriptions;
+
 
 public class MainIhm {
 
 	private JFrame frame = new JFrame();
 	private JPanel panel;
-	private JTextField field = new JTextField();
-	private JLabel name = new JLabel("boop");
-	private JPanel body;
+	private Inscriptions inscriptions = new Inscriptions();
 	public final static int HEIGHT = 600;
 	public final static int WIDTH = 1200;
 	
@@ -47,7 +47,7 @@ public class MainIhm {
 		panel = new JPanel();
 		panel.setFont(new Font("Serif", Font.PLAIN, 40));
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		JPanel userMenu = new UserMenu().getPanel();
+		JPanel userMenu = new UserMenu(inscriptions).getPanel();
 		JPanel teamMenu = new TeamMenu().getPanel();
 		JPanel competMenu = new CompetMenu().getPanel();
 		JTabbedPane tabs = new JTabbedPane();

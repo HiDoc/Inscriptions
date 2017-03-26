@@ -1,14 +1,11 @@
 package presentation.ihm;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.SortedSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -17,11 +14,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import application.inscriptions.Candidat;
 import application.inscriptions.Inscriptions;
+import application.inscriptions.Users;
 
 
 public class UserMenu extends SubMenu{
@@ -30,24 +26,30 @@ public class UserMenu extends SubMenu{
 	private JTextField nom = new JTextField(20);
 	private JTextField prenom = new JTextField(20);
 	private JTextField email = new JTextField(20);
+	private JTextField editNom = new JTextField(20);
+	private JTextField editPrenom = new JTextField(20);
+	private JTextField editEmail = new JTextField(20);
+	private JComboBox<Users> usersList;
 	private Inscriptions inscriptions;
+	private Users user;
 //	private SortedSet<Candidat> users;
 	
 	
+	public UserMenu(Inscriptions ins)
+	{
+		this.inscriptions = ins;
+	}
+	
 	public JPanel getPanel() {
 		JPanel panel = new JPanel();
-//		Inscriptions inscriptions = Inscriptions.getInscriptions();
-		//users = inscriptions.getCandidats();
-		//panel.setPreferredSize(new Dimension(MainIhm.WIDTH, MainIhm.HEIGHT));
 		panel.setFont(new Font("Serif", Font.PLAIN, FrameParams.FONT_SIZE));
-		//panel.setLayout(new GridLayout(5,1));
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.setBorder(BorderFactory.createLineBorder(Color.decode("#EEEEEE"), 5));
 		panel.add(addUser());
 		panel.add(editUser());
 		panel.add(selectUser());
 		panel.add(addAndRemove());
-		panel.add(new JButton("Effacer"));
+		panel.add(removeUser());
 		return panel;
 	}
 	
@@ -62,9 +64,30 @@ public class UserMenu extends SubMenu{
 		addUser.add(new JLabel("email :"));
 		addUser.add(email);
 		addUser.setBorder(BorderFactory.createTitledBorder("Ajouter une personne"));
-		addUser.add(new JButton("Ajouter"));
+		JButton addBtn = new JButton("Ajouter");
+		addBtn.addActionListener(addBtnListener(this));
+		addUser.add(addBtn);
 		addUser.add(Box.createVerticalStrut(50));
+	
 		return addUser;
+	}
+	
+	private ActionListener addBtnListener(UserMenu menu)
+	{
+		return new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Users user = inscriptions.createPersonne(
+						menu.nom.getText(), 
+						menu.prenom.getText(), 
+						menu.email.getText(), 
+						0
+				);
+				menu.usersList.addItem(user);
+				menu.user = user;
+			}
+		};
 	}
 	
 	private JPanel selectUser()
@@ -72,28 +95,32 @@ public class UserMenu extends SubMenu{
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Selectionner un utilisateur : "));
 		panel.setBorder(BorderFactory.createTitledBorder("Selectionner une personne"));
-		JComboBox box = new JComboBox();
-		box.addItem(new UserTest("toto","duck", 1));
-		box.addItem(new UserTest("riri","duckk", 2));
-		box.addItem(new UserTest("fifi","duckk", 3));
-		box.setPreferredSize(new Dimension(200,20));
-		box.addActionListener(selectBoxListener(box), this);
+		this.makeUsersList();
+		usersList.setPreferredSize(new Dimension(200,20));
+		usersList.addActionListener(selectBoxListener(usersList, this));
 		panel.add(Box.createHorizontalStrut(100));
-		panel.add(box);
+		panel.add(usersList);
 		panel.add(Box.createVerticalStrut(50));
 		return panel;
 	}
 	
-	private ActionListener selectBoxListener(JComboBox box, UserMenu menu)
+	private void makeUsersList()
+	{
+		usersList = new JComboBox<Users>();
+		inscriptions.getPersonnes().forEach(user -> usersList.addItem(user));
+	}
+	
+	private ActionListener selectBoxListener(JComboBox<Users> box, UserMenu menu)
 	{
 		return new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				UserTest selected = (UserTest) box.getSelectedItem();
-				System.out.println(selected.id);
-				menu.nom.setText(selected.nom);
-				menu.prenom.setText(selected.prenom);
+				Users selected = (Users) box.getSelectedItem();
+				menu.editNom.setText(selected.getNom());
+				menu.editPrenom.setText(selected.getPrenom());
+				menu.editEmail.setText(selected.getMail());
+				menu.user = selected;
 			}
 		};
 	}
@@ -195,14 +222,49 @@ public class UserMenu extends SubMenu{
 		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createTitledBorder("Editer placeholder"));
 		panel.add(new JLabel("<html>Nom :<br/></html>"));
-		panel.add(new JTextField(20));
+		panel.add(editNom);
 		panel.add(new JLabel("<html>prenom :<br/></html>"));
-		panel.add(new JTextField(20));
+		panel.add(editPrenom);
 		panel.add(new JLabel("email :"));
-		panel.add(new JTextField(20));
-		panel.add(new JButton("Editer"));
+		panel.add(editEmail);
+		JButton button = new JButton("Editer");
+		button.addActionListener(editBtnListener(this));
+		panel.add(button);
 		panel.add(Box.createVerticalStrut(50));
 		return panel;
-		
+	}
+	
+	private ActionListener editBtnListener(UserMenu menu)
+	{
+		return new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+
+			}
+		};
+	}
+
+	private JPanel removeUser()
+	{
+		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createTitledBorder("Editer placeholder"));
+		JButton button = new JButton("Editer");
+		button.addActionListener(deleteBtnListener(this));
+		panel.add(button);
+		return panel;
+	}
+	
+	private ActionListener deleteBtnListener(UserMenu menu)
+	{
+		return new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Users user = (Users) menu.usersList.getSelectedItem();
+				inscriptions.remove(user);
+				menu.usersList.removeItem(user);
+			}
+		};
 	}
 }

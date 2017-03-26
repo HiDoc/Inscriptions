@@ -10,6 +10,9 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import data.hibernate.passerelle;
+
 import static org.junit.Assert.*;
 
 /**
@@ -18,6 +21,8 @@ import static org.junit.Assert.*;
  */
 public class UsersTest {
     
+	Users instance;
+	
     public UsersTest() {
     }
     
@@ -31,10 +36,13 @@ public class UsersTest {
     
     @Before
     public void setUp() {
+        passerelle.open();
+        this.instance = (Users) passerelle.get(Users.class,1);
     }
     
     @After
     public void tearDown() {
+        passerelle.close();
     }
 
     /**
@@ -43,12 +51,8 @@ public class UsersTest {
     @Test
     public void testGetPrenom() {
         System.out.println("getPrenom");
-        Users instance = new Users();
-        String expResult = "";
-        String result = instance.getPrenom();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expResult = "prenom_1";
+        assertEquals(expResult, instance.getPrenom());
     }
 
     /**
@@ -57,12 +61,9 @@ public class UsersTest {
     @Test
     public void testGetNiveau() {
         System.out.println("getNiveau");
-        Users instance = new Users();
         int expResult = 0;
         int result = instance.getNiveau();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -71,12 +72,9 @@ public class UsersTest {
     @Test
     public void testGetMail() {
         System.out.println("getMail");
-        Users instance = new Users();
-        String expResult = "";
+        String expResult = "nom_1prenom_1@mail.com";
         String result = instance.getMail();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -85,11 +83,9 @@ public class UsersTest {
     @Test
     public void testSetPrenom() {
         System.out.println("setPrenom");
-        String prenom = "";
-        Users instance = new Users();
+        String prenom = "datPrenom";
         instance.setPrenom(prenom);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(prenom, instance.getPrenom());
     }
 
     /**
@@ -98,11 +94,9 @@ public class UsersTest {
     @Test
     public void testSetNiveau() {
         System.out.println("setNiveau");
-        int niveau = 0;
-        Users instance = new Users();
+        int niveau = 1;
         instance.setNiveau(niveau);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(niveau, instance.getNiveau());
     }
 
     /**
@@ -111,11 +105,9 @@ public class UsersTest {
     @Test
     public void testSetMail() {
         System.out.println("setMail");
-        String mail = "";
-        Users instance = new Users();
+        String mail = "yolo@yolo.om";
         instance.setMail(mail);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(mail, instance.getMail());
     }
     
 }

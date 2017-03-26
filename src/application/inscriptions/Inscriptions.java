@@ -29,12 +29,14 @@ public class Inscriptions implements Serializable {
     private SortedSet<Competition> competitions = new TreeSet<>();
     private SortedSet<Candidat> candidats = new TreeSet<>();
     private SortedSet<Candidat> equipes = new TreeSet<>();
-
+    private SortedSet<Users> users = new TreeSet<>();
+    
     public Inscriptions() {
         passerelle.open();
         //this.competitions = getSort((ArrayList) passerelle.table(Competition.class));
         this.candidats = getSort((ArrayList) passerelle.table(Candidat.class));
         this.equipes = getSort((ArrayList) passerelle.table(Equipe.class));
+        this.users = getSort((ArrayList) passerelle.table(Users.class));
         passerelle.close();
     }
 
@@ -61,8 +63,9 @@ public class Inscriptions implements Serializable {
      *
      * @return
      */
-    public SortedSet<Candidat> getPersonnes() {
-        return getSort((ArrayList) passerelle.table(Users.class));
+    public SortedSet<Users> getPersonnes() {
+    	return Collections.unmodifiableSortedSet(users);
+//        return getSort((ArrayList) passerelle.table(Users.class));
     }
 
     /**
@@ -107,10 +110,14 @@ public class Inscriptions implements Serializable {
      * @param mail
      * @param niveau
      */
-    public void createCandidat(String nom, String prenom, String mail, int niveau) {
-        Users personne = new Users(nom, prenom, niveau, mail);
+    public Users createPersonne(String nom, String prenom, String mail, int niveau) {
+    	passerelle.open();
+    	Users personne = new Users(nom, prenom, niveau, mail);
         this.candidats.add(personne);
+        this.users.add(personne);
         passerelle.save(personne);
+        passerelle.close();
+        return personne;
     }
 
     /**
@@ -133,6 +140,13 @@ public class Inscriptions implements Serializable {
     void remove(Candidat candidat) {
         candidats.remove(candidat);
         passerelle.delete(candidat);
+    }
+    
+    public void remove(Users user) {
+        candidats.remove(user);
+        passerelle.open();
+        passerelle.delete(user);
+        passerelle.close();
     }
 
     /**
@@ -236,10 +250,4 @@ public class Inscriptions implements Serializable {
         a.removeAll(b);
         return a.isEmpty();
     }
-	public static void main(String[] args)
-	{
-                Inscriptions myIns = new Inscriptions();
-                myIns.candidats.forEach(candidat -> System.out.println(candidat.getNom()));
-                
-	}
 }

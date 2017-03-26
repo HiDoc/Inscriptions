@@ -116,7 +116,7 @@ public class InscriptionsTest {
         String mail = "";
         int niveau = 0;
         Inscriptions instance = null;
-        instance.createCandidat(nom, prenom, mail, niveau);
+        instance.createPersonne(nom, prenom, mail, niveau);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
