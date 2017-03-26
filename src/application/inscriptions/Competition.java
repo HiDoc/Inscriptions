@@ -29,7 +29,8 @@ import javax.persistence.Temporal;
 @Table(name = "competition")
 
 
-public class Competition implements Serializable { 
+public class Competition implements Serializable, Comparable <Competition> { 
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -86,6 +87,16 @@ public class Competition implements Serializable {
         this.dateClose = dateClose;
     }
 
+     /**
+     * Retourne l'id de la compétition
+     * @return une chaine de caractères
+     */
+    protected int getId() {
+        return this.id_co;
+    }
+    
+    
+    
     /**
      * Retourne le nom de la compétition
      * @return une chaine de caractères
@@ -196,8 +207,11 @@ public class Competition implements Serializable {
      * @param candidat
      */
     public void removeCandidat(Candidat candidat){
+     if(this.candidats.contains(candidat)){
+         
         this.candidats.remove(candidat);
-        passerelle.save(this.candidats);
+     
+     }
     }
     
     /**
@@ -210,6 +224,12 @@ public class Competition implements Serializable {
     
     @Override
     public String toString() {
-        return "Compétion  " + this.nom + " commençant le" + this.date + " d'une durée de " + this.duree;
+        return "Compétition  " + this.nom + " commençant le" + this.date + " d'une durée de " + this.duree;
+    }
+
+    @Override
+    public int compareTo(Competition competition) {
+        int i = getNom().compareTo(competition.getNom());
+        return i + (getId() == competition.getId() ? 0 : 1) ;
     }
 }
