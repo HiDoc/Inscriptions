@@ -121,6 +121,7 @@ public class UserMenu extends SubMenu{
 				menu.editPrenom.setText(selected.getPrenom());
 				menu.editEmail.setText(selected.getMail());
 				menu.user = selected;
+				System.out.println(menu.user.getCompetition());
 			}
 		};
 	}

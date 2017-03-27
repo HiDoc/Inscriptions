@@ -86,7 +86,6 @@ public class Competition implements Serializable, Comparable <Competition> {
         this.enEquipe = enEquipe;
         this.dateClose = dateClose;
     }
-
      /**
      * Retourne l'id de la compétition
      * @return une chaine de caractères
@@ -222,9 +221,10 @@ public class Competition implements Serializable, Comparable <Competition> {
         passerelle.delete(this);
     }
     
+    
     @Override
     public String toString() {
-        return "Compétition  " + this.nom + " commençant le" + this.date + " d'une durée de " + this.duree;
+        return this.nom;
     }
 
     @Override

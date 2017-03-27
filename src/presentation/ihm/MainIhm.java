@@ -49,7 +49,7 @@ public class MainIhm {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		JPanel userMenu = new UserMenu(inscriptions).getPanel();
 		JPanel teamMenu = new TeamMenu().getPanel();
-		JPanel competMenu = new CompetMenu().getPanel();
+		JPanel competMenu = new CompetMenu(inscriptions).getPanel();
 		JTabbedPane tabs = new JTabbedPane();
 		userMenu.setFont(new Font("Serif", Font.PLAIN, FrameParams.FONT_SIZE));
 		tabs.setFont(new Font("Serif", Font.PLAIN, FrameParams.FONT_SIZE));

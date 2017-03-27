@@ -164,4 +164,12 @@ public class UsersTest {
     	this.instance.setPrenom("prenom_1");
     	passerelle.update(this.instance);
     }
+    
+    @Test
+    public void testGetCompetition() {
+        System.out.println("Réussite de la fonction getCompetition");
+        Competition competition = (Competition) passerelle.get(Competition.class, 1);
+        System.out.println((this.instance.getCompetition()));
+        assertTrue(this.instance.getCompetition().contains(competition));
+    }
 }

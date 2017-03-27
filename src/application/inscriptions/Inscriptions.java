@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -33,7 +36,7 @@ public class Inscriptions implements Serializable {
     
     public Inscriptions() {
         passerelle.open();
-        //this.competitions = getSort((ArrayList) passerelle.table(Competition.class));
+        this.competitions = getSort((ArrayList) passerelle.table(Competition.class));
         this.candidats = getSort((ArrayList) passerelle.table(Candidat.class));
         this.equipes = getSort((ArrayList) passerelle.table(Equipe.class));
         this.users = getSort((ArrayList) passerelle.table(Users.class));
@@ -91,7 +94,19 @@ public class Inscriptions implements Serializable {
         this.competitions.add(newC);
         passerelle.save(newC);
     }
-
+    
+    public Competition createCompetition(String nom, String dateDebut, int duree, boolean enEquipe) {
+    	Calendar debut = this.parseDate(dateDebut);
+    	Calendar fin = debut;
+    	fin.add(Calendar.DATE, duree);
+        Competition newC = new Competition(nom, debut, fin,duree, enEquipe);
+        this.competitions.add(newC);
+        passerelle.open();
+        passerelle.save(newC);
+        passerelle.close();
+        return newC;
+    }
+    
     /**
      * Surcharge du constructeur de la création de compétition
      * @param newC
@@ -242,6 +257,24 @@ public class Inscriptions implements Serializable {
                 + "\nCompetitions  " + getCompetitions().toString();
     }
 
+	private Calendar parseDate (String strDate)
+	{
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		try
+		{
+			date = sdf.parse(strDate);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			return cal;
+		}
+		catch(ParseException e)
+		{
+			e.printStackTrace();
+		}
+		return Calendar.getInstance();	
+	}
+    
     /**
      * Convertit une liste en sortedSet
      *

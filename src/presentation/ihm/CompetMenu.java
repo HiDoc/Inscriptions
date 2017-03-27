@@ -16,12 +16,25 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import application.inscriptions.Competition;
+import application.inscriptions.Inscriptions;
+
 public class CompetMenu extends SubMenu {
 	
 	private JTextField nom = new JTextField(20);
 	private JTextField date = new JTextField(20);
 	private JTextField duree = new JTextField(20);
+	private JTextField editNom = new JTextField(20);
+	private JTextField editDate = new JTextField(20);
+	private JTextField editDuree = new JTextField(20);
 	private JCheckBox enTeam = new JCheckBox("En équipe");
+	private JComboBox<Competition> competList = new JComboBox<Competition>();
+	private Inscriptions inscriptions;
+	
+	public CompetMenu(Inscriptions ins)
+	{
+		this.inscriptions = ins;
+	}
 	
 	public JPanel getPanel()
 	{
@@ -44,11 +57,32 @@ public class CompetMenu extends SubMenu {
 		panel.add(new JLabel("Date :"));
 		panel.add(date);
 		panel.add(new JLabel("Duree :"));
+		panel.add(duree);
 		panel.add(enTeam);
-		panel.setBorder(BorderFactory.createTitledBorder("Ajouter une personne"));
-		panel.add(new JButton("Ajouter"));
+		panel.setBorder(BorderFactory.createTitledBorder("Ajouter une compétition"));
+		JButton btn = new JButton("Ajouter");
+		btn.addActionListener(addBtnListener(this));
+		panel.add(btn);
 		panel.add(Box.createVerticalStrut(50));
 		return panel;
+	}
+	
+	private ActionListener addBtnListener(CompetMenu menu)
+	{
+		return new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				Competition compet = menu.inscriptions.createCompetition(
+					menu.nom.getText(), 
+					menu.date.getText(), 
+					Integer.parseInt(menu.duree.getText()), 
+					menu.enTeam.isSelected()
+				);
+				competList.addItem(compet);
+			}
+		};
 	}
 	
 	private JPanel selectCompet()
@@ -56,15 +90,11 @@ public class CompetMenu extends SubMenu {
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Selectionner une compétition : "));
 		panel.setBorder(BorderFactory.createTitledBorder("Selectionner une compétition"));
-		JComboBox box = new JComboBox();
-		box.addItem("toto");
-		box.addItem("riri");
-		box.addItem("fifi");
-		box.addItem("loulou");
-		box.addItem("yolo");
-		box.setPreferredSize(new Dimension(200,20));
+		System.out.println(inscriptions.getCompetitions());
+		inscriptions.getCompetitions().forEach(compet -> competList.addItem(compet));
+		competList.setPreferredSize(new Dimension(200,20));
 		panel.add(Box.createHorizontalStrut(100));
-		panel.add(box);
+		panel.add(competList);
 		panel.add(Box.createVerticalStrut(50));
 		return panel;
 	}
