@@ -140,5 +140,4 @@ public class passerelleTest {
         assertEquals(expResult, result.size());
     }
 
-
 }

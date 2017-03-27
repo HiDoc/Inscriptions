@@ -15,6 +15,8 @@ import data.hibernate.passerelle;
 
 import static org.junit.Assert.*;
 
+import org.hibernate.SessionException;
+
 /**
  *
  * @author Flo
@@ -40,9 +42,17 @@ public class UsersTest {
         this.instance = (Users) passerelle.get(Users.class,1);
     }
     
+    /**
+     * La passerelle est parfois déjà fermée par la classse Inscriptions
+     */
     @After
     public void tearDown() {
-        passerelle.close();
+    	try{
+    		passerelle.close();
+    	}
+    	catch (SessionException e){
+    		
+    	}
     }
 
     /**
@@ -110,4 +120,48 @@ public class UsersTest {
         assertEquals(mail, instance.getMail());
     }
     
+    /**
+     * create user test
+     */
+//    @Test
+//    public void testCreateUser(){
+//    	System.out.println("createUser");
+//    	Inscriptions ins = new Inscriptions();
+//    	Users user = ins.createPersonne("toto", "batman", "toto@batman.mail", 0);
+//    	passerelle.open();
+//    	this.instance = (Users) passerelle.get(Users.class,user.getId());
+//    	assertEquals(this.instance.getId(), user.getId());
+//    }
+    
+    /**
+     * create and remove user test
+     */
+    @Test
+    public void testCreateAndRemoveUser() {
+    	System.out.println("remove User");
+    	Inscriptions ins = new Inscriptions();
+    	passerelle.open();
+    	Users user = (Users) passerelle.get(Users.class, 49);
+    	passerelle.close();
+    	if(user == null)
+    		fail("Cannot create user");
+    	ins.remove(user);
+    	assertNull(passerelle.get(Users.class, user.getId()));
+    }
+    
+    /**
+     * update user test
+     */
+    @Test
+    public void testEditUser() {
+    	System.out.println("edit User");
+    	Users user = this.instance;
+    	user.setPrenom("edit");
+    	passerelle.update(user);
+    	this.instance = (Users) passerelle.get(Users.class, this.instance.getId());
+    	if(this.instance.getPrenom() != "edit")
+    		fail("Could not edit");
+    	this.instance.setPrenom("prenom_1");
+    	passerelle.update(this.instance);
+    }
 }

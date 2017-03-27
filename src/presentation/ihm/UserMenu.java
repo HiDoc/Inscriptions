@@ -240,7 +240,11 @@ public class UserMenu extends SubMenu{
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-
+				Users user = (Users) usersList.getSelectedItem();
+				user.setNom(menu.editNom.getText());
+				user.setPrenom(menu.editPrenom.getText());
+				user.setMail(menu.editEmail.getText());
+				menu.inscriptions.edit(user);
 			}
 		};
 	}
