@@ -139,14 +139,11 @@ public class UsersTest {
     @Test
     public void testCreateAndRemoveUser() {
     	System.out.println("remove User");
-    	Inscriptions ins = new Inscriptions();
-    	passerelle.open();
-    	Users user = (Users) passerelle.get(Users.class, 49);
-    	passerelle.close();
-    	if(user == null)
-    		fail("Cannot create user");
-    	ins.remove(user);
-    	assertNull(passerelle.get(Users.class, user.getId()));
+        long expRes = passerelle.count("Users");
+        Users user = (Users) passerelle.get(Users.class, 1);
+        passerelle.delete(user);
+        long Res = passerelle.count("Users");
+        assertEquals(expRes,Res);
     }
     
     /**

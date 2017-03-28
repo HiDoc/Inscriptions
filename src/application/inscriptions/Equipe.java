@@ -14,19 +14,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import jdk.nashorn.internal.ir.annotations.Immutable;
 
 /**
  *
  * @author Flo
  */
 @Entity
+@Immutable
 @Table(name ="equipe")
 public class Equipe extends Candidat implements Serializable {
     
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "appartenir", joinColumns = {
         @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_equipe")})
+        @JoinColumn(name = "id_lul")})
     private final Set<Users> users = new HashSet<>(0);
 
     /**
@@ -58,7 +60,5 @@ public class Equipe extends Candidat implements Serializable {
         }
         else throw new RuntimeException("le candidat n'est pas inscrit");    
     }
-    
-    
     
 }

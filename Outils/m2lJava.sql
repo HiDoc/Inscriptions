@@ -1,8 +1,6 @@
-DROP DATABASE m2lJava;
-CREATE DATABASE m2lJava;
 USE m2lJava;
-DROP VIEW IF EXISTS equipe;
 DROP TABLE IF EXISTS participer, appartenir, competition, users, candidat;
+DROP VIEW IF EXISTS equipe;
 DROP PROCEDURE IF EXISTS fillTables;
 
 CREATE TABLE candidat (
@@ -46,7 +44,7 @@ CREATE TABLE participer (
     FOREIGN KEY (id_co)
         REFERENCES competition (id_co)
 );
-CREATE VIEW equipe AS(
+CREATE VIEW Equipe AS(
 	SELECT * 
 	FROM candidat c 
 	WHERE NOT EXISTS (	SELECT * 
@@ -75,5 +73,5 @@ DELIMITER ;
 CALL filltables(2);
 insert into participer values(1,1);
 select * from participer;
-select * from users;
-grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';
+select * from candidat;
+/*grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';*/
