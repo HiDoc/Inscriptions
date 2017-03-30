@@ -30,7 +30,7 @@ CREATE TABLE appartenir (
     id_equipe INT,
     PRIMARY KEY (id_user , id_equipe),
     FOREIGN KEY (id_user)
-        REFERENCES candidat (id_ca),
+        REFERENCES users (id_ca),
     FOREIGN KEY (id_equipe)
         REFERENCES candidat (id_ca)
 );
@@ -71,7 +71,10 @@ BEGIN
 END|
 DELIMITER ;
 CALL filltables(2);
+use m2ljava;
 insert into participer values(1,1);
 select * from participer;
 select * from candidat;
+select * from users;
+select * from Equipe;
 /*grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';*/
