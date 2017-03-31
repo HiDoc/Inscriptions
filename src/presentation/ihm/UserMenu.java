@@ -30,9 +30,9 @@ public class UserMenu extends SubMenu {
     private JTextField editPrenom = new JTextField(20);
     private JTextField editEmail = new JTextField(20);
     private JComboBox<Users> usersList;
-    private JComboBox<Competition> competsRemList = new JComboBox<Competition>();
-    private JComboBox<Competition> competsList = new JComboBox<Competition>();
-    private JComboBox<Equipe> teamsRemList = new JComboBox<Equipe>();
+    private JComboBox<Competition> competsRemList = new JComboBox<>();
+    private JComboBox<Competition> competsList = new JComboBox<>();
+    private JComboBox<Equipe> teamsRemList = new JComboBox<>();
     private Inscriptions inscriptions;
     private Users user;
 //	private SortedSet<Candidat> users;
@@ -42,8 +42,8 @@ public class UserMenu extends SubMenu {
     }
 
     /**
-     *
-     * @return
+     * Renvoi une vue du Panel, compre
+     * @return un jPanel
      */
     public JPanel getPanel() {
         JPanel panel = new JPanel();
@@ -63,9 +63,9 @@ public class UserMenu extends SubMenu {
         addUser.setFont(new Font("Serif", Font.PLAIN, FrameParams.FONT_SIZE));
         addUser.add(new JLabel("<html>Nom :<br/></html>"));
         addUser.add(nom);
-        addUser.add(new JLabel("<html>prenom :<br/></html>"));
+        addUser.add(new JLabel("<html>Prenom :<br/></html>"));
         addUser.add(prenom);
-        addUser.add(new JLabel("email :"));
+        addUser.add(new JLabel("Email :"));
         addUser.add(email);
         addUser.setBorder(BorderFactory.createTitledBorder("Ajouter une personne"));
         JButton addBtn = new JButton("Ajouter");
@@ -77,25 +77,22 @@ public class UserMenu extends SubMenu {
     }
 
     private ActionListener addBtnListener(UserMenu menu) {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Users user = inscriptions.createPersonne(
-                        menu.nom.getText(),
-                        menu.prenom.getText(),
-                        menu.email.getText(),
-                        0
-                );
-                menu.usersList.addItem(user);
-                menu.user = user;
-            }
+        return (ActionEvent e) -> {
+            Users user1 = inscriptions.createPersonne(
+                    menu.nom.getText(),
+                    menu.prenom.getText(),
+                    menu.email.getText(),
+                    0
+            );
+            menu.usersList.addItem(user1);
+            menu.user = user1;
         };
     }
 
     private JPanel selectUser() {
         JPanel panel = new JPanel();
         panel.add(new JLabel("Selectionner un utilisateur : "));
-        panel.setBorder(BorderFactory.createTitledBorder("Selectionner une personne"));
+        panel.setBorder(BorderFactory.createTitledBorder("Selectionner une personne :"));
         this.makeUsersList();
         usersList.setPreferredSize(new Dimension(200, 20));
         usersList.addActionListener(selectBoxListener(usersList, this));
@@ -106,22 +103,20 @@ public class UserMenu extends SubMenu {
     }
 
     private void makeUsersList() {
-        usersList = new JComboBox<Users>();
+        usersList = new JComboBox<>();
         inscriptions.getPersonnes().forEach(user -> usersList.addItem(user));
     }
 
     private ActionListener selectBoxListener(JComboBox<Users> box, UserMenu menu) {
-        return new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Users selected = (Users) box.getSelectedItem();
-                menu.editNom.setText(selected.getNom());
-                menu.editPrenom.setText(selected.getPrenom());
-                menu.editEmail.setText(selected.getMail());
-                menu.user = selected;
-                selected.getCompetition().forEach(compet -> competsRemList.addItem(compet));
-                menu.makeCompetsList();
-                System.out.println(selected.getCompetition());
-            }
+        return (ActionEvent e) -> {
+            Users selected = (Users) box.getSelectedItem();
+            menu.editNom.setText(selected.getNom());
+            menu.editPrenom.setText(selected.getPrenom());
+            menu.editEmail.setText(selected.getMail());
+            menu.user = selected;
+            selected.getCompetition().forEach(compet -> competsRemList.addItem(compet));
+            menu.makeCompetsList();
+            System.out.println(selected.getCompetition());
         };
     }
     
@@ -129,15 +124,16 @@ public class UserMenu extends SubMenu {
     	competsList.removeAllItems();
     	Set<Competition> userComp = user.getCompetition();
     	Set<Competition> compets = inscriptions.getCompetitions();
-    	for(Competition c : compets) {
-    		boolean exists = false;
-    		for(Competition uc : userComp) {
-    			if(!exists)
-    				exists = (uc.getId() ==  c.getId());
-    		}
-    		if(!exists)
-    			this.competsList.addItem(c);
-    	}
+        compets.stream().forEach((c) -> {
+            boolean exists = false;
+            for(Competition uc : userComp) {
+                if(!exists)
+                    exists = (uc.getId() ==  c.getId());
+            }
+            if (!exists) {
+                this.competsList.addItem(c);
+            }
+        });
     }
     
     private JPanel addAndRemove() {
@@ -181,24 +177,18 @@ public class UserMenu extends SubMenu {
     }
     
     private ActionListener addTeamAL(JComboBox box) {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(box.getSelectedItem());
-            }
+        return (ActionEvent e) -> {
+            System.out.println(box.getSelectedItem());
         };
     }
 
     private ActionListener addCompetListener(UserMenu menu) {
-    	return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Competition compet = (Competition) menu.competsList.getSelectedItem();
-				user.inscription(compet);
-				menu.competsRemList.addItem(compet);
-				menu.competsList.removeItem(compet);
-			}
-    	};
+    	return (ActionEvent arg0) -> {
+            Competition compet = (Competition) menu.competsList.getSelectedItem();
+            user.inscription(compet);
+            menu.competsRemList.addItem(compet);
+            menu.competsList.removeItem(compet);
+            };
     }
     
     private JPanel removeFrom() {
@@ -233,18 +223,13 @@ public class UserMenu extends SubMenu {
     }
 
     private ActionListener competRemListener(UserMenu menu) {
-    	return new ActionListener()
-    	{
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Competition compet = (Competition) menu.competsRemList.getSelectedItem();
-				menu.user.desinscription(compet);
-				menu.competsRemList.removeItem(compet);
-				menu.competsList.addItem(compet);
-				System.out.println(compet);
-			}
-    		
-    	};
+    	return (ActionEvent arg0) -> {
+            Competition compet = (Competition) menu.competsRemList.getSelectedItem();
+            menu.user.desinscription(compet);
+            menu.competsRemList.removeItem(compet);
+            menu.competsList.addItem(compet);
+            System.out.println(compet);
+            };
     }
     
     private JPanel editUser() {
@@ -264,14 +249,12 @@ public class UserMenu extends SubMenu {
     }
 
     private ActionListener editBtnListener(UserMenu menu) {
-        return new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Users user = (Users) usersList.getSelectedItem();
-                user.setNom(menu.editNom.getText());
-                user.setPrenom(menu.editPrenom.getText());
-                user.setMail(menu.editEmail.getText());
-                menu.inscriptions.edit(user);
-            }
+        return (ActionEvent e) -> {
+            Users user1 = (Users) usersList.getSelectedItem();
+            user1.setNom(menu.editNom.getText());
+            user1.setPrenom(menu.editPrenom.getText());
+            user1.setMail(menu.editEmail.getText());
+            menu.inscriptions.edit(user1);
         };
     }
 
@@ -285,13 +268,10 @@ public class UserMenu extends SubMenu {
     }
 
     private ActionListener deleteBtnListener(UserMenu menu) {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Users user = (Users) menu.usersList.getSelectedItem();
-                inscriptions.remove(user);
-                menu.usersList.removeItem(user);
-            }
+        return (ActionEvent e) -> {
+            Users user1 = (Users) menu.usersList.getSelectedItem();
+            inscriptions.remove(user1);
+            menu.usersList.removeItem(user1);
         };
     }
 }
