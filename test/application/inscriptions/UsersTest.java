@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import data.hibernate.passerelle;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -61,7 +62,7 @@ public class UsersTest {
     @Test
     public void testGetPrenom() {
         System.out.println("getPrenom");
-        String expResult = "prenom_1";
+        String expResult = "datPrenom";
         assertEquals(expResult, instance.getPrenom());
     }
 
@@ -71,7 +72,7 @@ public class UsersTest {
     @Test
     public void testGetNiveau() {
         System.out.println("getNiveau");
-        int expResult = 0;
+        int expResult = 1;
         int result = instance.getNiveau();
         assertEquals(expResult, result);
     }
@@ -82,7 +83,7 @@ public class UsersTest {
     @Test
     public void testGetMail() {
         System.out.println("getMail");
-        String expResult = "nom_1prenom_1@mail.com";
+        String expResult = "yolo@yolo.com";
         String result = instance.getMail();
         assertEquals(expResult, result);
     }
@@ -94,8 +95,9 @@ public class UsersTest {
     public void testSetPrenom() {
         System.out.println("setPrenom");
         String prenom = "datPrenom";
-        instance.setPrenom(prenom);
-        assertEquals(prenom, instance.getPrenom());
+        this.instance.setPrenom(prenom);
+        passerelle.save(this.instance);
+        assertEquals(prenom, ((Users) passerelle.get(Users.class, 1)).getPrenom());
     }
 
     /**
@@ -105,8 +107,9 @@ public class UsersTest {
     public void testSetNiveau() {
         System.out.println("setNiveau");
         int niveau = 1;
-        instance.setNiveau(niveau);
-        assertEquals(niveau, instance.getNiveau());
+        this.instance.setNiveau(niveau);
+        passerelle.save(this.instance);
+        assertEquals(niveau, ((Users)passerelle.get(Users.class, 1)).getNiveau());
     }
 
     /**
@@ -115,54 +118,34 @@ public class UsersTest {
     @Test
     public void testSetMail() {
         System.out.println("setMail");
-        String mail = "yolo@yolo.om";
-        instance.setMail(mail);
-        assertEquals(mail, instance.getMail());
+        String mail = "yolo@yolo.com";
+        this.instance.setMail(mail);
+        passerelle.save(this.instance);
+        assertEquals(mail, ((Users)passerelle.get(Users.class, 1)).getMail());
     }
-    
     /**
-     * create user test
-     */
-//    @Test
-//    public void testCreateUser(){
-//    	System.out.println("createUser");
-//    	Inscriptions ins = new Inscriptions();
-//    	Users user = ins.createPersonne("toto", "batman", "toto@batman.mail", 0);
-//    	passerelle.open();
-//    	this.instance = (Users) passerelle.get(Users.class,user.getId());
-//    	assertEquals(this.instance.getId(), user.getId());
-//    }
-    
-    /**
-     * create and remove user test
+     * Test of inserting a new user in the database
      */
     @Test
-    public void testCreateAndRemoveUser() {
+    public void testRemove() {
     	System.out.println("remove User");
-    	Inscriptions ins = new Inscriptions();
-    	passerelle.open();
-    	Users user = (Users) passerelle.get(Users.class, 49);
-    	passerelle.close();
-    	if(user == null)
-    		fail("Cannot create user");
-    	ins.remove(user);
-    	assertNull(passerelle.get(Users.class, user.getId()));
+        long result = (long)passerelle.count("Users");
+        Users inst = (Users)passerelle.table(Users.class).get((int)result - 1);
+        passerelle.delete(inst);
+        long expResult = (long)passerelle.count("Users");
+        assertEquals(result - 1, expResult);
     }
     
     /**
-     * update user test
+     * Test of inserting a new user in the database
      */
     @Test
-    public void testEditUser() {
-    	System.out.println("edit User");
-    	Users user = this.instance;
-    	user.setPrenom("edit");
-    	passerelle.update(user);
-    	this.instance = (Users) passerelle.get(Users.class, this.instance.getId());
-    	if(this.instance.getPrenom() != "edit")
-    		fail("Could not edit");
-    	this.instance.setPrenom("prenom_1");
-    	passerelle.update(this.instance);
+    public void testCreate() {
+    	System.out.println("create User");
+        long result = (long)passerelle.count("Users");
+    	passerelle.save(new Users("nom", "prenom",0,"mail@mail.com"));
+        long expResult = (long)passerelle.count("Users");
+        assertEquals(result + 1, expResult);
     }
     
     @Test
@@ -172,5 +155,41 @@ public class UsersTest {
         System.out.println((this.instance.getCompetition()));
         assertTrue(this.instance.getCompetition().contains(competition));
     }
+
+    /**
+     * Test of getEquipes method, of class Users.
+     */
+    @Test
+    public void testGetEquipes() {
+        System.out.println("getEquipes");
+        Equipe instanceE = (Equipe)passerelle.get(Equipe.class, 3);
+        assertTrue(this.instance.getEquipes().contains(instanceE));
+    }
+
+
+    /**
+     * Test of addEquipe method, of class Users.
+     */
+    @Test
+    public void testAddEquipe() {
+        System.out.println("addEquipe");
+        Equipe equipe = (Equipe) passerelle.get(Equipe.class,21);
+        this.instance.addEquipe(equipe);
+        passerelle.save(this.instance);
+        assertTrue(((Users)passerelle.get(Users.class, 1)).getEquipes().contains(equipe));
+    }
+
+    /**
+     * Test of removeEquipe method, of class Users.
+     */
+    @Test
+    public void testRemoveEquipe() {
+        System.out.println("removeEquipe");
+        Equipe equipe = (Equipe) passerelle.get(Equipe.class, 21);
+        this.instance.removeEquipe(equipe);
+        passerelle.save(this.instance);
+        assertFalse(((Users)passerelle.get(Users.class, 1)).getEquipes().contains(equipe));
+    }
+
     
 }
