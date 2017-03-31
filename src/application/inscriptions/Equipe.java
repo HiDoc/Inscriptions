@@ -5,60 +5,82 @@
  */
 package application.inscriptions;
 
+import data.hibernate.passerelle;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import jdk.nashorn.internal.ir.annotations.Immutable;
 
 /**
  *
  * @author Flo
  */
 @Entity
-@Immutable
-@Table(name ="equipe")
+@Table(name = "equipe")
 public class Equipe extends Candidat implements Serializable {
-    
+
+    /*
+     * Clés plusieurs à plusieurs sur la table participer
+     */
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "appartenir", joinColumns = {
-        @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_lul")})
-    private final Set<Users> users = new HashSet<>(0);
+        @JoinColumn(name = "id_eq")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_ca")})
+    private Set<Users> utilisateurs = new HashSet<>(0);
 
     /**
-     * Retourne la liste des candidats inscrits dans cette équipe
-     * @return un Set de candidat
+     * Retourne une liste d'utilisateurs
+     * @return un Set d'objet User
      */
-    public Set<Users> getUsers() {
-        return users;
-    }
-    
-    /**
-     * Ajouter un candidat à l'équipe
-     * @param candidat
-     */
-    public void addUser(Users candidat){
-        if(!this.users.contains((Users)candidat)){
-            this.users.add((Users) candidat);
-        }
-        else throw new RuntimeException("le candidat est déjà inscrit");
+    public Set<Users> getUtilisateurs() {
+        return this.utilisateurs;
     }
 
     /**
-     * Enlever un candidat de l'équipe
-     * @param candidat 
+     * Modifie les utilisateurs d'une équipe
+     * @param utilisateurs
      */
-    public void removeUser(Candidat candidat){
-    if(this.users.contains((Users)candidat)){
-            this.users.remove((Users)candidat);
-        }
-        else throw new RuntimeException("le candidat n'est pas inscrit");    
+    public void setUtilisateurs(Set<Users> utilisateurs) {
+        this.utilisateurs = utilisateurs;
     }
-    
+
+    /**
+     * Ajoute un utilisateur à l'équipe
+     * @param user
+     */
+    public void addUser(Users user) {
+        this.utilisateurs.add(user);
+    }
+
+    /**
+     * Enlève un utilisateur d'une équipe
+     * @param user
+     */
+    public void removeUser(Users user) {
+        this.utilisateurs.remove(user);
+    }
+
+    /**
+     * Constructeur vide pour la persistance
+     */
+    @SuppressWarnings("unused")
+    public Equipe() {
+    }
+
+    /**
+     * Constructeur
+     *
+     * @param nom de la classe mère Candidat
+     */
+    public Equipe(String nom) {
+        super(nom);
+    }
+
 }

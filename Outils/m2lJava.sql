@@ -26,13 +26,13 @@ CREATE TABLE competition (
 );
 
 CREATE TABLE appartenir (
-    id_user INT,
-    id_equipe INT,
-    PRIMARY KEY (id_user , id_equipe),
-    FOREIGN KEY (id_user)
+    id_ca INT,
+    id_eq INT,
+    PRIMARY KEY (id_ca , id_eq),
+    FOREIGN KEY (id_ca)
         REFERENCES users (id_ca),
-    FOREIGN KEY (id_equipe)
-        REFERENCES candidat (id_ca)
+    FOREIGN KEY (id_eq)
+        REFERENCES users (id_eq)
 );
 
 CREATE TABLE participer (
@@ -44,13 +44,12 @@ CREATE TABLE participer (
     FOREIGN KEY (id_co)
         REFERENCES competition (id_co)
 );
-CREATE VIEW Equipe AS(
-	SELECT * 
-	FROM candidat c 
-	WHERE NOT EXISTS (	SELECT * 
-						FROM users u 	
-						WHERE c.id_ca = u.id_ca)
-	);
+CREATE table equipe (
+	id_eq INt PRIMARY KEY,
+    id_chef int,
+    foreign key (id_chef) references users (id_ca),
+    foreign key (id_eq) references candidat (id_ca)
+);
 
 DELIMITER |
 CREATE PROCEDURE fillTables(nbr int)      
@@ -71,10 +70,10 @@ BEGIN
 END|
 DELIMITER ;
 CALL filltables(2);
-use m2ljava;
-insert into participer values(1,1);
 select * from participer;
 select * from candidat;
+insert into appartenir values(1,3);
 select * from users;
 select * from Equipe;
+insert into candidat values (default, "salut");
 /*grant all privileges on m2lJava.* to 'hibernate'@'localhost' identified by 'root';*/

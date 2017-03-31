@@ -34,17 +34,13 @@ public class Users extends Candidat implements Serializable {
     private String mail;
     
     /*
-     * Clés plusieurs à plusieurs sur la table appartenir
+     * Clés plusieurs à plusieurs sur la table participer
      */
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "appartenir", joinColumns = {
         @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_lul")})
-    /**
-     * Crée une liste de toutes les équipes auxquelles le candidat est inscrit
-     */
-    private final Set<Equipe> equipes = new HashSet<>(0);
-
+        @JoinColumn(name = "id_eq")})
+    private Set<Equipe> equipes = new HashSet<>(0);
     
     /**
      * Constructeur vide pour la persistance
@@ -94,7 +90,16 @@ public class Users extends Candidat implements Serializable {
     public String getMail() {
         return this.mail;
     }
-
+    
+    /**
+     * Getter
+     * Retourne les équipes de l'utilisateur
+     * @return Set d'objet Equipe
+     */
+    public Set<Equipe> getEquipes(){
+        return this.equipes;
+    }
+    
     /**
      * Setter
      * Modifie le prénom de l'utilisateur
@@ -122,37 +127,34 @@ public class Users extends Candidat implements Serializable {
         this.mail = mail;
     }
     /**
-     * Retourne la liste des équipes du candidat
-     * @return un Set de Candidat
+     * Setter
+     * Modifie les equipes de l'utilisateur
+     * @param equipes
      */
-    public Set<Equipe> getEquipe() {
-        return this.equipes;
-    }
-    /**
-     * Ajouter un candidat à l'équipe
-     * @param equipe
-     */
-    public void addEquipe(Equipe equipe){
-        if(!this.equipes.contains((Equipe)equipe)){
-            this.equipes.add((Equipe) equipe);
-        }
-        else throw new RuntimeException("le candidat est déjà inscrit");
+    public void setEquipes(Set<Equipe> equipes) {
+        this.equipes = equipes;
     }
 
     /**
-     * Enlever un candidat de l'équipe
+     * Ajoute l'utilisateur à une équipe
+     * @param equipe
+     */
+    public void addEquipe(Equipe equipe){
+        this.equipes.add(equipe);
+    }
+    /**
+     * Enlève l'utilisateur d'une équipe
      * @param equipe
      */
     public void removeEquipe(Equipe equipe){
-    if(this.equipes.contains((Equipe)equipe)){
-            this.equipes.remove((Equipe)equipe);
-        }
-        else throw new RuntimeException("le candidat n'est pas inscrit");    
+        this.equipes.remove(equipe);
     }
     
+    
+    @Override
     public String toString()
     {
-    	return this.prenom+" "+super.getNom();
+    	return this.prenom + " " + super.getNom();
     }
 
 }
