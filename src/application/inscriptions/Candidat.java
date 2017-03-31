@@ -58,7 +58,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
      * Crée une liste de toutes les compétitions auxquelles le candidat est inscrit
      */
     private final Set<Competition> competitions = new HashSet<>(0);
-
+   
     /**
      * Constructeur par défault vide pour la persistance
      */

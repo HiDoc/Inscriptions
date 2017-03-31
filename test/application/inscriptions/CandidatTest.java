@@ -5,8 +5,6 @@
  */
 package application.inscriptions;
 import data.hibernate.passerelle;
-import java.util.HashSet;
-import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
