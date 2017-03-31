@@ -130,8 +130,10 @@ public class CompetMenu extends SubMenu {
     	for(Candidat c : candidats) {
     		boolean exists = false;
     		for(Candidat cc : competCandidats) {
-    			exists = (cc.getId() ==  c.getId());
+    			if(!exists) 
+    				exists = (cc.getId() ==  c.getId());
     		}
+    		System.out.println(exists);
     		if(!exists)
     			candidatsList.addItem(c);
     	}

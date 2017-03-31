@@ -8,26 +8,7 @@ import java.util.Date;
 import presentation.cli.menu.MainMenu;
 
 public class Main {
-         passerelle passerelle = new passerelle();
-         
-	public static Calendar parseDate (String strDate)
-	{
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		try
-		{
-			date = sdf.parse(strDate);
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(date);
-			return cal;
-		}
-		catch(ParseException e)
-		{
-			e.printStackTrace();
-		}
-		return Calendar.getInstance();
-		
-	}
+	passerelle passerelle = new passerelle();     
 
 	public static void main(String[] args) {
 		MainMenu mainMenu = new MainMenu(Inscriptions.getInscriptions());

@@ -6,6 +6,7 @@
 package application.inscriptions;
 import data.hibernate.passerelle;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -105,7 +106,7 @@ public class Competition implements Serializable, Comparable <Competition> {
      * Retourne le nom de la compétition
      * @return une chaine de caractères
      */
-    protected String getNom() {
+    public String getNom() {
         return this.nom;
     }
 
@@ -113,15 +114,19 @@ public class Competition implements Serializable, Comparable <Competition> {
      * Retourne la date de la compétition
      * @return une date de type Calendar
      */
-    protected Calendar getDate() {
+    public Calendar getDate() {
         return this.date;
     }
 
+    public String getDateToString() {
+    	return new SimpleDateFormat("yyyy/MM/dd").format(this.date.getTime());
+    }
+    
     /**
      * Retourne le temps de la compétition en secondes
      * @return un nombre en secondes
      */
-    protected int getDuree() {
+    public int getDuree() {
         return this.duree;
     }
     
@@ -132,11 +137,12 @@ public class Competition implements Serializable, Comparable <Competition> {
     protected Calendar getDateClose(){
         return this.dateClose;
     }
+    
     /**
      * Retourne vrai si la compétition se déroule en équipe 
      * @return un booléan
      */
-    protected boolean getEnEquipe() {
+    public boolean getEnEquipe() {
         return this.enEquipe;
     }
 
@@ -144,7 +150,7 @@ public class Competition implements Serializable, Comparable <Competition> {
      * Modifie le nom de la compétition
      * @param nom une chaine de caractères
      */
-    protected void setNom(String nom) {
+    public void setNom(String nom) {
         this.nom = nom;
     }
 
@@ -152,7 +158,7 @@ public class Competition implements Serializable, Comparable <Competition> {
      * Modifie la date de la compétition
      * @param date de type Calendar
      */
-    protected void setDate(Calendar date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
@@ -160,7 +166,7 @@ public class Competition implements Serializable, Comparable <Competition> {
      * Modifie la durée en secondes de la compétition
      * @param duree une nombre de secondes
      */
-    protected void setDuree(int duree) {
+    public void setDuree(int duree) {
         this.duree = duree;
     }
 
@@ -168,7 +174,7 @@ public class Competition implements Serializable, Comparable <Competition> {
      * Modifie si la compétition doit se faire en équipe
      * @param enEquipe de type booléan
      */
-    protected void setEnEquipe(boolean enEquipe) {
+    public void setEnEquipe(boolean enEquipe) {
         this.enEquipe = enEquipe;
     }
     

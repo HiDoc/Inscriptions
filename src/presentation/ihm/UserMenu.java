@@ -132,7 +132,8 @@ public class UserMenu extends SubMenu {
     	for(Competition c : compets) {
     		boolean exists = false;
     		for(Competition uc : userComp) {
-    			exists = (uc.getId() ==  c.getId());
+    			if(!exists)
+    				exists = (uc.getId() ==  c.getId());
     		}
     		if(!exists)
     			this.competsList.addItem(c);

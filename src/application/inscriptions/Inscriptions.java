@@ -95,9 +95,9 @@ public class Inscriptions implements Serializable {
         passerelle.save(newC);
     }
     
-    public Competition createCompetition(String nom, String dateDebut, int duree, boolean enEquipe) {
-    	Calendar debut = this.parseDate(dateDebut);
-    	Calendar fin = debut;
+    public Competition createCompetition(String nom, Calendar dateDebut, int duree, boolean enEquipe) {
+    	Calendar debut = dateDebut;
+    	Calendar fin = (Calendar) debut.clone();
     	fin.add(Calendar.DATE, duree);
         Competition newC = new Competition(nom, debut, fin,duree, enEquipe);
         this.competitions.add(newC);
@@ -167,6 +167,10 @@ public class Inscriptions implements Serializable {
     
     public void edit(Users user) {
     	passerelle.update(user);
+    }
+    
+    public void edit(Competition compet) {
+    	passerelle.update(compet);
     }
     /**
      * Retourne l'unique instance de cette classe. Crée cet objet s'il n'existe
@@ -254,24 +258,6 @@ public class Inscriptions implements Serializable {
         return "Candidats : " + getCandidats().toString()
                 + "\nCompetitions  " + getCompetitions().toString();
     }
-
-	private Calendar parseDate (String strDate)
-	{
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		try
-		{
-			date = sdf.parse(strDate);
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(date);
-			return cal;
-		}
-		catch(ParseException e)
-		{
-			e.printStackTrace();
-		}
-		return Calendar.getInstance();	
-	}
     
     /**
      * Convertit une liste en sortedSet

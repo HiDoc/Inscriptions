@@ -135,7 +135,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
     
     @Override
     public String toString() {
-    	return id_ca+":"+nom;
+    	return nom;
     }
 
     @Override
