@@ -1,5 +1,5 @@
 USE m2lJava;
-DROP TABLE IF EXISTS participer, appartenir, competition, users, candidat;
+DROP TABLE IF EXISTS participer, appartenir, competition,equipe, users, candidat;
 DROP VIEW IF EXISTS equipe;
 DROP PROCEDURE IF EXISTS fillTables;
 
@@ -15,7 +15,12 @@ CREATE TABLE users (
     prenom VARCHAR(128),
     FOREIGN KEY (id_ca) REFERENCES candidat(id_ca)
 );
-
+CREATE table equipe (
+	id_ca INt PRIMARY KEY,
+    id_chef int,
+    foreign key (id_chef) references users (id_ca),
+    foreign key (id_ca) references candidat (id_ca)
+);
 CREATE TABLE competition (
     id_co INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(128),
@@ -28,11 +33,11 @@ CREATE TABLE competition (
 CREATE TABLE appartenir (
     id_ca INT,
     id_eq INT,
-    PRIMARY KEY (id_ca , id_eq),
     FOREIGN KEY (id_ca)
         REFERENCES users (id_ca),
     FOREIGN KEY (id_eq)
-        REFERENCES users (id_eq)
+        REFERENCES equipe (id_ca),
+    PRIMARY KEY (id_ca , id_eq)
 );
 
 CREATE TABLE participer (
@@ -44,12 +49,7 @@ CREATE TABLE participer (
     FOREIGN KEY (id_co)
         REFERENCES competition (id_co)
 );
-CREATE table equipe (
-	id_eq INt PRIMARY KEY,
-    id_chef int,
-    foreign key (id_chef) references users (id_ca),
-    foreign key (id_eq) references candidat (id_ca)
-);
+
 
 DELIMITER |
 CREATE PROCEDURE fillTables(nbr int)      
@@ -72,7 +72,8 @@ DELIMITER ;
 CALL filltables(2);
 select * from participer;
 select * from candidat;
-insert into appartenir values(1,3);
+insert into candidat values(default,"equipe");
+insert into equipe values(3,1);
 select * from users;
 select * from Equipe;
 insert into candidat values (default, "salut");

@@ -11,6 +11,7 @@ package data.hibernate;
  */
 import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -48,7 +49,6 @@ public class passerelle {
     public static void open() {
         session = sessionFactory.openSession();
     }
-
     /**
      * Ferme l'objet session
      */
@@ -59,11 +59,9 @@ public class passerelle {
         session.flush();
     }
     public static void update(Object o){
-    	session = sessionFactory.openSession();
     	Transaction tx = session.beginTransaction();
         session.update(o);
         tx.commit();
-        session.close();
     }
     public static void refresh(Object o){
         session.refresh(o);
@@ -114,7 +112,7 @@ public class passerelle {
         tx.commit();
         return object;
     }
-
+    
     /**
      * Selectionne une table par rapport à l'objet mis en paramètre
      * @param <T>
