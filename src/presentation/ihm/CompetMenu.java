@@ -2,9 +2,9 @@ package presentation.ihm;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import application.inscriptions.Candidat;
 import application.inscriptions.Competition;
 import application.inscriptions.Inscriptions;
 
@@ -28,8 +29,12 @@ public class CompetMenu extends SubMenu {
 	private JTextField editDate = new JTextField(20);
 	private JTextField editDuree = new JTextField(20);
 	private JCheckBox enTeam = new JCheckBox("En équipe");
+	private JCheckBox editEnTeam = new JCheckBox("En équipe");
 	private JComboBox<Competition> competList = new JComboBox<Competition>();
+	private JComboBox<Candidat> candidatsList = new JComboBox<Candidat>();
+	private JComboBox<Candidat> candidatsRemList = new JComboBox<Candidat>();
 	private Inscriptions inscriptions;
+	private Competition competition;
 	
 	public CompetMenu(Inscriptions ins)
 	{
@@ -76,7 +81,7 @@ public class CompetMenu extends SubMenu {
 			{
 				Competition compet = menu.inscriptions.createCompetition(
 					menu.nom.getText(), 
-					menu.date.getText(), 
+					menu.parseDate(menu.date.getText()), 
 					Integer.parseInt(menu.duree.getText()), 
 					menu.enTeam.isSelected()
 				);
@@ -92,6 +97,7 @@ public class CompetMenu extends SubMenu {
 		panel.setBorder(BorderFactory.createTitledBorder("Selectionner une compétition"));
 		System.out.println(inscriptions.getCompetitions());
 		inscriptions.getCompetitions().forEach(compet -> competList.addItem(compet));
+		competList.addActionListener(competListListener(this));
 		competList.setPreferredSize(new Dimension(200,20));
 		panel.add(Box.createHorizontalStrut(100));
 		panel.add(competList);
@@ -99,20 +105,76 @@ public class CompetMenu extends SubMenu {
 		return panel;
 	}
 	
+	private ActionListener competListListener(CompetMenu menu)
+	{
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                Competition selected = (Competition) menu.competList.getSelectedItem();
+                menu.editNom.setText(selected.getNom());
+                menu.editDate.setText(selected.getDateToString());
+                menu.editDuree.setText(Integer.toString(selected.getDuree()));
+                menu.editEnTeam.setSelected(selected.getEnEquipe());
+                menu.competition = selected;
+                menu.makeCandidatsList();
+                menu.makeCandidatsRemList();
+			}
+		};
+	}
+	
+	private void makeCandidatsList()
+	{
+    	candidatsList.removeAllItems();
+    	Set<Candidat> competCandidats = competition.getCandidats();
+    	Set<Candidat> candidats = inscriptions.getCandidats();
+    	for(Candidat c : candidats) {
+    		boolean exists = false;
+    		for(Candidat cc : competCandidats) {
+    			exists = (cc.getId() ==  c.getId());
+    		}
+    		if(!exists)
+    			candidatsList.addItem(c);
+    	}
+	}
+	
+	private void makeCandidatsRemList()
+	{
+		candidatsRemList.removeAllItems();
+		competition.getCandidats().forEach(c -> candidatsRemList.addItem(c));
+	}
+	
 	private JPanel editCompet()
 	{
 		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createTitledBorder("Editer placeholder"));
 		panel.add(new JLabel("Nom :"));
-		panel.add(new JTextField(20));
+		panel.add(editNom);
 		panel.add(new JLabel("Date :"));
-		panel.add(new JTextField(20));
+		panel.add(editDate);
 		panel.add(new JLabel("Durée :"));
-		panel.add(new JTextField(20));
-		panel.add(new JButton("Editer"));
+		panel.add(editDuree);
+		panel.add(editEnTeam);
+		JButton editBtn = new JButton("Editer");
+		editBtn.addActionListener(editBtnListener(this));
+		panel.add(editBtn);
 		panel.add(Box.createVerticalStrut(50));
 		return panel;
 		
+	}
+	
+	private ActionListener editBtnListener(CompetMenu menu)
+	{
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Competition compet = (Competition) competList.getSelectedItem();
+				compet.setNom(menu.editNom.getText());
+				compet.setDate(menu.parseDate(menu.editDate.getText()));
+				compet.setDuree(Integer.parseInt(menu.editDuree.getText()));
+				compet.setEnEquipe(menu.editEnTeam.isSelected());
+				menu.inscriptions.edit(compet);
+			}
+		};
 	}
 	
 	private JPanel addAndRemove()
@@ -120,39 +182,27 @@ public class CompetMenu extends SubMenu {
 		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createTitledBorder("Modifier candidats"));
 		panel.add(new JLabel("Ajouter candidat :"));
-		JComboBox boxAdd = new JComboBox();
-		boxAdd.addItem("toto");
-		boxAdd.addItem("riri");
-		boxAdd.addItem("fifi");
-		boxAdd.addItem("loulou");
-		boxAdd.addItem("yolo");
-		boxAdd.setPreferredSize(new Dimension(200,20));
-		boxAdd.addActionListener(addTeamAL(boxAdd));
-		panel.add(boxAdd);
+		candidatsList.setPreferredSize(new Dimension(200,20));
+		candidatsList.addActionListener(addTeamAL());
+		panel.add(candidatsList);
 		panel.add(Box.createHorizontalStrut(100));
 		panel.add(new JLabel("Enlever Candidat :"));
-		JComboBox boxRemove = new JComboBox();
-		boxRemove.addItem("toto");
-		boxRemove.addItem("riri");
-		boxRemove.addItem("fifi");
-		boxRemove.addItem("loulou");
-		boxRemove.addItem("yolo");
-		boxRemove.setPreferredSize(new Dimension(200,20));
-		boxRemove.addActionListener(addTeamAL(boxRemove));
-		panel.add(boxRemove);
+		candidatsRemList.setPreferredSize(new Dimension(200,20));
+		candidatsRemList.addActionListener(addTeamAL());
+		panel.add(candidatsRemList);
 		panel.add(Box.createVerticalStrut(50));
 		return panel;
 	}
 	
 	
-	private ActionListener addTeamAL(JComboBox box)
+	private ActionListener addTeamAL()
 	{
 		return new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				System.out.println(box.getSelectedItem());
+//				System.out.println(box.getSelectedItem());
 			}
 		};
 	}
