@@ -59,9 +59,11 @@ public class passerelle {
         session.flush();
     }
     public static void update(Object o){
+    	session = sessionFactory.openSession();
     	Transaction tx = session.beginTransaction();
         session.update(o);
         tx.commit();
+        session.close();
     }
     public static void refresh(Object o){
         session.refresh(o);

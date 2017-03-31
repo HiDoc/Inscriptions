@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -15,7 +16,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+import application.inscriptions.Competition;
+import application.inscriptions.Equipe;
 import application.inscriptions.Inscriptions;
 import application.inscriptions.Users;
 
@@ -28,6 +30,9 @@ public class UserMenu extends SubMenu {
     private JTextField editPrenom = new JTextField(20);
     private JTextField editEmail = new JTextField(20);
     private JComboBox<Users> usersList;
+    private JComboBox<Competition> competsRemList = new JComboBox<Competition>();
+    private JComboBox<Competition> competsList = new JComboBox<Competition>();
+    private JComboBox<Equipe> teamsRemList = new JComboBox<Equipe>();
     private Inscriptions inscriptions;
     private Users user;
 //	private SortedSet<Candidat> users;
@@ -113,11 +118,27 @@ public class UserMenu extends SubMenu {
                 menu.editPrenom.setText(selected.getPrenom());
                 menu.editEmail.setText(selected.getMail());
                 menu.user = selected;
-                System.out.println(menu.user.getCompetition());
+                selected.getCompetition().forEach(compet -> competsRemList.addItem(compet));
+                menu.makeCompetsList();
+                System.out.println(selected.getCompetition());
             }
         };
     }
-
+    
+    private void makeCompetsList() {
+    	competsList.removeAllItems();
+    	Set<Competition> userComp = user.getCompetition();
+    	Set<Competition> compets = inscriptions.getCompetitions();
+    	for(Competition c : compets) {
+    		boolean exists = false;
+    		for(Competition uc : userComp) {
+    			exists = (uc.getId() ==  c.getId());
+    		}
+    		if(!exists)
+    			this.competsList.addItem(c);
+    	}
+    }
+    
     private JPanel addAndRemove() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 2));
@@ -141,16 +162,13 @@ public class UserMenu extends SubMenu {
         JPanel teams = new JPanel();
         teams.add(new JLabel("Ajouter à l'équipe :"));
         teams.add(boxTeams);
-        JComboBox boxCompets = new JComboBox();
-        boxCompets.addItem("toto");
-        boxCompets.addItem("riri");
-        boxCompets.addItem("fifi");
-        boxCompets.addItem("loulou");
-        boxCompets.addItem("yolo");
-        boxCompets.setPreferredSize(new Dimension(200, 20));
+        competsList.setPreferredSize(new Dimension(200, 20));
+        JButton competsAddBtn = new JButton("Ajouter");
+        competsAddBtn.addActionListener(addCompetListener(this));
         JPanel compets = new JPanel();
         compets.add(new JLabel("Ajouter à la compétition :"));
-        compets.add(boxCompets);
+        compets.add(competsList);
+        compets.add(competsAddBtn);
         panel.setBorder(BorderFactory.createTitledBorder("Ajouter a"));
         panel.add(teams);
         panel.add(Box.createVerticalStrut(20));
@@ -160,7 +178,7 @@ public class UserMenu extends SubMenu {
         panel.add(Box.createVerticalStrut(10));
         return panel;
     }
-
+    
     private ActionListener addTeamAL(JComboBox box) {
         return new ActionListener() {
             @Override
@@ -170,8 +188,23 @@ public class UserMenu extends SubMenu {
         };
     }
 
+    private ActionListener addCompetListener(UserMenu menu) {
+    	return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Competition compet = (Competition) menu.competsList.getSelectedItem();
+				user.inscription(compet);
+				menu.competsRemList.addItem(compet);
+				menu.competsList.removeItem(compet);
+			}
+    	};
+    }
+    
     private JPanel removeFrom() {
         JPanel panel = new JPanel();
+        this.competsRemList.setPreferredSize(new Dimension(200, 20));
+        JPanel teams = new JPanel();
+        teams.add(new JLabel("Enlever de l'équipe :"));
         JComboBox boxTeams = new JComboBox();
         boxTeams.addItem("toto");
         boxTeams.addItem("riri");
@@ -179,23 +212,16 @@ public class UserMenu extends SubMenu {
         boxTeams.addItem("loulou");
         boxTeams.addItem("yolo");
         boxTeams.setPreferredSize(new Dimension(200, 20));
-        JPanel teams = new JPanel();
-        teams.add(new JLabel("Enlever de l'équipe :"));
         teams.add(boxTeams);
-        JComboBox boxCompets = new JComboBox();
-        boxCompets.addItem("toto");
-        boxCompets.addItem("riri");
-        boxCompets.addItem("fifi");
-        boxCompets.addItem("loulou");
-        boxCompets.addItem("yolo");
-        boxCompets.setPreferredSize(new Dimension(200, 20));
         panel.setBorder(BorderFactory.createTitledBorder("Enlever de"));
         panel.add(Box.createVerticalStrut(10));
         panel.add(teams);
-
         JPanel compets = new JPanel();
         compets.add(new JLabel("Enlever de la compétition :"));
-        compets.add(boxCompets);
+        compets.add(competsRemList);
+        JButton competsRemBtn = new JButton("Enlever");
+        competsRemBtn.addActionListener(competRemListener(this));
+        compets.add(competsRemBtn);
         panel.add(teams);
         panel.add(Box.createVerticalStrut(20));
 //		panel.add(Box.createHorizontalStrut(100));
@@ -205,6 +231,21 @@ public class UserMenu extends SubMenu {
         return panel;
     }
 
+    private ActionListener competRemListener(UserMenu menu) {
+    	return new ActionListener()
+    	{
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Competition compet = (Competition) menu.competsRemList.getSelectedItem();
+				menu.user.desinscription(compet);
+				menu.competsRemList.removeItem(compet);
+				menu.competsList.addItem(compet);
+				System.out.println(compet);
+			}
+    		
+    	};
+    }
+    
     private JPanel editUser() {
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createTitledBorder("Editer placeholder"));
@@ -235,8 +276,8 @@ public class UserMenu extends SubMenu {
 
     private JPanel removeUser() {
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder("Editer placeholder"));
-        JButton button = new JButton("Editer");
+        panel.setBorder(BorderFactory.createTitledBorder("Effacer l'utilisateur"));
+        JButton button = new JButton("Effacer");
         button.addActionListener(deleteBtnListener(this));
         panel.add(button);
         return panel;

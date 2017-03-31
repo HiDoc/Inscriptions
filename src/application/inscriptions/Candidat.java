@@ -22,6 +22,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
 
 /**
@@ -45,7 +46,11 @@ public class Candidat implements Serializable, Comparable<Candidat> {
     /*
      * Clés plusieurs à plusieurs sur la table participer
      */
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade =
+            {
+                    CascadeType.ALL
+            })
     @JoinTable(name = "participer", joinColumns = {
         @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
         @JoinColumn(name = "id_co")})
@@ -105,6 +110,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
     public void inscription(Competition competition){
         if (!competitions.contains(competition)){
             competitions.add(competition);
+            passerelle.update(this);
         }
     }
 
@@ -116,6 +122,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
     public void desinscription(Competition competition){
         if (competitions.contains(competition)){
             competitions.remove(competition);
+            passerelle.update(this);
         }
     }
     

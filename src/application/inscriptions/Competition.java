@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,7 +55,11 @@ public class Competition implements Serializable, Comparable <Competition> {
     @Column(name = "enEquipe")
     private boolean enEquipe;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade =
+            {
+                    CascadeType.PERSIST
+            })
     @JoinTable(name = "participer", joinColumns = {
         @JoinColumn(name = "id_co")}, inverseJoinColumns = {
         @JoinColumn(name = "id_ca")})
@@ -90,7 +95,7 @@ public class Competition implements Serializable, Comparable <Competition> {
      * Retourne l'id de la compétition
      * @return une chaine de caractères
      */
-    protected int getId() {
+    public int getId() {
         return this.id_co;
     }
     
@@ -207,8 +212,7 @@ public class Competition implements Serializable, Comparable <Competition> {
      */
     public void removeCandidat(Candidat candidat){
      if(this.candidats.contains(candidat)){
-         
-        this.candidats.remove(candidat);
+    	 this.candidats.remove(candidat);
      
      }
     }

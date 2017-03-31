@@ -166,9 +166,7 @@ public class Inscriptions implements Serializable {
     }
     
     public void edit(Users user) {
-    	passerelle.open();
     	passerelle.update(user);
-    	passerelle.close();
     }
     /**
      * Retourne l'unique instance de cette classe. Crée cet objet s'il n'existe
