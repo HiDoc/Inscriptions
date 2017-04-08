@@ -5,17 +5,15 @@
  */
 package application.inscriptions;
 
-import data.hibernate.passerelle;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -34,12 +32,23 @@ public class Equipe extends Candidat implements Serializable {
         @JoinColumn(name = "id_eq")}, inverseJoinColumns = {
         @JoinColumn(name = "id_ca")})
     private Set<Users> utilisateurs = new HashSet<>(0);
-
+    
+    /**
+     * Clé un à plusieurs sur la table users
+     * TODO : implémenter la clé un à plusieurs pour notifier le chef d"équipe 
+     */
+//    @OneToMany
+//    @JoinTable( name= "Users", joinColums = { 
+//        @JoinColumn(name="id_chef")}, inverseJoinColums = { 
+//        @JoinColumn(name="id_ca")})
+//    private Users chefEquipe;
+    
+    
     /**
      * Retourne une liste d'utilisateurs
      * @return un Set d'objet User
      */
-    public Set<Users> getUtilisateurs() {
+    public Set<Users> getUsers() {
         return this.utilisateurs;
     }
 
