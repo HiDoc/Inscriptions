@@ -52,16 +52,18 @@ public class EquipeTest {
         Set<Users> expResult = instance.getUsers();
         assertTrue(expResult.contains(instanceU));
     }
-
+    
     /**
      * Test of addUser method, of class Equipe.
      */
     @Test
     public void testAddUser() {
         System.out.println("addUser");
-        Users candidat = null;
-        Equipe instance = new Equipe();
-        instance.addUser(candidat);
+        Equipe instance = (Equipe) passerelle.get(Equipe.class,3);
+        Users instanceU = (Users) passerelle.get(Users.class,2);
+        instance.addUser(instanceU);
+        passerelle.save(instance);
+        assertTrue((((Equipe)passerelle.get(Equipe.class,3)).getUsers()).contains(instanceU));
     }
 
     /**
@@ -70,9 +72,11 @@ public class EquipeTest {
     @Test
     public void testRemoveUser() {
         System.out.println("removeUser");
-        Candidat candidat = null;
-        Equipe instance = new Equipe();
-        instance.removeUser(candidat);
+        Equipe instance = (Equipe) passerelle.get(Equipe.class,3);
+        Users instanceU = (Users) passerelle.get(Users.class,2);
+        instance.removeUser(instanceU);
+        passerelle.save(instance);
+        assertFalse((((Equipe)passerelle.get(Equipe.class,3)).getUsers()).contains(instanceU));
     }
     
 }

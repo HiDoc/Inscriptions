@@ -8,8 +8,6 @@ package application.inscriptions;
 import data.hibernate.passerelle;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import org.junit.After;
@@ -55,7 +53,7 @@ public class InscriptionsTest {
     public void testGetCompetitions() {
         System.out.println("getCompetitions");
         ArrayList<Competition> compare = null;
-        ArrayList<Competition> instances = (ArrayList)passerelle.table("competition");
+        ArrayList<Competition> instances = (ArrayList)passerelle.table(Competition.class);
         instances.stream().forEach(compare::add);
         ArrayList<Competition> result = (ArrayList<Competition>) (this.instance.getCompetitions().stream());
         assertTrue(this.instance.compareList(compare,instances));
@@ -69,10 +67,8 @@ public class InscriptionsTest {
         System.out.println("getCandidats");
         Inscriptions instance = null;
         SortedSet<Candidat> expResult = null;
-        SortedSet<Candidat> result = instance.getCandidats();
+        SortedSet<Candidat> result = (SortedSet<Candidat>)instance.getCandidats();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

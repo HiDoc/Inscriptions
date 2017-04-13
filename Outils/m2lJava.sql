@@ -50,7 +50,6 @@ CREATE TABLE participer (
         REFERENCES competition (id_co)
 );
 
-
 DELIMITER |
 CREATE PROCEDURE fillTables(nbr int)      
 BEGIN
