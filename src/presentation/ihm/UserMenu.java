@@ -42,7 +42,7 @@ public class UserMenu extends SubMenu {
     }
 
     /**
-     * Renvoi une vue du Panel, compre
+     * Renvoi l'onglet Personnes du panneau principal
      * @return un jPanel
      */
     public JPanel getPanel() {
@@ -183,12 +183,12 @@ public class UserMenu extends SubMenu {
     }
 
     private ActionListener addCompetListener(UserMenu menu) {
-    	return (ActionEvent arg0) -> {
+    	return (ActionEvent e) -> {
             Competition compet = (Competition) menu.competsList.getSelectedItem();
             user.inscription(compet);
             menu.competsRemList.addItem(compet);
             menu.competsList.removeItem(compet);
-            };
+    	};
     }
     
     private JPanel removeFrom() {

@@ -210,7 +210,8 @@ public class Competition implements Serializable, Comparable <Competition> {
      */
     public void addCandidat(Candidat candidat){
         candidats.add(candidat);
-        }
+        passerelle.update(this);
+    }
 
     /**
      * Enlève un candidat de la compétition
@@ -219,7 +220,7 @@ public class Competition implements Serializable, Comparable <Competition> {
     public void removeCandidat(Candidat candidat){
      if(this.candidats.contains(candidat)){
     	 this.candidats.remove(candidat);
-     
+    	 passerelle.update(this);
      }
     }
     

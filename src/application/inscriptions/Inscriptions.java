@@ -40,7 +40,6 @@ public class Inscriptions implements Serializable {
         this.candidats = getSort((ArrayList) passerelle.table(Candidat.class));
         this.equipes = getSort((ArrayList) passerelle.table(Equipe.class));
         this.users = getSort((ArrayList) passerelle.table(Users.class));
-        passerelle.close();
     }
 
     /**
@@ -126,12 +125,10 @@ public class Inscriptions implements Serializable {
      * @param niveau
      */
     public Users createPersonne(String nom, String prenom, String mail, int niveau) {
-    	passerelle.open();
     	Users personne = new Users(nom, prenom, niveau, mail);
         this.candidats.add(personne);
         this.users.add(personne);
         passerelle.save(personne);
-        passerelle.close();
         return personne;
     }
 
@@ -160,9 +157,7 @@ public class Inscriptions implements Serializable {
     public void remove(Users user) {
         candidats.remove(user);
         users.remove(user);
-        passerelle.open();
         passerelle.delete(user);
-        passerelle.close();
     }
     
     public void edit(Users user) {

@@ -4,6 +4,7 @@ import java.awt.*;
 
 
 import javax.swing.*;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import application.inscriptions.Inscriptions;
 
@@ -44,6 +45,19 @@ public class MainIhm {
 	
 	private JPanel setFrame()
 	{
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				System.out.println(info.getName());
+				if("Nimbus".equals(info.getName())) {
+					System.out.println("pioue");
+					UIManager.setLookAndFeel(info.getClassName());
+				}
+			}
+		}
+		
+		catch (Exception e) {
+			System.out.println("yolo");
+		}
 		panel = new JPanel();
 		panel.setFont(new Font("Serif", Font.PLAIN, 40));
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));

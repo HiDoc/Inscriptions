@@ -133,7 +133,6 @@ public class CompetMenu extends SubMenu {
     			if(!exists) 
     				exists = (cc.getId() ==  c.getId());
     		}
-    		System.out.println(exists);
     		if(!exists)
     			candidatsList.addItem(c);
     	}
@@ -186,16 +185,47 @@ public class CompetMenu extends SubMenu {
 		panel.add(new JLabel("Ajouter candidat :"));
 		candidatsList.setPreferredSize(new Dimension(200,20));
 		candidatsList.addActionListener(addTeamAL());
+		JButton addBtn = new JButton("Ajouter");
+		addBtn.addActionListener(addCandidatListener(this));
 		panel.add(candidatsList);
+		panel.add(addBtn);
 		panel.add(Box.createHorizontalStrut(100));
 		panel.add(new JLabel("Enlever Candidat :"));
 		candidatsRemList.setPreferredSize(new Dimension(200,20));
 		candidatsRemList.addActionListener(addTeamAL());
+		JButton remBtn = new JButton("Enlever");
+		remBtn.addActionListener(remCandidatListener(this));
+		panel.add(remBtn);
 		panel.add(candidatsRemList);
 		panel.add(Box.createVerticalStrut(50));
 		return panel;
 	}
 	
+	private ActionListener addCandidatListener(CompetMenu menu)
+	{
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Candidat candidat = (Candidat) menu.candidatsList.getSelectedItem();
+				menu.competition.addCandidat(candidat); 
+				menu.candidatsList.removeItem(candidat);
+				menu.candidatsRemList.addItem(candidat);
+			}
+		};
+	}
+	
+	private ActionListener remCandidatListener(CompetMenu menu)
+	{
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Candidat candidat = (Candidat) menu.candidatsRemList.getSelectedItem();
+				menu.competition.removeCandidat(candidat); 
+				menu.candidatsList.addItem(candidat);
+				menu.candidatsRemList.removeItem(candidat);
+			}
+		};
+	}
 	
 	private ActionListener addTeamAL()
 	{
