@@ -22,19 +22,15 @@ import application.inscriptions.Users;
 public class TeamMenu extends SubMenu{
 	
 	private JTextField nom = new JTextField(20);
-	private JPanel panel = new JPanel();
 	private Equipe team;
 	private JComboBox<Equipe> teamList;
-	private Inscriptions inscriptions;
 	
 	public TeamMenu(Inscriptions ins)
 	{
-		this.inscriptions = ins;
+		super(ins);
 	}
 	
 	public JPanel getPanel() {
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setBorder(BorderFactory.createLineBorder(Color.decode("#EEEEEE"), 5));
 		panel.add(addTeam());
 		panel.add(editTeam());
 		panel.add(selectTeam());

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -15,6 +16,12 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import org.hibernate.metamodel.relational.Size;
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import application.inscriptions.Candidat;
 import application.inscriptions.Competition;
@@ -33,19 +40,15 @@ public class CompetMenu extends SubMenu {
 	private JComboBox<Competition> competList = new JComboBox<Competition>();
 	private JComboBox<Candidat> candidatsList = new JComboBox<Candidat>();
 	private JComboBox<Candidat> candidatsRemList = new JComboBox<Candidat>();
-	private Inscriptions inscriptions;
 	private Competition competition;
 	
 	public CompetMenu(Inscriptions ins)
 	{
-		this.inscriptions = ins;
+		super(ins);
 	}
 	
 	public JPanel getPanel()
 	{
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setBorder(BorderFactory.createLineBorder(Color.decode("#EEEEEE"), 5));
 		panel.add(addCompet());
 		panel.add(selectCompet());
 		panel.add(editCompet());
@@ -59,10 +62,20 @@ public class CompetMenu extends SubMenu {
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Nom :"));
 		panel.add(nom);
-		panel.add(new JLabel("Date :"));
-		panel.add(date);
 		panel.add(new JLabel("Duree :"));
 		panel.add(duree);
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Aujourd'hui");
+		p.put("text.month","mois");
+		p.put("text.year", "année");
+		JDatePanelImpl date = new JDatePanelImpl(model, p);
+		date.setBackground(Color.decode("#000000"));
+		date.setForeground(Color.decode("#000000"));
+		date.setPreferredSize(new Dimension(300,200));
+		JDatePickerImpl dp = new JDatePickerImpl(date, new DateComponentFormatter());
+		
+		panel.add(dp);
 		panel.add(enTeam);
 		panel.setBorder(BorderFactory.createTitledBorder("Ajouter une compétition"));
 		JButton btn = new JButton("Ajouter");
