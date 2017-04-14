@@ -31,7 +31,7 @@ public class Inscriptions implements Serializable {
 
     private SortedSet<Competition> competitions = new TreeSet<>();
     private SortedSet<Candidat> candidats = new TreeSet<>();
-    private SortedSet<Candidat> equipes = new TreeSet<>();
+    private SortedSet<Equipe> equipes = new TreeSet<>();
     private SortedSet<Users> users = new TreeSet<>();
     
     public Inscriptions() {
@@ -74,7 +74,7 @@ public class Inscriptions implements Serializable {
      * Retourne toutes les équipes.
      * @return Un SortedSet
      */
-    public SortedSet<Candidat> getEquipes() {
+    public SortedSet<Equipe> getEquipes() {
         return Collections.unmodifiableSortedSet(this.equipes);
     }
 
@@ -100,9 +100,7 @@ public class Inscriptions implements Serializable {
     	fin.add(Calendar.DATE, duree);
         Competition newC = new Competition(nom, debut, fin,duree, enEquipe);
         this.competitions.add(newC);
-        passerelle.open();
         passerelle.save(newC);
-        passerelle.close();
         return newC;
     }
     
@@ -138,10 +136,11 @@ public class Inscriptions implements Serializable {
      *
      * @param nom
      */
-    public void createEquipe(String nom) {
-        Candidat equipe = new Candidat(nom);
+    public Equipe createEquipe(String nom) {
+        Equipe equipe = new Equipe(nom);
         this.equipes.add(equipe);
         passerelle.save(equipe);
+        return equipe;
     }
 
     void remove(Competition competition) {

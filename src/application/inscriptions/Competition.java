@@ -56,7 +56,7 @@ public class Competition implements Serializable, Comparable <Competition> {
     @Column(name = "enEquipe")
     private boolean enEquipe;
 
-    @ManyToMany(fetch = FetchType.EAGER,
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade =
             {
                     CascadeType.PERSIST

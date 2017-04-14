@@ -46,7 +46,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
     /*
      * Clés plusieurs à plusieurs sur la table participer
      */
-    @ManyToMany(fetch = FetchType.EAGER,
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade =
             {
                     CascadeType.ALL

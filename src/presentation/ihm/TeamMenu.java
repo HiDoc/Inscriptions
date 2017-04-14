@@ -2,7 +2,6 @@ package presentation.ihm;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,14 +15,24 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import application.inscriptions.Equipe;
+import application.inscriptions.Inscriptions;
+import application.inscriptions.Users;
+
 public class TeamMenu extends SubMenu{
 	
 	private JTextField nom = new JTextField(20);
 	private JPanel panel = new JPanel();
+	private Equipe team;
+	private JComboBox<Equipe> teamList;
+	private Inscriptions inscriptions;
+	
+	public TeamMenu(Inscriptions ins)
+	{
+		this.inscriptions = ins;
+	}
 	
 	public JPanel getPanel() {
-		JPanel panel = new JPanel();
-
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.setBorder(BorderFactory.createLineBorder(Color.decode("#EEEEEE"), 5));
 		panel.add(addTeam());
@@ -37,13 +46,25 @@ public class TeamMenu extends SubMenu{
 	private JPanel addTeam()
 	{
 		JPanel addUser = new JPanel();
+		JButton addBtn = new JButton("Ajouter");
 		addUser.add(new JLabel("Nom :"));
 		addUser.add(nom);
-
-		addUser.setBorder(BorderFactory.createTitledBorder("Ajouter une personne"));
-		addUser.add(new JButton("Ajouter"));
+		addUser.setBorder(BorderFactory.createTitledBorder("Ajouter une équipe"));
+		addBtn.addActionListener(addBtnListener(this));
+		addUser.add(addBtn);
 		addUser.add(Box.createVerticalStrut(50));
 		return addUser;
+	}
+	
+	private ActionListener addBtnListener(TeamMenu menu)
+	{
+        return (ActionEvent e) -> {
+            Equipe team = inscriptions.createEquipe(
+                    menu.nom.getText()
+            );
+            menu.teamList.addItem(team);
+            menu.team = team;
+        };
 	}
 	
 	private JPanel selectTeam()
@@ -51,19 +72,20 @@ public class TeamMenu extends SubMenu{
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Selectionner une équipe : "));
 		panel.setBorder(BorderFactory.createTitledBorder("Selectionner une équipe"));
-		JComboBox box = new JComboBox();
-		box.addItem("toto");
-		box.addItem("riri");
-		box.addItem("fifi");
-		box.addItem("loulou");
-		box.addItem("yolo");
-		box.setPreferredSize(new Dimension(200,20));
+		makeTeamList();
+		teamList.setPreferredSize(new Dimension(200,20));
 		panel.add(Box.createHorizontalStrut(100));
-		panel.add(box);
+		panel.add(teamList);
 		panel.add(Box.createVerticalStrut(50));
 		return panel;
 	}
 
+	private void makeTeamList()
+	{
+		teamList = new JComboBox<>();
+		inscriptions.getEquipes().forEach(team-> teamList.addItem(team));
+	}
+	
 	private JPanel addAndRemove()
 	{
 		JPanel panel = new JPanel();

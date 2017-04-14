@@ -67,7 +67,7 @@ BEGIN
 		SET v_i = v_i + 1;
 	UNTIL v_i > nbr END REPEAT;
 END|
-DELIMITER ;
+/*DELIMITER ;
 CALL filltables(2);
 select * from participer;
 select * from candidat;

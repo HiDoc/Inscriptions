@@ -78,14 +78,14 @@ public class UserMenu extends SubMenu {
 
     private ActionListener addBtnListener(UserMenu menu) {
         return (ActionEvent e) -> {
-            Users user1 = inscriptions.createPersonne(
+            Users user = inscriptions.createPersonne(
                     menu.nom.getText(),
                     menu.prenom.getText(),
                     menu.email.getText(),
                     0
             );
-            menu.usersList.addItem(user1);
-            menu.user = user1;
+            menu.usersList.addItem(user);
+            menu.user = user;
         };
     }
 
@@ -104,6 +104,7 @@ public class UserMenu extends SubMenu {
 
     private void makeUsersList() {
         usersList = new JComboBox<>();
+        System.out.println(inscriptions.getCandidats());
         inscriptions.getPersonnes().forEach(user -> usersList.addItem(user));
     }
 
