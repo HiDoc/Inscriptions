@@ -143,7 +143,7 @@ public class Inscriptions implements Serializable {
         return equipe;
     }
 
-    void remove(Competition competition) {
+    public void remove(Competition competition) {
         competitions.remove(competition);
         passerelle.delete(competition);
     }
@@ -158,6 +158,13 @@ public class Inscriptions implements Serializable {
         users.remove(user);
         passerelle.delete(user);
     }
+
+    public void remove(Equipe team) {
+        candidats.remove(team);
+        equipes.remove(team);
+        passerelle.delete(team);
+    }
+    
     
     public void edit(Users user) {
     	passerelle.update(user);
@@ -266,5 +273,9 @@ public class Inscriptions implements Serializable {
     public boolean compareList(ArrayList a, ArrayList b){
         a.removeAll(b);
         return a.isEmpty();
+    }
+    
+    public void refresh(Object o) {
+    	passerelle.refresh(o);
     }
 }

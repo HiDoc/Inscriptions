@@ -59,7 +59,7 @@ public class Competition implements Serializable, Comparable <Competition>, Data
     @ManyToMany(fetch = FetchType.LAZY,
             cascade =
             {
-                    CascadeType.PERSIST
+                    CascadeType.DETACH
             })
     @JoinTable(name = "participer", joinColumns = {
         @JoinColumn(name = "id_co")}, inverseJoinColumns = {

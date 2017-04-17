@@ -49,7 +49,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
     @ManyToMany(fetch = FetchType.LAZY,
             cascade =
             {
-                    CascadeType.ALL
+            		CascadeType.DETACH
             })
     @JoinTable(name = "participer", joinColumns = {
         @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
@@ -144,5 +144,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
         return i + (getId() == candidat.getId() ? 0 : 1) ;
     }
 
-
+    public boolean isTeam() {
+    	return this instanceof Equipe;
+    }
 }

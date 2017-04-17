@@ -10,11 +10,14 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import data.hibernate.passerelle;
 
 /**
  *
@@ -27,7 +30,11 @@ public class Equipe extends Candidat implements Serializable {
     /*
      * Clés plusieurs à plusieurs sur la table participer
      */
-    @ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY,
+            cascade =
+            {
+            		CascadeType.DETACH
+            })
     @JoinTable(name = "appartenir", joinColumns = {
         @JoinColumn(name = "id_eq")}, inverseJoinColumns = {
         @JoinColumn(name = "id_ca")})
@@ -66,6 +73,7 @@ public class Equipe extends Candidat implements Serializable {
      */
     public void addUser(Users user) {
         this.utilisateurs.add(user);
+        passerelle.update(this);
     }
 
     /**
@@ -73,7 +81,10 @@ public class Equipe extends Candidat implements Serializable {
      * @param user
      */
     public void removeUser(Users user) {
-        this.utilisateurs.remove(user);
+    	if(this.utilisateurs.contains(user)){
+    		this.utilisateurs.remove(user);
+    		passerelle.update(this);
+    	}
     }
 
     /**

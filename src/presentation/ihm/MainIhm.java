@@ -47,16 +47,12 @@ public class MainIhm {
 	{
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				System.out.println(info.getName());
 				if("Nimbus".equals(info.getName())) {
-					System.out.println("pioue");
 					UIManager.setLookAndFeel(info.getClassName());
 				}
 			}
 		}
-		
 		catch (Exception e) {
-			System.out.println("yolo");
 		}
 		panel = new JPanel();
 		panel.setFont(new Font("Serif", Font.PLAIN, 40));
