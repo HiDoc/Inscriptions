@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import application.inscriptions.Inscriptions;
 import application.inscriptions.Main;
-import commandLine.*;
+import utilitaires.ligneDeCommande.*;
 
 
 public class MenuCompetition {
@@ -29,24 +28,19 @@ public class MenuCompetition {
 	
 	private static Action getActionAdd()
 	{
-		return new Action()
-		{
-			public void optionSelectionnee()
-			{
-				System.out.println("Nom :");
-				String name = MainMenu.scanner.next();
-				System.out.println("Date(yyyy/mm/jj) :");
-				String strDate = MainMenu.scanner.next();
-				Calendar date = Main.parseDate(strDate);
-				System.out.println("Durée :");
-				String strDuree = MainMenu.scanner.next();
-				int duree = Integer.parseInt(strDuree);
-				System.out.println("En équipe(o/n) :");
-				String team = MainMenu.scanner.next();
-				boolean boolTeam = (team) == "y" ? true : false;
-			//	Inscriptions.makeCompetition(name, date, duree, boolTeam);
-			}
-		};
+		return () -> {
+                    System.out.println("Nom :");
+                    String name = MainMenu.scanner.next();
+                    //System.out.println("Date(yyyy/mm/jj) :");
+                    //String strDate = MainMenu.scanner.next();
+                    //Calendar date = Main.parseDate(strDate);
+                    System.out.println("Durée :");
+                    String strDuree = MainMenu.scanner.next();
+                    int duree = Integer.parseInt(strDuree);
+                    System.out.println("En équipe(o/n) :");
+                    String team = MainMenu.scanner.next();
+                    boolean boolTeam = "y".equals((String)team);
+                };
 	}
 	
 

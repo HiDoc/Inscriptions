@@ -1,6 +1,5 @@
 package presentation.ihm;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,7 +8,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,8 +17,13 @@ import application.inscriptions.Competition;
 import application.inscriptions.Equipe;
 import application.inscriptions.Inscriptions;
 import application.inscriptions.Users;
-import data.hibernate.passerelle;
 
+/**
+ * Classe qui permet de contruire le panneau principal des équipes. Il est composé de 
+ * plusieurs panneaux qui correspondent aux fonctionnalités de contrôle des équipes.
+ * 
+ * @author Flo
+ */
 public class TeamMenu extends SubMenu{
 	
 	private JTextField nom = new JTextField(20);

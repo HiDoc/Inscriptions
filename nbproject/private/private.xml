@@ -12,9 +12,18 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/test/application/inscriptions/EquipeTest.java</file>
-            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/application/inscriptions/Equipe.java</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/presentation/ihm/FrameParams.java</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/presentation/ihm/SubMenu.java</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/presentation/ihm/CompetMenu.java</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/data/hibernate/database.cfg.xml</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/application/inscriptions/Candidat.java</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/presentation/ihm/TeamMenu.java</file>
             <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/presentation/ihm/UserMenu.java</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/presentation/ihm/MainIhm.java</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/application/inscriptions/Competition.java</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/test/application/inscriptions/InscriptionsTest.java</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/presentation/cli/menu/MainMenu.java</file>
+            <file>file:/C:/Users/Flo/Documents/GitHub/Inscriptions/src/presentation/ihm/Inscriptions.ihm.ucls</file>
         </group>
     </open-files>
 </project-private>

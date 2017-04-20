@@ -1,9 +1,8 @@
 package presentation.cli.menu;
 
-import java.util.Scanner;
-
+import java.util.Scanner;      
+import utilitaires.ligneDeCommande.*;
 import application.inscriptions.Inscriptions;
-import commandLine.*;
 
 public class MainMenu {	
 	

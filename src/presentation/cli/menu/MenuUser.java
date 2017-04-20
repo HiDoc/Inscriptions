@@ -3,7 +3,7 @@ package presentation.cli.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import commandLine.*;
+import utilitaires.ligneDeCommande.*;
 
 public class MenuUser {
 	

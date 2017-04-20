@@ -31,7 +31,7 @@ import javax.persistence.Temporal;
 @Table(name = "competition")
 
 
-public class Competition implements Serializable, Comparable <Competition>, Data { 
+public class Competition implements Serializable, Comparable <Competition>{ 
     
 
     @Id

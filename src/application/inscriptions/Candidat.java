@@ -27,6 +27,7 @@ import javax.persistence.Table;
 
 /**
  * Couche accès aux données de la classe Candidat
+ *
  * @author Flo
  */
 @Entity
@@ -39,17 +40,17 @@ public class Candidat implements Serializable, Comparable<Candidat> {
     @Column(name = "id_ca")
     private int id_ca;
 
-    @Basic(fetch=EAGER)
+    @Basic(fetch = EAGER)
     @Column(name = "nom")
     private String nom;
-    
+
     /*
      * Clés plusieurs à plusieurs sur la table participer
      */
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade =
-            {
-            		CascadeType.DETACH
+            cascade
+            = {
+                CascadeType.DETACH
             })
     @JoinTable(name = "participer", joinColumns = {
         @JoinColumn(name = "id_ca")}, inverseJoinColumns = {
@@ -58,7 +59,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
      * Crée une liste de toutes les compétitions auxquelles le candidat est inscrit
      */
     private final Set<Competition> competitions = new HashSet<>(0);
-   
+
     /**
      * Constructeur par défault vide pour la persistance
      */
@@ -68,83 +69,99 @@ public class Candidat implements Serializable, Comparable<Candidat> {
 
     /**
      * Surcharge du constructeur
+     *
      * @param nom une chaine de caractère
      */
     public Candidat(String nom) {
         this.nom = nom;
     }
+
     /**
      * Retourne l'id d'un candidat
-     * @return int 
+     *
+     * @return int
      */
     public int getId() {
         return this.id_ca;
     }
+
     /**
      * Retourne le nom d'un Candidat
+     *
      * @return nom - une chaine de caractères
      */
     public String getNom() {
         return this.nom;
     }
+
     /**
      * Attribue un nouveau nom au Candidat
+     *
      * @param nom une chaine de caractères
      */
     public void setNom(String nom) {
         this.nom = nom;
     }
-    
+
     /**
      * Retourne la liste des compétitions du candidat
+     *
      * @return un Set de Competition
      */
     public Set<Competition> getCompetition() {
         return this.competitions;
     }
-    
+
     /**
-     * Inscrit un candidat à une compétition     * 
+     * Inscrit un candidat à une compétition
+     *
+     *
      * @param competition
      */
-    public void inscription(Competition competition){
-        if (!competitions.contains(competition)){
+    public void inscription(Competition competition) {
+        if (!competitions.contains(competition)) {
             competitions.add(competition);
             passerelle.update(this);
         }
     }
 
     /**
-     * Désinscrit un candidat à une compétition. Lance une erreur si le candidat 
+     * Désinscrit un candidat à une compétition. Lance une erreur si le candidat
      * est déjà inscrit à cette compétition
+     *
      * @param competition
      */
-    public void desinscription(Competition competition){
-        if (competitions.contains(competition)){
+    public void desinscription(Competition competition) {
+        if (competitions.contains(competition)) {
             competitions.remove(competition);
             passerelle.update(this);
         }
     }
-    
+
     /**
      * Supprime un candidat de l'application
      */
-    public void remove(){
+    public void remove() {
         passerelle.delete(this);
     }
-    
+
     @Override
     public String toString() {
-    	return nom;
+        return nom;
     }
 
     @Override
     public int compareTo(Candidat candidat) {
         int i = getNom().compareTo(candidat.getNom());
-        return i + (getId() == candidat.getId() ? 0 : 1) ;
+        return i + (getId() == candidat.getId() ? 0 : 1);
     }
 
+    /**
+     * Vérifie si le candidat est une équipe ou un utilisateur
+     *
+     * @return un booléen
+     */
     public boolean isTeam() {
-    	return this instanceof Equipe;
+        return this instanceof Equipe;
     }
 }
