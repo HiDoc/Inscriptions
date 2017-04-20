@@ -17,7 +17,6 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import application.inscriptions.Candidat;
 import application.inscriptions.Competition;
 import application.inscriptions.Inscriptions;
-import application.inscriptions.Users;
 
 public class CompetMenu extends SubMenu {
 	
@@ -46,7 +45,6 @@ public class CompetMenu extends SubMenu {
 		panel.add(editCompet());
 		panel.add(addAndRemove());
 		panel.add(removeCompet());
-//		panel.add(placeholder());
 		return panel;	
 	}
 	
@@ -65,20 +63,15 @@ public class CompetMenu extends SubMenu {
 	
 	private ActionListener addBtnListener()
 	{
-		return new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				Competition compet = inscriptions.createCompetition(
-					nom.getText(), 
-					(Calendar) dp.getModel().getValue(),
-					Integer.parseInt(duree.getText()), 
-					enTeam.isSelected()
-				);
-				competList.addItem(compet);
-			}
-		};
+		return (ActionEvent e) -> {
+                    Competition compet = inscriptions.createCompetition(
+                            nom.getText(),
+                            (Calendar) dp.getModel().getValue(),
+                            Integer.parseInt(duree.getText()),
+                            enTeam.isSelected()
+                    );
+                    competList.addItem(compet);
+                };
 	}
 	
 	private JPanel selectCompet()
@@ -97,24 +90,21 @@ public class CompetMenu extends SubMenu {
 	
 	private ActionListener competListListener()
 	{
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-                Competition selected = (Competition) competList.getSelectedItem();
-                inscriptions.refresh(selected);
-                editNom.setText(selected.getNom());
-                editDuree.setText(Integer.toString(selected.getDuree()));
-                editEnTeam.setSelected(selected.getEnEquipe());
-                editDp.getModel().setDate(
-                	selected.getDate().get(Calendar.YEAR), 
-                	selected.getDate().get(Calendar.MONTH), 
-                	selected.getDate().get(Calendar.DAY_OF_MONTH)
-                );
-                editDp.getModel().setSelected(true);
-                competition = selected;
-                makeCandidatsList();
-			}
-		};
+		return (ActionEvent e) -> {
+                    Competition selected = (Competition) competList.getSelectedItem();
+                    inscriptions.refresh(selected);
+                    editNom.setText(selected.getNom());
+                    editDuree.setText(Integer.toString(selected.getDuree()));
+                    editEnTeam.setSelected(selected.getEnEquipe());
+                    editDp.getModel().setDate(
+                            selected.getDate().get(Calendar.YEAR),
+                            selected.getDate().get(Calendar.MONTH),
+                            selected.getDate().get(Calendar.DAY_OF_MONTH)
+                    );
+                    editDp.getModel().setSelected(true);
+                    competition = selected;
+                    makeCandidatsList();
+                };
 	}
 	
 	private void makeCandidatsList()
@@ -149,17 +139,14 @@ public class CompetMenu extends SubMenu {
 	
 	private ActionListener editBtnListener(CompetMenu menu)
 	{
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Competition compet = (Competition) competList.getSelectedItem();
-				compet.setNom(menu.editNom.getText());
-				compet.setDate((Calendar) editDp.getModel().getValue());
-				compet.setDuree(Integer.parseInt(menu.editDuree.getText()));
-				compet.setEnEquipe(menu.editEnTeam.isSelected());
-				menu.inscriptions.edit(compet);
-			}
-		};
+		return (ActionEvent e) -> {
+                    Competition compet = (Competition) competList.getSelectedItem();
+                    compet.setNom(menu.editNom.getText());
+                    compet.setDate((Calendar) editDp.getModel().getValue());
+                    compet.setDuree(Integer.parseInt(menu.editDuree.getText()));
+                    compet.setEnEquipe(menu.editEnTeam.isSelected());
+                    menu.inscriptions.edit(compet);
+                };
 	}
 	
 	private JPanel addAndRemove()
@@ -180,28 +167,22 @@ public class CompetMenu extends SubMenu {
 	
 	private ActionListener addCandidatListener(CompetMenu menu)
 	{
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Candidat candidat = (Candidat) menu.candidatsList.getSelectedItem();
-				menu.competition.addCandidat(candidat); 
-				menu.candidatsList.removeItem(candidat);
-				menu.candidatsRemList.addItem(candidat);
-			}
-		};
+		return (ActionEvent arg0) -> {
+                    Candidat candidat = (Candidat) menu.candidatsList.getSelectedItem();
+                    menu.competition.addCandidat(candidat);
+                    menu.candidatsList.removeItem(candidat);
+                    menu.candidatsRemList.addItem(candidat);
+                };
 	}
 	
 	private ActionListener remCandidatListener(CompetMenu menu)
 	{
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Candidat candidat = (Candidat) menu.candidatsRemList.getSelectedItem();
-				menu.competition.removeCandidat(candidat); 
-				menu.candidatsList.addItem(candidat);
-				menu.candidatsRemList.removeItem(candidat);
-			}
-		};
+		return (ActionEvent arg0) -> {
+                    Candidat candidat = (Candidat) menu.candidatsRemList.getSelectedItem();
+                    menu.competition.removeCandidat(candidat);
+                    menu.candidatsList.addItem(candidat);
+                    menu.candidatsRemList.removeItem(candidat);
+                };
 	}
 	
     private JPanel removeCompet() {

@@ -166,7 +166,6 @@ public class UserMenu extends SubMenu {
         teamRemList.setPreferredSize(new Dimension(200, 20));
         teamsRem.add(this.getButton("Enlever", teamRemListener()));
         
-//		panel.add(Box.createHorizontalStrut(100));
         panel.add(teams);
         panel.add(teamsRem);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -208,7 +207,7 @@ public class UserMenu extends SubMenu {
         competsRem.add(competsRemList);
         competsRem.add(this.getButton("Enlever", competRemListener()));
         panel.add(Box.createVerticalStrut(20));
-//		panel.add(Box.createHorizontalStrut(100));
+        
         panel.add(competsRem);
         panel.add(Box.createVerticalStrut(30));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
