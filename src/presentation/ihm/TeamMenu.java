@@ -35,12 +35,21 @@ public class TeamMenu extends SubMenu{
 	private JComboBox<Competition> competList = new JComboBox<>();
 	private JComboBox<Competition> competRemList = new JComboBox<>();
 	
-	public TeamMenu(Inscriptions ins)
+    /**
+     * Constructeur de la classe TeamMenu, permet d'initialiser un 
+     * objet inscription pour permettre la persistance
+     * @param ins un objet Inscription
+     */
+    public TeamMenu(Inscriptions ins)
 	{
 		super(ins);
 	}
 	
-	public JPanel getPanel() {
+    /**
+     * Construit le panel principal du sous-menu Equipe
+     * @return un objet jPanel
+     */
+    public JPanel getPanel() {
 		panel.add(addTeam());
 		panel.add(editTeam());
 		panel.add(selectTeam());
@@ -64,35 +73,35 @@ public class TeamMenu extends SubMenu{
 	private ActionListener addBtnListener(TeamMenu menu)
 	{
         return (ActionEvent e) -> {
-            Equipe team = inscriptions.createEquipe(
+            Equipe addTeam = inscriptions.createEquipe(
                     menu.nom.getText()
             );
-            menu.teamList.addItem(team);
-            menu.team = team;
+            menu.teamList.addItem(addTeam);
+            menu.team = addTeam;
         };
 	}
 	
 	private JPanel selectTeam()
 	{
-		JPanel panel = new JPanel();
-		panel.add(new JLabel("Selectionner une équipe : "));
-		panel.setBorder(BorderFactory.createTitledBorder("Selectionner une équipe"));
+		JPanel selectPanel = new JPanel();
+		selectPanel.add(new JLabel("Selectionner une équipe : "));
+		selectPanel.setBorder(BorderFactory.createTitledBorder("Selectionner une équipe"));
 		makeTeamList();
 		teamList.setPreferredSize(new Dimension(200,20));
 		teamList.addActionListener(selectTeamListener());
-		panel.add(Box.createHorizontalStrut(100));
-		panel.add(teamList);
-		panel.add(Box.createVerticalStrut(50));
-		return panel;
+		selectPanel.add(Box.createHorizontalStrut(100));
+		selectPanel.add(teamList);
+		selectPanel.add(Box.createVerticalStrut(50));
+		return selectPanel;
 	}
 
 	private ActionListener selectTeamListener()
 	{
 		return (ActionEvent e) -> {
-			Equipe team = (Equipe) this.teamList.getSelectedItem();
-			inscriptions.refresh(team);
-			this.team = team;
-			System.out.println(team.getUsers());
+			Equipe selectTeam = (Equipe) this.teamList.getSelectedItem();
+			inscriptions.refresh(selectTeam);
+			this.team = selectTeam;
+			System.out.println(selectTeam.getUsers());
 			makeUsersList();
 			makeCompetsList();
 		};
@@ -135,20 +144,20 @@ public class TeamMenu extends SubMenu{
 	
 	private JPanel addAndRemove()
 	{
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(1,2));
-		panel.add(addRemoveUsers());
-		panel.add(addRemoveCompets());
-		return panel;
+		JPanel refreshPanel = new JPanel();
+		refreshPanel.setLayout(new GridLayout(1,2));
+		refreshPanel.add(addRemoveUsers());
+		refreshPanel.add(addRemoveCompets());
+		return refreshPanel;
 	}
 	
 	private JPanel addRemoveUsers()
 	{
-		JPanel panel = getSubPanel("Gérer les membres");
+		JPanel addRemovePanel = getSubPanel("Gérer les membres");
 		JPanel users = new JPanel();
 		JPanel usersRem = new JPanel();
 		
-		panel.add(Box.createVerticalStrut(10));
+		addRemovePanel.add(Box.createVerticalStrut(10));
 		userList.setPreferredSize(new Dimension(200,20));
 		this.addLabelledComponent(users, "Ajouter un membre :", userList);
 		users.add(this.getButton("Ajouter", addUserListener()));
@@ -156,12 +165,12 @@ public class TeamMenu extends SubMenu{
 		usersRem.add(new JLabel("Enlever un membre :"));
 		usersRem.add(userRemList);
 		usersRem.add(this.getButton("Enlever", remUserListener()));
-		panel.add(users);
-		panel.add(Box.createVerticalStrut(20));
-		panel.add(usersRem);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.add(Box.createVerticalStrut(10));
-		return panel;
+		addRemovePanel.add(users);
+		addRemovePanel.add(Box.createVerticalStrut(20));
+		addRemovePanel.add(usersRem);
+		addRemovePanel.setLayout(new BoxLayout(addRemovePanel, BoxLayout.Y_AXIS));
+		addRemovePanel.add(Box.createVerticalStrut(10));
+		return addRemovePanel;
 	}
 	
 	private ActionListener addUserListener()
@@ -185,7 +194,7 @@ public class TeamMenu extends SubMenu{
 	}
 	private JPanel addRemoveCompets()
 	{
-		JPanel panel = getSubPanel("Gérer les compétitions");
+		JPanel addRemovePanel = getSubPanel("Gérer les compétitions");
 		JPanel compets = new JPanel();
 		JPanel competsRem = new JPanel();
 		
@@ -193,16 +202,16 @@ public class TeamMenu extends SubMenu{
 		competRemList.setPreferredSize(new Dimension(200,20));
 		this.addLabelledComponent(compets, "Ajouter à la compétition", competList);
 		compets.add(this.getButton("Ajouter", addCompetListener()));
-		panel.add(Box.createVerticalStrut(10));
+		addRemovePanel.add(Box.createVerticalStrut(10));
 
 		this.addLabelledComponent(competsRem, "Enlever de la compétition", competRemList);
 		competsRem.add(this.getButton("Enlever", remCompetListener()));
-		panel.add(compets);
-		panel.add(Box.createVerticalStrut(20));
-		panel.add(competsRem);
-		panel.add(Box.createVerticalStrut(30));
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		return panel;
+		addRemovePanel.add(compets);
+		addRemovePanel.add(Box.createVerticalStrut(20));
+		addRemovePanel.add(competsRem);
+		addRemovePanel.add(Box.createVerticalStrut(30));
+		addRemovePanel.setLayout(new BoxLayout(addRemovePanel, BoxLayout.Y_AXIS));
+		return addRemovePanel;
 	}
 	
 	private ActionListener addCompetListener()
@@ -227,25 +236,25 @@ public class TeamMenu extends SubMenu{
 	
 	private JPanel editTeam()
 	{
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createTitledBorder("Editer placeholder"));
-		this.addLabelledComponent(panel, "nom", editNom);
-		panel.add(Box.createVerticalStrut(50));
-		return panel;
+		JPanel editPanel = new JPanel();
+		editPanel.setBorder(BorderFactory.createTitledBorder("Editer placeholder"));
+		this.addLabelledComponent(editPanel, "nom", editNom);
+		editPanel.add(Box.createVerticalStrut(50));
+		return editPanel;
 		
 	}
 	
     private JPanel removeTeam() {
-        JPanel panel = getSubPanel("Effacer l'equipe");
-        panel.add(getButton("Effacer", deleteBtnListener()));
-        return panel;
+        JPanel removeTeamPanel = getSubPanel("Effacer l'equipe");
+        removeTeamPanel.add(getButton("Effacer", deleteBtnListener()));
+        return removeTeamPanel;
     }
 
     private ActionListener deleteBtnListener() {
         return (ActionEvent e) -> {
-            Equipe team = (Equipe) teamList.getSelectedItem();
-            inscriptions.remove(team);
-            teamList.removeItem(team);
+            Equipe deleteTeam = (Equipe) teamList.getSelectedItem();
+            inscriptions.remove(deleteTeam);
+            teamList.removeItem(deleteTeam);
         };
     }
 }

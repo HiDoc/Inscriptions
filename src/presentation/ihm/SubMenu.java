@@ -62,7 +62,7 @@ public abstract class SubMenu {
      * 
      * @param name le nom du boutton
      * @param al l'action à effectuer lors de l'appui sur le boutton
-     * @return
+     * @return un objet jButton correspondant à un nom et à une action
      */
     protected JButton getButton(String name, ActionListener al) {
         JButton button = new JButton(name);
@@ -72,7 +72,7 @@ public abstract class SubMenu {
 
     /**
      * Crée une date à partir d'un String
-     * @param strDate
+     * @param strDate une chaine de caractère à formatter
      * @return un objet de type Calendar
      */
     protected Calendar parseDate(String strDate) {

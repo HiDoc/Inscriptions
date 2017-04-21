@@ -16,12 +16,15 @@ public class MainIhm {
     /**
      * Fonction principale de l'application, initialise un objet mainIhm
      * 
-     * @param args
+     * @param args les paramètres de la fonction Main
      */
     public static void main(String[] args) {
         MainIhm mainIhm = new MainIhm();
     }
 
+    /**
+     * Constructeur de la classe mainMenu qui initialise les frames composantes de l'application
+     */
     public MainIhm() {
         frame.setTitle("Inscriptions sportives");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

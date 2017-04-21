@@ -44,7 +44,7 @@ public class UserMenu extends SubMenu {
      * Contructeur de la classe UserMenu qui initialise un objet Inscription qui
      * permet de gérer les entrées et sorties dans la base de donnée
      *
-     * @param ins
+     * @param ins l'objet d'inscription permettant la persistance
      */
     public UserMenu(Inscriptions ins) {
         super(ins);

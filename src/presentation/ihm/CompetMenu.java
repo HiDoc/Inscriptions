@@ -66,15 +66,15 @@ public class CompetMenu extends SubMenu {
     }
 
     private JPanel addCompet() {
-        JPanel panel = this.getSubPanel("Ajouter une compétition");
-        this.addLabelledComponent(panel, "Nom :", nom);
-        this.addLabelledComponent(panel, "Durée :", duree);
+        JPanel competPanel = this.getSubPanel("Ajouter une compétition");
+        this.addLabelledComponent(competPanel, "Nom :", nom);
+        this.addLabelledComponent(competPanel, "Durée :", duree);
         dp = getDatePicker();
-        panel.add(dp);
-        panel.add(enTeam);
-        panel.add(this.getButton("Ajouter", addBtnListener()));
-        panel.add(Box.createVerticalStrut(50));
-        return panel;
+        competPanel.add(dp);
+        competPanel.add(enTeam);
+        competPanel.add(this.getButton("Ajouter", addBtnListener()));
+        competPanel.add(Box.createVerticalStrut(50));
+        return competPanel;
     }
 
     private ActionListener addBtnListener() {
@@ -90,16 +90,16 @@ public class CompetMenu extends SubMenu {
     }
 
     private JPanel selectCompet() {
-        JPanel panel = this.getSubPanel("Selectionner une compétition");
+        JPanel competSelectPanel = this.getSubPanel("Selectionner une compétition");
         System.out.println(inscriptions.getCompetitions());
         inscriptions.getCompetitions().forEach(compet -> competList.addItem(compet));
         competList.addActionListener(competListListener());
         competList.setPreferredSize(new Dimension(200, 20));
-        panel.add(Box.createHorizontalStrut(100));
-        panel.add(competList);
-        this.addLabelledComponent(panel, "Selectionnez une compétition :", competList);
-        panel.add(Box.createVerticalStrut(50));
-        return panel;
+        competSelectPanel.add(Box.createHorizontalStrut(100));
+        competSelectPanel.add(competList);
+        this.addLabelledComponent(competSelectPanel, "Selectionnez une compétition :", competList);
+        competSelectPanel.add(Box.createVerticalStrut(50));
+        return competSelectPanel;
     }
 
     private ActionListener competListListener() {
@@ -137,15 +137,15 @@ public class CompetMenu extends SubMenu {
     }
 
     private JPanel editCompet() {
-        JPanel panel = this.getSubPanel("Editer une compétition");
-        this.addLabelledComponent(panel, "Nom :", editNom);
-        this.addLabelledComponent(panel, "Durée :", editDuree);
+        JPanel editCompetPanel = this.getSubPanel("Editer une compétition");
+        this.addLabelledComponent(editCompetPanel, "Nom :", editNom);
+        this.addLabelledComponent(editCompetPanel, "Durée :", editDuree);
         editDp = this.getDatePicker();
-        panel.add(editDp);
-        panel.add(editEnTeam);
-        panel.add(this.getButton("Editer", this.editBtnListener(this)));
-        panel.add(Box.createVerticalStrut(50));
-        return panel;
+        editCompetPanel.add(editDp);
+        editCompetPanel.add(editEnTeam);
+        editCompetPanel.add(this.getButton("Editer", this.editBtnListener(this)));
+        editCompetPanel.add(Box.createVerticalStrut(50));
+        return editCompetPanel;
 
     }
 
@@ -161,18 +161,18 @@ public class CompetMenu extends SubMenu {
     }
 
     private JPanel addAndRemove() {
-        JPanel panel = this.getSubPanel("Modifier candidats");
-        panel.add(new JLabel("Ajouter candidat :"));
+        JPanel refreshPanel = this.getSubPanel("Modifier candidats");
+        refreshPanel.add(new JLabel("Ajouter candidat :"));
         candidatsList.setPreferredSize(new Dimension(200, 20));
-        panel.add(candidatsList);
-        panel.add(this.getButton("Ajouter", addCandidatListener(this)));
-        panel.add(Box.createHorizontalStrut(100));
-        panel.add(new JLabel("Enlever Candidat :"));
+        refreshPanel.add(candidatsList);
+        refreshPanel.add(this.getButton("Ajouter", addCandidatListener(this)));
+        refreshPanel.add(Box.createHorizontalStrut(100));
+        refreshPanel.add(new JLabel("Enlever Candidat :"));
         candidatsRemList.setPreferredSize(new Dimension(200, 20));
-        panel.add(this.getButton("Enlever", this.remCandidatListener(this)));
-        panel.add(candidatsRemList);
-        panel.add(Box.createVerticalStrut(50));
-        return panel;
+        refreshPanel.add(this.getButton("Enlever", this.remCandidatListener(this)));
+        refreshPanel.add(candidatsRemList);
+        refreshPanel.add(Box.createVerticalStrut(50));
+        return refreshPanel;
     }
 
     private ActionListener addCandidatListener(CompetMenu menu) {
@@ -194,9 +194,9 @@ public class CompetMenu extends SubMenu {
     }
 
     private JPanel removeCompet() {
-        JPanel panel = getSubPanel("Effacer la compétition");
-        panel.add(getButton("Effacer", deleteBtnListener()));
-        return panel;
+        JPanel removePanel = getSubPanel("Effacer la compétition");
+        removePanel.add(getButton("Effacer", deleteBtnListener()));
+        return removePanel;
     }
 
     private ActionListener deleteBtnListener() {
@@ -208,8 +208,8 @@ public class CompetMenu extends SubMenu {
     }
 
     private JPanel placeholder() {
-        JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(0, 150));
-        return panel;
+        JPanel placeholderPanel = new JPanel();
+        placeholderPanel.setPreferredSize(new Dimension(0, 150));
+        return placeholderPanel;
     }
 }

@@ -61,7 +61,7 @@ public class Equipe extends Candidat implements Serializable {
 
     /**
      * Modifie les utilisateurs d'une équipe
-     * @param utilisateurs
+     * @param utilisateurs les utilisateurs qui composent l'équipe
      */
     public void setUtilisateurs(Set<Users> utilisateurs) {
         this.utilisateurs = utilisateurs;
@@ -69,7 +69,7 @@ public class Equipe extends Candidat implements Serializable {
 
     /**
      * Ajoute un utilisateur à l'équipe
-     * @param user
+     * @param user l'utilisateur à ajouter à l'équipe
      */
     public void addUser(Users user) {
         this.utilisateurs.add(user);
@@ -78,7 +78,7 @@ public class Equipe extends Candidat implements Serializable {
 
     /**
      * Enlève un utilisateur d'une équipe
-     * @param user
+     * @param user l'utilisateur à enlever de l'équipe
      */
     public void removeUser(Users user) {
     	if(this.utilisateurs.contains(user)){
