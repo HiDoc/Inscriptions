@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
@@ -52,9 +54,9 @@ public abstract class SubMenu {
      * @return jPanel
      */
     protected JPanel getSubPanel(String borderText) {
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(borderText));
-        return panel;
+        JPanel subPanel = new JPanel();
+        subPanel.setBorder(BorderFactory.createTitledBorder(borderText));
+        return subPanel;
     }
 
     /**
