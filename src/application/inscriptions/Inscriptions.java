@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -45,7 +42,7 @@ public class Inscriptions implements Serializable {
     /**
      * Retourne les compétitions.
      *
-     * @return
+     * @return une collection composée de toutes les compétitions
      */
     public SortedSet<Competition> getCompetitions() {
         return Collections.unmodifiableSortedSet(competitions);
@@ -54,7 +51,7 @@ public class Inscriptions implements Serializable {
     /**
      * Retourne tous les candidats (personnes et équipes confondues).
      *
-     * @return
+     * @return une collection composée de tout les candidats
      */
     public SortedSet<Candidat> getCandidats() {
         return Collections.unmodifiableSortedSet(candidats);
@@ -63,16 +60,15 @@ public class Inscriptions implements Serializable {
     /**
      * Retourne toutes les personnes.
      *
-     * @return
+     * @return une collections de tout les utilisateurs 
      */
     public SortedSet<Users> getPersonnes() {
     	return Collections.unmodifiableSortedSet(users);
-//        return getSort((ArrayList) passerelle.table(Users.class));
     }
 
     /**
      * Retourne toutes les équipes.
-     * @return Un SortedSet
+     * @return une collection composée de toutes les équipes
      */
     public SortedSet<Equipe> getEquipes() {
         return Collections.unmodifiableSortedSet(this.equipes);
@@ -82,11 +78,11 @@ public class Inscriptions implements Serializable {
      * Créée une compétition. Ceci est le seul moyen, il n'y a pas de
      * constructeur public dans {@link Competition}.
      *
-     * @param nom
-     * @param dateDebut
-     * @param dateCloture
-     * @param duree
-     * @param enEquipe
+     * @param nom le nom de la nouvelle compétition
+     * @param dateDebut la date de début de la nouvelle compétition
+     * @param dateCloture la date de fermeture des inscriptions de la nouvelle compétition
+     * @param duree la durée en secondes de la compétition
+     * @param enEquipe un booléen précisant si la compétition doit se faire en équipe
      */
     public void createCompetition(String nom, Calendar dateDebut, Calendar dateCloture,int duree, boolean enEquipe) {
         Competition newC = new Competition(nom, dateDebut, dateCloture, duree, enEquipe);
@@ -106,7 +102,7 @@ public class Inscriptions implements Serializable {
     
     /**
      * Surcharge du constructeur de la création de compétition
-     * @param newC
+     * @param newC un objet compétition qui constitue la nouvelle compétition à créer
      */
     public void createCompetition(Competition newC) {
         this.competitions.add(newC);
@@ -114,13 +110,13 @@ public class Inscriptions implements Serializable {
     }
 
     /**
-     * Créée une Candidat de type Personne. Ceci est le seul moyen, il n'y a pas
-     * de constructeur public dans {@link Personne}.
-     *
-     * @param nom
-     * @param prenom
-     * @param mail
-     * @param niveau
+     * Créée une Candidat de type utilisateur. 
+     * 
+     * @param nom le nom du nouvel utilisateur
+     * @param prenom le prénom du nouvel utilisateur
+     * @param mail l'adresse e-mail du nouvel utilisateur
+     * @param niveau le niveau d'accès du nouvel utilisateur
+     * @return un nouvel utilisateur à créer
      */
     public Users createPersonne(String nom, String prenom, String mail, int niveau) {
     	Users personne = new Users(nom, prenom, niveau, mail);
@@ -134,7 +130,8 @@ public class Inscriptions implements Serializable {
      * Créée une Candidat de type équipe. Ceci est le seul moyen, il n'y a pas
      * de constructeur public dans {@link Equipe}.
      *
-     * @param nom
+     * @param nom le nom de l'équipe
+     * @return la nouvelle équipe à créer
      */
     public Equipe createEquipe(String nom) {
         Equipe equipe = new Equipe(nom);
@@ -143,6 +140,10 @@ public class Inscriptions implements Serializable {
         return equipe;
     }
 
+    /**
+     * Enlève une compétition de l'application
+     * @param competition la compétition à supprimer
+     */
     public void remove(Competition competition) {
         competitions.remove(competition);
         passerelle.delete(competition);
@@ -153,23 +154,38 @@ public class Inscriptions implements Serializable {
         passerelle.delete(candidat);
     }
     
+    /**
+     * Enlève un utilisateur de l'application
+     * @param user l'utilisateur à supprimer
+     */
     public void remove(Users user) {
         candidats.remove(user);
         users.remove(user);
         passerelle.delete(user);
     }
 
+    /**
+     * Enlève une équipe de l'application
+     * @param team l'équipe à supprimer
+     */
     public void remove(Equipe team) {
         candidats.remove(team);
         equipes.remove(team);
         passerelle.delete(team);
     }
     
-    
+    /**
+     * Mets à jour un utilisateur
+     * @param user l'utilisateur à modifier
+     */
     public void edit(Users user) {
     	passerelle.update(user);
     }
     
+    /**
+     * Mets à jour une compétition 
+     * @param compet la compétition à modifier
+     */
     public void edit(Competition compet) {
     	passerelle.update(compet);
     }
@@ -194,7 +210,7 @@ public class Inscriptions implements Serializable {
      * Retourne un object inscriptions vide. Ne modifie pas les compétitions et
      * candidats déjà existants.
      *
-     * @return
+     * @return un objet de type inscription
      */
     public Inscriptions reinitialiser() {
         inscriptions = new Inscriptions();
@@ -205,7 +221,7 @@ public class Inscriptions implements Serializable {
      * Efface toutes les modifications sur Inscriptions depuis la dernière
      * sauvegarde. Ne modifie pas les compétitions et candidats déjà existants.
      *
-     * @return
+     * @return un objet de type inscription
      */
     public Inscriptions recharger() {
         inscriptions = null;
@@ -234,7 +250,7 @@ public class Inscriptions implements Serializable {
      * Sauvegarde le gestionnaire pour qu'il soit ouvert automatiquement lors
      * d'une exécution ultérieure du programme.
      *
-     * @throws IOException
+     * @throws IOException si une erreur à été détectée
      */
     public void sauvegarder() throws IOException {
         ObjectOutputStream oos = null;
@@ -261,10 +277,10 @@ public class Inscriptions implements Serializable {
     }
     
     /**
-     * Convertit une liste en sortedSet
+     * Convertit une liste en collection TreeSet
      *
-     * @param list
-     * @return
+     * @param list la liste à convertir
+     * @return une collection TreeSet
      */
     public static TreeSet getSort(ArrayList list) {
         TreeSet set = new TreeSet(list);

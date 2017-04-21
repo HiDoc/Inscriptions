@@ -93,7 +93,7 @@ public class passerelle {
 
     /**
      * Compte le nombre d'objets dans une table
-     * @param className
+     * @param className un nom de classe
      * @return le nombre d'entrée dans une table spécifiée
      */
     public static long count(String className) {
@@ -101,8 +101,8 @@ public class passerelle {
     }
     /**
      * Recherche dans les tables une entrée avec un ID
-     * @param <T>
-     * @param cls
+     * @param <T> un objet se référant à une table
+     * @param cls un objet Class
      * @param id un nombre
      * @return un objet spécifique sélectionné par son id
      */

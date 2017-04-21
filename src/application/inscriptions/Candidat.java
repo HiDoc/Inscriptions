@@ -26,7 +26,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Table;
 
 /**
- * Couche accès aux données de la classe Candidat
+ * Couche accès aux données de la classe Candidat. Permet de générer les candidats en persistance.
  *
  * @author Flo
  */
@@ -115,8 +115,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
     /**
      * Inscrit un candidat à une compétition
      *
-     *
-     * @param competition
+     * @param competition la compétition à inscrire
      */
     public void inscription(Competition competition) {
         if (!competitions.contains(competition)) {
@@ -129,7 +128,7 @@ public class Candidat implements Serializable, Comparable<Candidat> {
      * Désinscrit un candidat à une compétition. Lance une erreur si le candidat
      * est déjà inscrit à cette compétition
      *
-     * @param competition
+     * @param competition la compétition à désinscrire
      */
     public void desinscription(Competition competition) {
         if (competitions.contains(competition)) {

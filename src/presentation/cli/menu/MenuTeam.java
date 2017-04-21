@@ -3,11 +3,21 @@ package presentation.cli.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import commandLine.*;
+import utilitaires.ligneDeCommande.*;
 
+/**
+ * Classe permettant de créer le sous-menu des équipes
+ * 
+ * @author Flo
+ */
 public class MenuTeam {
 
-	public static Menu getMenu(String name)
+    /**
+     * Renvois le sous-menu équipe
+     * @param name le nom du sous-menu
+     * @return un menu
+     */
+    public static Menu getMenu(String name)
 	{
 		Menu teamMenu = new Menu(name,"e");
 		teamMenu.ajoute(getOptionAdd());
@@ -58,15 +68,18 @@ public class MenuTeam {
 	{
 		return new ActionListe<String>()
 		{
+                        @Override
 			public List<String> getListe()
 			{
 				return teams;
 			}
 
 			// Vide, car on souhaite créer manuellement chaque option.
+                        @Override
 			public void elementSelectionne(int indice, String element){}
 
 			// Retourne l'option associée à element.
+                        @Override
 			public Option getOption(final String team)
 			{
 
@@ -114,11 +127,13 @@ public class MenuTeam {
 			@Override
 			public void elementSelectionne(int indice, String element) {}
 
+                        @Override
 			public Option getOption(String compet) {
 				// TODO Auto-generated method stub
 				return new Option(compet, null, new Action()
 				{
 					// Action exécutée si l'option est sélectionnée.
+                                        @Override
 					public void optionSelectionnee()
 					{
 						System.out.println("point d'arrivé : ajouter une équipe à une compétition");
@@ -138,6 +153,7 @@ public class MenuTeam {
 	{
 		return new Action()
 		{
+                        @Override
 			public void optionSelectionnee()
 			{
 				System.out.println("point d'arrivée : editer équipe");
@@ -155,6 +171,7 @@ public class MenuTeam {
 	{
 		return new Action()
 		{
+                        @Override
 			public void optionSelectionnee()
 			{
 				System.out.println("point d'arrivée : effacer équipe");
@@ -187,15 +204,18 @@ public class MenuTeam {
 		return new ActionListe<String>()
 		{
 			// Retourne les éléments affichés dans le menu.
+                        @Override
 			public List<String> getListe()
 			{
 				return users;
 			}
 
 			// Vide, car on souhaite créer manuellement chaque option.
+                        @Override
 			public void elementSelectionne(int indice, String element){}
 
 			// Retourne l'option associée à element.
+                        @Override
 			public Option getOption(final String user)
 			{
 
@@ -217,13 +237,9 @@ public class MenuTeam {
 	
 	private static Action getAddUserAction()
 	{
-		return new Action()
-		{
-			public void optionSelectionnee()
-			{
-				System.out.println("Point d'arrivée : Ajouter un utilisateur à une équipe");
-			}
-		};
+		return () -> {
+                    System.out.println("Point d'arrivée : Ajouter un utilisateur à une équipe");
+                };
 	}
 	
 	private static Option getDeleteuserOption(List<String> users, String user)
@@ -233,14 +249,10 @@ public class MenuTeam {
 	
 	private static Action getDeleteUserAction(List<String> users, String user)
 	{
-		return new Action()
-		{
-			public void optionSelectionnee()
-			{
-				users.remove(user);
-				System.out.println("Point d'arrivée : enlever un utilisateur d'une équipe");
-			}
-		};
+		return () -> {
+                    users.remove(user);
+                    System.out.println("Point d'arrivée : enlever un utilisateur d'une équipe");
+                };
 	}
 	
 }
