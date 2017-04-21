@@ -210,7 +210,7 @@ public class Inscriptions implements Serializable {
      * Retourne un object inscriptions vide. Ne modifie pas les compétitions et
      * candidats déjà existants.
      *
-     * @return
+     * @return un objet de type inscription
      */
     public Inscriptions reinitialiser() {
         inscriptions = new Inscriptions();
@@ -221,7 +221,7 @@ public class Inscriptions implements Serializable {
      * Efface toutes les modifications sur Inscriptions depuis la dernière
      * sauvegarde. Ne modifie pas les compétitions et candidats déjà existants.
      *
-     * @return
+     * @return un objet de type inscription
      */
     public Inscriptions recharger() {
         inscriptions = null;
@@ -250,7 +250,7 @@ public class Inscriptions implements Serializable {
      * Sauvegarde le gestionnaire pour qu'il soit ouvert automatiquement lors
      * d'une exécution ultérieure du programme.
      *
-     * @throws IOException
+     * @throws IOException si une erreur à été détectée
      */
     public void sauvegarder() throws IOException {
         ObjectOutputStream oos = null;
@@ -277,10 +277,10 @@ public class Inscriptions implements Serializable {
     }
     
     /**
-     * Convertit une liste en sortedSet
+     * Convertit une liste en collection TreeSet
      *
-     * @param list
-     * @return
+     * @param list la liste à convertir
+     * @return une collection TreeSet
      */
     public static TreeSet getSort(ArrayList list) {
         TreeSet set = new TreeSet(list);

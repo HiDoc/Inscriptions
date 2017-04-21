@@ -60,9 +60,9 @@ public class Users extends Candidat implements Serializable {
      * Constructeur
      *
      * @param nom de la classe mère Candidat
-     * @param prenom
-     * @param niveau
-     * @param mail
+     * @param prenom le prénom de l'utilisateur
+     * @param niveau le niveau d'accès de l'utilisateur
+     * @param mail l'adresse e-mail de l'utilisateur
      */
     public Users(String nom,String prenom, int niveau, String mail) {
         super(nom);
@@ -74,7 +74,7 @@ public class Users extends Candidat implements Serializable {
     /**
      * Getter
      * Retourne le prénom de l'utilisateur
-     * @return String prenom
+     * @return une chaine de caractère correspondant au prénom de l'utilisateur
      */
     public String getPrenom() {
         return this.prenom;
@@ -110,7 +110,7 @@ public class Users extends Candidat implements Serializable {
     /**
      * Setter
      * Modifie le prénom de l'utilisateur
-     * @param prenom
+     * @param prenom le nouveau prénom de l'utilisateur
      */
     public void setPrenom(String prenom) {
         this.prenom = prenom;
@@ -119,7 +119,7 @@ public class Users extends Candidat implements Serializable {
     /**
      * Setter
      * Modifie le niveau d'accès aux droits de l'utilisateur
-     * @param niveau
+     * @param niveau le nouveau niveau de l'utilisateur
      */
     public void setNiveau(int niveau) {
         this.niveau = niveau;
@@ -128,7 +128,7 @@ public class Users extends Candidat implements Serializable {
     /**
      * Setter
      * Modifie le mail de l'utilisateur
-     * @param mail
+     * @param mail le nouveau mail de l'utilisateur
      */
     public void setMail(String mail) {
         this.mail = mail;
@@ -136,7 +136,7 @@ public class Users extends Candidat implements Serializable {
     /**
      * Setter
      * Modifie les equipes de l'utilisateur
-     * @param equipes
+     * @param equipes les nouvelles équipes de l'utilisateur
      */
     public void setEquipes(Set<Equipe> equipes) {
         this.equipes = equipes;
@@ -144,7 +144,7 @@ public class Users extends Candidat implements Serializable {
 
     /**
      * Ajoute l'utilisateur à une équipe
-     * @param equipe
+     * @param equipe une nouvelle équipe pour l'utilisateur
      */
     public void addEquipe(Equipe equipe){
         this.equipes.add(equipe);
@@ -152,7 +152,7 @@ public class Users extends Candidat implements Serializable {
     }
     /**
      * Enlève l'utilisateur d'une équipe
-     * @param equipe
+     * @param equipe une équipe déjà existante à supprimer dans la liste des équipes de l'utilisateur
      */
     public void removeEquipe(Equipe equipe){
     	if(this.equipes.contains(equipe)){
