@@ -36,8 +36,7 @@ public class MainIhm {
     private JPanel setFrame() {
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                System.out.println(info.getName());
-                if ("Windows".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     UIManager.setLookAndFeel(info.getClassName());
                 }
             }
